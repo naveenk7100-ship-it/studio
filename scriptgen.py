@@ -112,16 +112,20 @@ OUTPUT FORMAT: Strict valid JSON only, no markdown ticks, no preamble:
 """
 
 
-def _call_gemini(prompt: str, grounded: bool = False) -> str:
-    """Call Google Gemini REST API."""
+def _call_gemini_model(prompt: str, model_name: str, grounded: bool = False) -> str:
+    """Call Google Gemini REST API with structured JSON output."""
     key = os.getenv("GEMINI_API_KEY", "").strip()
     if not key:
         raise ValueError("GEMINI_API_KEY is not set")
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={key}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={key}"
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.85, "maxOutputTokens": 2048}
+        "generationConfig": {
+            "temperature": 0.7,
+            "maxOutputTokens": 2048,
+            "responseMimeType": "application/json"
+        }
     }
     if grounded:
         body["tools"] = [{"google_search": {}}]
@@ -133,6 +137,10 @@ def _call_gemini(prompt: str, grounded: bool = False) -> str:
     data = res.json()
     parts = data["candidates"][0]["content"]["parts"]
     return "".join(p.get("text", "") for p in parts)
+
+
+def _call_gemini(prompt: str, grounded: bool = False) -> str:
+    return _call_gemini_model(prompt, GEMINI_MODEL, grounded=grounded)
 
 
 def _call_openrouter(prompt: str) -> str:
@@ -206,15 +214,15 @@ def call_llm(prompt: str, grounded: bool = False) -> str:
     """Robust LLM chain with automatic failover and exponential backoff:
     1. Gemini -> 2. OpenRouter -> 3. NaraRouter
     """
-    # 1. Attempt Gemini first
+    # 1. Attempt Gemini models first
     if os.getenv("GEMINI_API_KEY"):
-        for attempt in range(2):
+        for m_name in [GEMINI_MODEL, "gemini-3.8-flash", "gemini-3.8-flash-lite"]:
             try:
-                print(f"[LLM] Querying Gemini ({GEMINI_MODEL}, attempt {attempt+1})...")
-                return _call_gemini(prompt, grounded=grounded)
+                print(f"[LLM] Querying Gemini ({m_name})...")
+                return _call_gemini_model(prompt, m_name, grounded=grounded)
             except Exception as e:
-                print(f"[LLM] Gemini attempt {attempt+1} failed: {e}")
-                time.sleep(2 ** attempt)
+                print(f"[LLM] Gemini {m_name} failed: {e}")
+                time.sleep(1)
 
     # 2. Failover to OpenRouter
     if os.getenv("OPENROUTER_API_KEY"):
