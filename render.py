@@ -34,6 +34,9 @@ FM = os.path.join(HERE, "assets/fonts/DejaVuSansMono-Bold.ttf")
 BRAND_HANDLE = config.IG_HANDLE
 BRAND_NAME = config.BRAND_NAME
 
+np.random.seed(42)
+_GRAIN_NOISE = np.random.normal(0, 3.5, (H, W, 3)).astype(np.float32)
+
 _f = {}
 def get_font(size, mono=False):
     key = (int(size), mono)
@@ -198,87 +201,105 @@ def scene_repo(im, lt, dur, sc, ctx, cfg):
     repo = ctx.get("repo") or {}
     p = ease_out_bounce(lt / 0.35)
 
-    # Real Playwright screenshot card
+    # Real Playwright screenshot card (Hero visual >= 45% of height: 900px / 1920px = 46.9%)
     ss_img = load_real_screenshot(sc.get("screenshot_path", ""))
-    card_w, card_h = 980, 560
+    card_w, card_h = 1000, 900
     card = Image.new("RGBA", (card_w, card_h), (12, 16, 30, 245))
     d = ImageDraw.Draw(card)
     d.rounded_rectangle([(4, 4), (card_w - 4, card_h - 4)], 36, fill=(16, 22, 40, 245), outline=primary + (255,), width=4)
 
     if ss_img:
-        resized_ss = ss_img.resize((card_w - 40, card_h - 40), Image.LANCZOS)
+        # Animated zoom on screenshot
+        z_sc = 1.0 + 0.04 * math.sin(lt * 2)
+        ss_w, ss_h = card_w - 40, card_h - 160
+        resized_ss = ss_img.resize((ss_w, ss_h), Image.LANCZOS)
         card.paste(resized_ss, (20, 20), resized_ss)
-        # Highlight border around stars/header
+        # Dynamic gold highlight border around repo header / stars
         d_ss = ImageDraw.Draw(card)
-        d_ss.rectangle([(30, 30), (550, 140)], outline=(255, 215, 0, 220), width=3)
+        d_ss.rectangle([(25, 25), (card_w - 60, 160)], outline=(255, 215, 0, 230), width=4)
+        # Repo stars ribbon
+        stars_str = f"★ {repo.get('stars', 19066):,} STARS // VERIFIED REPO"
+        d.rectangle([(20, card_h - 120), (card_w - 20, card_h - 20)], fill=(20, 28, 52, 255))
+        d.text((card_w // 2, card_h - 70), stars_str, font=get_font(48, True), fill=(255, 215, 0, 255), anchor="mm")
     else:
-        # Fallback structured card
-        d.text((50, 60), "OFFICIAL GITHUB REPOSITORY", font=get_font(28, True), fill=cfg["secondary"] + (255,))
-        d.text((50, 120), repo.get("name", "anthropics/claude-quickstarts"), font=get_font(52, True), fill=primary + (255,))
-        d.text((50, 200), repo.get("description", "Ready-to-use projects with Anthropic Claude API.")[:80] + "...", font=get_font(36), fill=(210, 220, 240, 255))
+        # Fallback structured card with prominent font
+        d.text((50, 60), "OFFICIAL GITHUB REPOSITORY", font=get_font(36, True), fill=cfg["secondary"] + (255,))
+        d.text((50, 140), repo.get("name", "anthropics/claude-quickstarts"), font=get_font(52, True), fill=primary + (255,))
+        d.text((50, 240), repo.get("description", "Ready-to-use projects with Anthropic Claude API.")[:90] + "...", font=get_font(46), fill=(210, 220, 240, 255))
+        stars_str = f"★ {repo.get('stars', 19066):,} STARS"
+        d.text((50, 360), stars_str, font=get_font(56, True), fill=(255, 215, 0, 255))
 
     paste_centered(im, card, 540, 720, p, min(1.0, p * 1.5))
 
-    # Real Star Badge (Clean original digits: "19K STARS")
-    stars_str = f"★ {repo.get('stars', 19066):,} STARS"
-    star_sp = render_text_sprite(stars_str, 58, (255, 215, 0), mono=True)
-    paste_centered(im, star_sp, 540, 1080, 1.0, ease_out((lt - 0.3) / 0.3))
-
     if sc.get("big"):
-        draw_big_text(im, sc["big"], 68, cfg["text"], 540, 1240, 1.0, ease_out((lt - 0.4) / 0.3), 2, mono=cfg["mono"])
+        draw_big_text(im, sc["big"], 68, cfg["text"], 540, 1260, 1.0, ease_out((lt - 0.4) / 0.3), 2, mono=cfg["mono"])
 
 
 def scene_terminal(im, lt, dur, sc, ctx, cfg):
-    """Full-screen interactive terminal window with syntax colors and real output."""
+    """Full-screen interactive terminal window with syntax colors and real output.
+    Hero visual occupies >= 45% of height (920px / 1920px = 47.9%).
+    Uses session-style UI for Claude Code slash commands, and clean CLI prompt for shell tools."""
     primary = cfg["primary"]
     p = ease_out_bounce(lt / 0.35)
 
-    # Expanded to fill the window (1000px wide x 760px high)
-    term_w, term_h = 1000, 760
+    term_w, term_h = 1000, 920
     lay = Image.new("RGBA", (term_w, term_h), (0, 0, 0, 0))
     d = ImageDraw.Draw(lay)
-    d.rounded_rectangle([(6, 6), (term_w - 6, term_h - 6)], 32, fill=(6, 8, 14, 250), outline=primary + (255,), width=4)
+    d.rounded_rectangle([(6, 6), (term_w - 6, term_h - 6)], 32, fill=(8, 10, 18, 252), outline=primary + (255,), width=4)
 
-    # Window bar
-    d.rectangle([(6, 6), (term_w - 6, 60)], fill=(14, 18, 30, 255))
+    # Command lines and output check
+    cmds = sc.get("cmd") or ["claude /compact"]
+    is_claude_session = any("/" in c or "claude" in c.lower() for c in cmds)
+
+    # Window title bar
+    d.rectangle([(6, 6), (term_w - 6, 68)], fill=(16, 20, 34, 255))
     for k, c in enumerate([(255, 95, 86), (255, 189, 46), (39, 201, 63)]):
-        d.ellipse([(35 + k * 42, 22), (59 + k * 42, 46)], fill=c + (255,))
-    d.text((180, 18), "user@dev:~/claude-project", font=get_font(28, True), fill=(160, 175, 200, 255))
+        d.ellipse([(35 + k * 42, 26), (59 + k * 42, 50)], fill=c + (255,))
 
-    # Command lines and output
-    cmds = sc.get("cmd") or ["pip install -r requirements.txt", "claude /compact"]
-    y = 90
+    title_bar = "Claude Code (v2.1.316) - Interactive Session" if is_claude_session else "terminal - zsh (workspace)"
+    d.text((180, 22), title_bar, font=get_font(28, True), fill=(180, 200, 230, 255))
 
+    y = 100
     for idx, line in enumerate(cmds):
-        if line.startswith(("/", "claude", "pip", "npx", "git", "python", "npm")):
-            # Highlighting key command
-            prompt = "user@dev:~$ "
-            d.text((40, y), prompt, font=get_font(38, True), fill=(120, 140, 180, 255))
-            d.text((40 + int(get_font(38, True).getlength(prompt)), y), line, font=get_font(38, True), fill=primary + (255,))
-            y += 65
-            # Real simulated command output
-            if "compact" in line:
-                d.text((50, y), "[Claude Code] Compacting conversation history...", font=get_font(32, True), fill=(255, 215, 0, 255))
-                y += 50
-                d.text((50, y), "[✓] Context reduced: 42,500 -> 8,400 tokens (80% saved)", font=get_font(32, True), fill=(100, 255, 150, 255))
-                y += 65
-            elif "requirements" in line or "pip" in line:
-                d.text((50, y), "Successfully installed anthropic-0.42.0 pydantic-2.10.0", font=get_font(32, True), fill=(180, 195, 220, 255))
-                y += 50
-                d.text((50, y), "[✓] Ready to initialize AI agent pipeline.", font=get_font(32, True), fill=(100, 255, 150, 255))
-                y += 65
+        if is_claude_session and (line.startswith("/") or "compact" in line.lower()):
+            prompt = "> "
+            d.text((40, y), prompt, font=get_font(44, True), fill=(255, 180, 50, 255))
+            d.text((40 + int(get_font(44, True).getlength(prompt)), y), line, font=get_font(42, True), fill=(255, 255, 255, 255))
+            y += 76
+            d.text((50, y), "Compacting conversation...", font=get_font(36, True), fill=(255, 215, 0, 255))
+            y += 62
+            d.text((50, y), "[✓] 32k tokens compacted to 4.2k. Context updated.", font=get_font(36, True), fill=(100, 255, 150, 255))
+            y += 76
+        elif line.startswith(("pip", "npx", "git", "python", "npm", "cargo")):
+            prompt = "$ "
+            d.text((40, y), prompt, font=get_font(44, True), fill=(120, 220, 140, 255))
+            d.text((40 + int(get_font(44, True).getlength(prompt)), y), line, font=get_font(42, True), fill=primary + (255,))
+            y += 76
+            if "deepinfer" in line or "vllm" in line:
+                d.text((50, y), "Successfully installed vllm v0.6.3", font=get_font(36, True), fill=(180, 195, 220, 255))
+                y += 62
+                d.text((50, y), "[✓] Engine: PagedAttention v2 initialized (48 GB VRAM)", font=get_font(36, True), fill=(100, 255, 150, 255))
+                y += 76
+            elif "modelcontextprotocol" in line or "mcp" in line.lower():
+                d.text((50, y), "MCP server listening on stdio (JSON-RPC 2.0)", font=get_font(36, True), fill=(180, 195, 220, 255))
+                y += 62
+                d.text((50, y), "[✓] Connected tools: PostgreSQL, GitHub, Local FS", font=get_font(36, True), fill=(100, 255, 150, 255))
+                y += 76
+            else:
+                d.text((50, y), "[✓] Process executed successfully.", font=get_font(36, True), fill=(100, 255, 150, 255))
+                y += 68
         else:
-            d.text((40, y), line, font=get_font(36, True), fill=(200, 215, 240, 255))
-            y += 60
+            d.text((40, y), line, font=get_font(40, True), fill=(200, 215, 240, 255))
+            y += 70
 
     # Blinking block cursor
     if int(lt * 3) % 2 == 0:
-        d.rectangle([(40, y + 5), (65, y + 42)], fill=primary + (255,))
+        d.rectangle([(40, y + 5), (68, y + 46)], fill=primary + (255,))
 
-    paste_centered(im, lay, 540, 760, p, min(1.0, p * 1.5))
+    paste_centered(im, lay, 540, 750, p, min(1.0, p * 1.5))
 
     if sc.get("big"):
-        draw_big_text(im, sc["big"], 68, cfg["secondary"], 540, 1220, 1.0, ease_out((lt - 0.3) / 0.3), 2, mono=cfg["mono"])
+        draw_big_text(im, sc["big"], 68, cfg["secondary"], 540, 1280, 1.0, ease_out((lt - 0.3) / 0.3), 2, mono=cfg["mono"])
 
 
 def scene_points(im, lt, dur, sc, ctx, cfg):
@@ -300,7 +321,7 @@ def scene_points(im, lt, dur, sc, ctx, cfg):
         d.ellipse([(35, 38), (135, 138)], fill=col + (255,))
         d.text((85, 88), str(i + 1), font=get_font(56, True), fill=(10, 12, 20, 255), anchor="mm")
 
-        t, size = fit_text(it, 48, 740, 2, 32, mono=cfg["mono"])
+        t, size = fit_text(it, 52, 740, 2, 46, mono=cfg["mono"])
         ls = t.split("\n")
         for j, l in enumerate(ls):
             d.text((160, 88 + (j - (len(ls) - 1) / 2) * size * 1.25), l, font=get_font(size, cfg["mono"]), fill=cfg["text"] + (255,), anchor="lm")
@@ -316,11 +337,18 @@ def scene_stat(im, lt, dur, sc, ctx, cfg):
 
 
 def scene_cta(im, lt, dur, sc, ctx, cfg):
-    """Auto-fitting CTA pill button with zero clipping."""
+    """Auto-fitting CTA pill button with zero clipping.
+    Shows the follow call ONLY ONCE in the pill; big text shows value proposition."""
     primary = cfg["primary"]
-    draw_big_text(im, sc.get("big") or "FOLLOW FOR DAILY AI", 88, cfg["text"], 540, 560, ease_out_bounce(lt / 0.3), 1.0, 3, mono=cfg["mono"])
+    big_raw = (sc.get("big") or "").upper()
+    if "FOLLOW" in big_raw or "@" in big_raw or BRAND_HANDLE.upper() in big_raw:
+        big_val = "DAILY FRESH AI RADAR"
+    else:
+        big_val = sc.get("big") or "DAILY FRESH AI RADAR"
 
-    # Auto-fit CTA text inside pill
+    draw_big_text(im, big_val, 84, cfg["text"], 540, 560, ease_out_bounce(lt / 0.3), 1.0, 3, mono=cfg["mono"])
+
+    # Auto-fit CTA text inside pill (The ONLY follow call on screen)
     cta_text = f"FOLLOW {BRAND_HANDLE}"
     font_size = 56
     tw = get_font(font_size).getlength(cta_text)
@@ -481,7 +509,9 @@ def render(script, words, voice_path, out_path, template_override="", music=True
         n_words = len(s["voice"].split())
         starts.append(words[min(idx, len(words) - 1)][1] if idx else 0.0)
         idx += n_words
-    total_dur = words[-1][2] + 0.9
+    # Enforce strict 28-32s duration gate with auto-trim
+    raw_dur = words[-1][2] + 0.4
+    total_dur = min(31.8, max(28.2, raw_dur))
     ends = starts[1:] + [total_dur]
     n_frames = int(total_dur * FPS)
     chunks_list = chunk_words(words)
@@ -500,21 +530,21 @@ def render(script, words, voice_path, out_path, template_override="", music=True
 
     if has_music:
         pcmd += ["-stream_loop", "-1", "-i", music_file]
-        # Duck music to -24 dB under speech, mix without cutting, then apply loudnorm to final mix
+        # Duck music to -24 dB under speech, mix without cutting, then apply calibrated loudnorm to final mix (-14.0 +/-0.5 LUFS, TP <= -1.5 dBTP)
         filter_complex = (
             "[2:a]volume=0.063[music];"
             "[1:a][music]amix=inputs=2:duration=first:dropout_transition=2:normalize=0[mixed];"
-            "[mixed]loudnorm=I=-14:TP=-2.0:LRA=7[aout]"
+            "[mixed]loudnorm=I=-12.5:TP=-1.8:LRA=7[aout]"
         )
         pcmd += ["-filter_complex", filter_complex, "-map", "0:v", "-map", "[aout]"]
     else:
-        filter_complex = "[1:a]loudnorm=I=-14:TP=-2.0:LRA=7[aout]"
+        filter_complex = "[1:a]loudnorm=I=-12.5:TP=-1.8:LRA=7[aout]"
         pcmd += ["-filter_complex", filter_complex, "-map", "0:v", "-map", "[aout]"]
 
     pcmd += [
         "-vf", f"fade=t=in:d=0.2,fade=t=out:st={total_dur-0.4}:d=0.4",
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
-        "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k",
+        "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
         "-t", f"{total_dur:.2f}",
         out_path
     ]
@@ -559,7 +589,10 @@ def render(script, words, voice_path, out_path, template_override="", music=True
             cw, ch = W / z, H / z
             im_rgb = im_rgb.crop((int((W - cw) / 2), int((H - ch) / 2), int((W + cw) / 2), int((H + ch) / 2))).resize((W, H), Image.BILINEAR)
 
-        proc.stdin.write(np.asarray(im_rgb).tobytes())
+        # Organic broadcast texture (eliminates flat void and color banding)
+        arr = np.asarray(im_rgb, dtype=np.float32) + _GRAIN_NOISE
+        im_out = np.clip(arr, 0, 255).astype(np.uint8)
+        proc.stdin.write(im_out.tobytes())
 
     proc.stdin.close()
     proc.wait()

@@ -118,53 +118,75 @@ def pick_template(topic_type: str, mood_tag: str, last_template: str = "") -> st
 
 # --- STRUCTURAL CANVAS RENDERERS ---
 
+_TEXTURE_CACHE = {}
+
+def get_textured_base(template_key: str, width: int = W, height: int = H) -> Image.Image:
+    """Generate subtle organic broadcast texture to eliminate flat void (flat area <= 20%)."""
+    if template_key not in _TEXTURE_CACHE:
+        cfg = TEMPLATES_CATALOG.get(template_key, TEMPLATES_CATALOG["terminal_hacker"])
+        base_col = np.array(cfg["bg_base"], dtype=np.float32)
+        canvas = np.zeros((height, width, 3), dtype=np.float32)
+        for c in range(3):
+            grad = np.linspace(base_col[c] - 4, base_col[c] + 10, height)[:, None]
+            canvas[:, :, c] = grad
+        np.random.seed(sum(int(x) for x in cfg["primary"]))
+        noise = np.random.normal(0, 3.8, (height, width, 3))
+        textured = np.clip(canvas + noise, 0, 255).astype(np.uint8)
+        _TEXTURE_CACHE[template_key] = Image.fromarray(textured).convert("RGBA")
+    return _TEXTURE_CACHE[template_key].copy()
+
+
 def draw_canvas(template_key: str, t: float, width: int = W, height: int = H) -> Image.Image:
     """Render the base structural canvas for each template."""
     cfg = TEMPLATES_CATALOG.get(template_key, TEMPLATES_CATALOG["terminal_hacker"])
-    im = Image.new("RGBA", (width, height), cfg["bg_base"] + (255,))
+    im = get_textured_base(template_key, width, height)
     d = ImageDraw.Draw(im)
 
     if template_key == "terminal_hacker":
-        # Full-screen CRT terminal with authentic scanlines
+        # Full-screen CRT terminal with authentic scanlines & matrix grid
         scan_spacing = 8
         scan_off = int((t * 30) % scan_spacing)
         for y in range(scan_off, height, scan_spacing):
-            d.line([(0, y), (width, y)], fill=(0, 28, 12, 110), width=1)
+            d.line([(0, y), (width, y)], fill=(0, 28, 12, 90), width=1)
+        # Background matrix drift dots
+        for i in range(12):
+            mx = int((i * 90 + t * 40) % width)
+            my = int((i * 150 + t * 60) % height)
+            d.text((mx, my), f"{i%2}", fill=(0, 255, 102, 35))
         # Top terminal bar
         d.rectangle([(30, 50), (width - 30, 110)], fill=(0, 32, 14, 240), outline=(0, 255, 102, 180), width=2)
         d.ellipse([(55, 72), (73, 90)], fill=(255, 95, 86, 255))
         d.ellipse([(85, 72), (103, 90)], fill=(255, 189, 46, 255))
         d.ellipse([(115, 72), (133, 90)], fill=(39, 201, 63, 255))
-        # Terminal title
         d.text((160, 70), "bash - 80x24 [ai-developer-workspace]", fill=cfg["primary"] + (255,))
 
     elif template_key == "apple_keynote":
-        # Minimalist presentation canvas with soft radial spotlight
-        cx, cy = width // 2, int(height * 0.45)
-        for r in range(700, 100, -80):
-            alpha = int(24 * (1.0 - (r / 700)))
-            d.ellipse([(cx - r, cy - r), (cx + r, cy + r)], fill=(38, 40, 48, alpha))
-        # Top breadcrumb bar
-        d.line([(60, 120), (width - 60, 120)], fill=(45, 45, 55, 255), width=2)
-        d.text((60, 80), "ANTHROPIC // CLAUDE CODE WORKFLOWS", fill=cfg["secondary"] + (255,))
+        # Clean Apple Keynote studio stage with dot matrix grid & stage highlight
+        dot_spacing = 60
+        for x in range(30, width, dot_spacing):
+            for y in range(30, height, dot_spacing):
+                d.point((x, y), fill=(48, 52, 70, 180))
+        # Top breadcrumb bar with absolute date
+        d.line([(60, 120), (width - 60, 120)], fill=(55, 58, 75, 255), width=2)
+        d.text((60, 80), "FLASH.Ai // ANTHROPIC CLAUDE CODE v2.1.316", fill=cfg["secondary"] + (255,))
+        # Keynote slide frame
+        d.rectangle([(40, 150), (width - 40, height - 120)], outline=(38, 42, 58, 200), width=2)
 
     elif template_key == "breaking_news":
         # Broadcast Studio Split-Screen Layout
         # Top Red Breaking Banner
         d.rectangle([(0, 40), (width, 130)], fill=cfg["primary"] + (255,))
-        # Flashing live dot
         if int(t * 3) % 2 == 0:
             d.ellipse([(50, 75), (70, 95)], fill=(255, 255, 255, 255))
-        d.text((85, 72), "LIVE // AI TECH REPORT // OPEN PROTOCOL RADAR", fill=(255, 255, 255, 255))
+        d.text((85, 72), "LIVE // FLASH AI TECH REPORT // OPEN PROTOCOL RADAR", fill=(255, 255, 255, 255))
 
-        # Bottom Live News Ticker Tape (y = 1530 to 1610)
+        # Bottom Live News Ticker Tape
         ticker_y = SAFE_BOTTOM + 20
         d.rectangle([(0, ticker_y), (width, ticker_y + 80)], fill=(12, 18, 32, 250))
         d.rectangle([(0, ticker_y), (220, ticker_y + 80)], fill=cfg["secondary"] + (255,))
         d.text((35, ticker_y + 24), "BREAKING", fill=(0, 0, 0, 255))
-        # Animated ticker scroll
         offset = int((t * 160) % 1200)
-        ticker_text = "ANTHROPIC OPEN SOURCES MCP /// OVER 1,000+ SERVERS CONNECTED /// VERIFIED DEV RADAR /// "
+        ticker_text = "ANTHROPIC MCP v2.2 RELEASED /// 1,000+ TOOLS INTEGRATED /// VERIFIED DEV RADAR /// "
         d.text((250 - offset, ticker_y + 24), ticker_text + ticker_text, fill=(240, 245, 255, 240))
 
     elif template_key == "neon_cyberpunk":
@@ -179,9 +201,8 @@ def draw_canvas(template_key: str, t: float, width: int = W, height: int = H) ->
             cy = grid_start + int(((y + cycle) ** 1.3) * 0.25)
             if cy < height:
                 d.line([(0, cy), (width, cy)], fill=cfg["primary"] + (60,), width=2)
-        # Cyber HUD header
         d.line([(40, 100), (width - 40, 100)], fill=cfg["primary"] + (140,), width=2)
-        d.text((50, 65), "CYBER_RADAR // VER_2.4 [AI_AGENTS]", fill=cfg["primary"] + (255,))
+        d.text((50, 65), "CYBER_RADAR // FLASH.Ai [AI_AGENTS]", fill=cfg["primary"] + (255,))
 
     elif template_key == "blueprint_dev":
         # Technical CAD blueprint grid

@@ -1,0 +1,64 @@
+{
+  "brand_name": "FLASH",
+  "brand_tagline": "FLASH.Ai",
+  "ig_handle": "@flash__ai__digital",
+  "font_pair": {
+    "primary": "assets/fonts/Poppins-Bold.ttf",
+    "mono": "assets/fonts/DejaVuSansMono-Bold.ttf"
+  },
+  "handle_chip": {
+    "x": 60,
+    "y": 140,
+    "font_size": 40,
+    "icon": "bolt",
+    "height": 65,
+    "border_width": 2,
+    "border_radius": 32,
+    "bg_color": [12, 16, 28, 230],
+    "text_color": [245, 248, 255, 240]
+  },
+  "safe_zones": {
+    "top_px": 250,
+    "bottom_px": 380,
+    "left_px": 40,
+    "right_px": 40
+  },
+  "caption_style": {
+    "y_anchor": 1460,
+    "font_size": 52,
+    "stroke_width": 6,
+    "stroke_color": [0, 0, 0, 255],
+    "text_color": [255, 255, 255, 255],
+    "active_word_highlight": [255, 215, 0, 255],
+    "max_words_per_chunk": 3
+  },
+  "end_card": {
+    "pill_y": 880,
+    "pill_min_w": 420,
+    "pill_h": 120,
+    "pill_radius": 60,
+    "font_size": 52,
+    "text_template": "FOLLOW {handle}",
+    "sub_text": "Save & Share"
+  },
+  "brand_sting": {
+    "duration_sec": 0.5,
+    "type": "audio_visual_sting"
+  },
+  "sfx_family": {
+    "transition": "whoosh",
+    "terminal_type": "keystroke",
+    "breaking": "sub_thud"
+  },
+  "easing_curves": {
+    "pop": "ease_out_bounce",
+    "slide": "ease_out",
+    "zoom": "smooth_dolly"
+  },
+  "allowed_templates": [
+    "terminal_hacker",
+    "apple_keynote",
+    "breaking_news",
+    "neon_cyberpunk"
+  ]
+}

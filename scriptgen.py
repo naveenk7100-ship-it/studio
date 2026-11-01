@@ -32,16 +32,18 @@ Write a high-retention 25-35 second vertical video script in TENGLISH.
 CRITICAL RULES:
 1. VOICE LANGUAGE (TENGLISH): Conversational romanized Telugu mixed with English (friendly youtuber tone, e.g. "Mama, ee repo chusthe shock avthav!").
 2. STRICT SCRIPT BAN: NEVER use Telugu script Unicode characters (అ, ఆ, etc.) anywhere. ONLY use Latin letters (English alphabet).
-3. ON-SCREEN TEXT: Short, punchy English in UPPERCASE (max 5-6 words for "big", optional 2-3 words for "sub").
-4. FACTUAL GROUNDING: Rely strictly on the provided repository facts or verified search facts. Every command in "cmd" must literally exist in the verified commands list or README.
-5. RETENTION DYNAMICS:
+3. BAN RELATIVE TIME WORDS: NEVER use relative time words ("yesterday", "today", "this week", "last week", "tomorrow"). ALWAYS use absolute dates (e.g., "31 Oct 2026") or release versions ("v2.1.316").
+4. ON-SCREEN TEXT: Short, punchy English in UPPERCASE (max 5-6 words for "big", optional 2-3 words for "sub"). Never repeat the caption as a label.
+5. FACTUAL GROUNDING: Rely strictly on the provided repository facts or verified search facts. Every command in "cmd" must literally exist in the verified commands list or README.
+6. RETENTION & LENGTH:
    - Hook in the first 1.5 seconds (< 10 spoken words).
    - Visual/scene change every 2-3 seconds.
-   - Word count: EXACTLY 70 to 95 spoken words in total.
+   - Word count: EXACTLY 65 to 80 spoken words in total (strictly targeting 28-32 seconds).
+   - Follow Call: Appears ONLY ONCE in the final CTA pill. Do not repeat "Follow for Daily Insights" elsewhere.
    - Ending: Seamless loop back to the hook or clear CTA.
-6. SCENE TYPES: hook, repo, terminal, points, stat, cta.
-7. MOOD TAGS: "hype", "futuristic", "chill-focus", "dark-tech", "inspiring", "news-urgent", "playful".
-8. ENERGY: 1 to 5.
+7. SCENE TYPES: hook, repo, terminal, points, stat, cta.
+8. MOOD TAGS: "hype", "futuristic", "chill-focus", "dark-tech", "inspiring", "news-urgent", "playful".
+9. ENERGY: 1 to 5.
 
 OUTPUT FORMAT: Strict valid JSON only, no markdown ticks, no preamble:
 {
@@ -49,7 +51,7 @@ OUTPUT FORMAT: Strict valid JSON only, no markdown ticks, no preamble:
   "title": "Catchy YouTube/Reels title under 80 chars",
   "hook": "Opening hook sentence",
   "caption": "Engaging 2-line caption with 6-8 relevant hashtags",
-  "hashtags": ["#AI", "#TeluguTech", "#Coding", "#OpenSource"],
+  "hashtags": ["#FLASH", "#FLASHAI", "#AI", "#Tech", "#Coding"],
   "tags": ["AI", "Claude Code", "GitHub"],
   "mood": "hype",
   "energy": 4,

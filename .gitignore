@@ -12,6 +12,7 @@ out/
 runs/
 scratch/
 queue/
+cache/
 *.mp4
 *.mp3
 *.wav

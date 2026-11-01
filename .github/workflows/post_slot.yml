@@ -1,0 +1,82 @@
+name: Post Slot (12:30 PM & 8:30 PM IST)
+
+on:
+  schedule:
+    # 12:30 PM IST (07:00 UTC) -> Slot 1
+    - cron: "0 7 * * *"
+    # 8:30 PM IST (15:00 UTC) -> Slot 2
+    - cron: "0 15 * * *"
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: "Slot number (1 or 2)"
+        default: "1"
+        required: true
+      force_post:
+        description: "Force publish even if dry-run (true/false)"
+        default: "false"
+        required: false
+
+concurrency:
+  group: post-slot-execution
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish-slot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install System Dependencies (FFmpeg)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Sync Approvals & Publish Slot
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRAND_NAME: "FLASH"
+          BRAND_TAGLINE: "FLASH.Ai"
+        run: |
+          echo "[SLOT EXECUTION] Checking Telegram human approvals..."
+          python -c "
+          import queue_manager, config
+          queue_manager.sync_telegram_approvals()
+          item = queue_manager.get_next_publishable_item()
+          if not item:
+              print('[GATE] No human-approved videos found in queue. Aborting post for this slot.')
+          else:
+              print(f'[GATE APPROVED] Found approved item {item[\"id\"]} for publication.')
+          "
+          # Run live post if approved item is available
+          python main.py --live
+
+      - name: Commit & Push Updated History and Queue Status
+        run: |
+          git config user.name "FLASH Studio Bot"
+          git config user.email "bot@flash-ai.digital"
+          git add queue/ history.json
+          git diff --cached --quiet || (git commit -m "chore(publish): slot published and archived [skip ci]" && git push)

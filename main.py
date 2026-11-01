@@ -166,10 +166,13 @@ def run_pipeline(slot: int = 1, dry_run: bool = True, preview: bool = False, tem
 
 
 def publish_next_from_queue():
-    """Publish the next approved item from the queue."""
-    item = queue_manager.get_next_ready_item()
+    """Publish the next approved item from the queue, enforcing human approval if configured."""
+    item = queue_manager.get_next_publishable_item()
     if not item:
-        print("[PUBLISH] Queue is currently empty. Nothing to publish.")
+        if config.APPROVAL_REQUIRED:
+            print("[PUBLISH NOTICE] Slot skipped: No human-approved videos in queue (APPROVAL_REQUIRED=True).")
+        else:
+            print("[PUBLISH] Queue is currently empty. Nothing to publish.")
         return
 
     print(f"[PUBLISH] Publishing next approved video: {item['title']} ({item['id']})...")

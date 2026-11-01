@@ -32,7 +32,7 @@ PROOF_VIDEOS = [
         "bpm": 120,
         "script": {
             "title": "Anthropic Claude Quickstarts Repo (19K Stars)",
-            "caption": "Official Anthropic repo with ready-to-run AI agents in Python.\nFollow for verified AI tech! #Claude #Python #OpenSource #TeluguTech",
+            "caption": "Official Anthropic repo with ready-to-run AI agents in Python.\nFollow for verified AI tech! #Claude #Python #OpenSource #FLASH",
             "tags": ["Claude", "Anthropic", "Python", "AI Agents"],
             "mood": "dark-tech",
             "repo": {
@@ -108,8 +108,8 @@ PROOF_VIDEOS = [
         "bpm": 92,
         "script": {
             "title": "Claude Code Secret: /compact Summarizes Context",
-            "caption": "Save context tokens inside Claude Code with the /compact slash command.\nFollow for daily dev tips! #ClaudeCode #Anthropic #TeluguTech #Coding",
-            "tags": ["Claude Code", "Anthropic", "Context Window", "Telugu Tech"],
+            "caption": "Save context tokens inside Claude Code with the /compact slash command.\nFollow for daily dev tips! #ClaudeCode #Anthropic #FLASH #Coding",
+            "tags": ["Claude Code", "Anthropic", "Context Window", "FLASH Tech"],
             "mood": "chill-focus",
             "sources": [
                 {
@@ -173,8 +173,8 @@ PROOF_VIDEOS = [
         "bpm": 135,
         "script": {
             "title": "Breaking: Model Context Protocol (MCP) Open Standard",
-            "caption": "Anthropic open sources Model Context Protocol to connect AI to databases and tools.\nFollow for daily AI news! #MCP #OpenStandard #Anthropic #TeluguTech",
-            "tags": ["MCP", "Model Context Protocol", "AI News", "Telugu Tech"],
+            "caption": "Anthropic open sources Model Context Protocol to connect AI to databases and tools.\nFollow for daily AI news! #MCP #OpenStandard #Anthropic #FLASH",
+            "tags": ["MCP", "Model Context Protocol", "AI News", "FLASH Tech"],
             "mood": "news-urgent",
             "sources": [
                 {

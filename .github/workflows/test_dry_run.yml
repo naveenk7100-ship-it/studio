@@ -1,0 +1,73 @@
+name: CI Pipeline Dry-Run & Quality Gates Verification
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install System Dependencies (FFmpeg & Fonts)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Cache Playwright Chromium
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('requirements.txt') }}
+
+      - name: Install Python Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: |
+          python -m playwright install --with-deps chromium
+
+      - name: Pre-Commit Secret Scanner Check
+        run: |
+          python scripts/scan_secrets.py
+
+      - name: Run Legacy Layout Failure Proof Test
+        run: |
+          python scripts/test_legacy_layout_fail.py
+
+      - name: Run Voice Metrics Calculation Test
+        run: |
+          python -c "
+          from scripts.analyze_voice_match import BUNTY_REFERENCE
+          print('Bunty Reference Benchmarks:', BUNTY_REFERENCE)
+          "
+
+      - name: Run Fast Pipeline Preview (540x960 @ 15fps)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NARAROUTER_API_KEY: ${{ secrets.NARAROUTER_API_KEY }}
+          BRAND_NAME: "FLASH"
+          BRAND_TAGLINE: "FLASH.Ai"
+        run: |
+          python main.py --preview --slot 1

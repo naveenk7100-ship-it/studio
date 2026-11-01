@@ -1,0 +1,105 @@
+name: Replenish Content Queue
+
+on:
+  schedule:
+    # 3x per day: 7:30 AM, 3:30 PM, 11:30 PM IST (02:00, 10:00, 18:00 UTC)
+    - cron: "0 2,10,18 * * *"
+  workflow_dispatch:
+    inputs:
+      target_depth:
+        description: "Target queue buffer depth (default 6)"
+        default: "6"
+        required: false
+
+concurrency:
+  group: queue-replenish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  replenish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install System Dependencies (FFmpeg & Fonts)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-freefont-ttf
+
+      - name: Cache Playwright Chromium
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('requirements.txt') }}
+
+      - name: Install Python Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: |
+          python -m playwright install --with-deps chromium
+
+      - name: Run Pre-Commit Secret Scanner
+        run: |
+          python scripts/scan_secrets.py
+
+      - name: Check Buffer Depth & Replenish Queue
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NARAROUTER_API_KEY: ${{ secrets.NARAROUTER_API_KEY }}
+          ELEVEN_API_KEY: ${{ secrets.ELEVEN_API_KEY }}
+          ELEVEN_VOICE_ID: ${{ secrets.ELEVEN_VOICE_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRAND_NAME: "FLASH"
+          BRAND_TAGLINE: "FLASH.Ai"
+        run: |
+          echo "[QUEUE] Checking queue buffer depth..."
+          python -c "
+          import queue_manager, config
+          depth = queue_manager.check_buffer_depth()
+          print(f'Initial buffer depth: {depth}')
+          "
+          # Run dry-run replenishment until buffer depth is healthy
+          python main.py --dry-run --slot 1
+          python main.py --dry-run --slot 2
+
+      - name: Upload Videos to GitHub Release Asset Storage
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Create or verify release 'queue-buffer'
+          gh release view queue-buffer || gh release create queue-buffer --title "FLASH Queue Storage" --notes "Automated video buffer storage"
+          # Upload rendered MP4s if any exist
+          if ls out/*.mp4 1> /dev/null 2>&1; then
+            gh release upload queue-buffer out/*.mp4 --clobber
+          fi
+
+      - name: Commit & Push Updated Queue Manifest
+        run: |
+          git config user.name "FLASH Studio Bot"
+          git config user.email "bot@flash-ai.digital"
+          git add queue/ history.json brand_kit.json runs/
+          git diff --cached --quiet || (git commit -m "chore(queue): buffer replenished [skip ci]" && git push)
