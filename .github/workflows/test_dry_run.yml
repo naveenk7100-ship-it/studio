@@ -58,8 +58,8 @@ jobs:
       - name: Run Voice Metrics Calculation Test
         run: |
           python -c "
-          from scripts.analyze_voice_match import BUNTY_REFERENCE
-          print('Bunty Reference Benchmarks:', BUNTY_REFERENCE)
+          import config
+          print('Bunty Reference Benchmarks:', config.BUNTY_REFERENCE)
           "
 
       - name: Run Fast Pipeline Preview (540x960 @ 15fps)
