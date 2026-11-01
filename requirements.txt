@@ -5,3 +5,10 @@ edge-tts
 google-api-python-client
 google-auth
 google-auth-oauthlib
+python-dotenv
+soundfile
+scipy
+opencv-python-headless
+playwright
+imageio-ffmpeg
+faster-whisper
