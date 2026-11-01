@@ -1,0 +1,86 @@
+[
+  {
+    "track_id": "hype_01",
+    "title": "CyberPulse: Hype",
+    "mood": "hype",
+    "energy": 5,
+    "bpm": 130,
+    "duration": 45.0,
+    "file": "assets/music/hype/hype_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  },
+  {
+    "track_id": "futuristic_01",
+    "title": "CyberPulse: Futuristic",
+    "mood": "futuristic",
+    "energy": 4,
+    "bpm": 124,
+    "duration": 45.0,
+    "file": "assets/music/futuristic/futuristic_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  },
+  {
+    "track_id": "chill-focus_01",
+    "title": "CyberPulse: Chill-focus",
+    "mood": "chill-focus",
+    "energy": 2,
+    "bpm": 92,
+    "duration": 45.0,
+    "file": "assets/music/chill-focus/chill-focus_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  },
+  {
+    "track_id": "dark-tech_01",
+    "title": "CyberPulse: Dark-tech",
+    "mood": "dark-tech",
+    "energy": 4,
+    "bpm": 120,
+    "duration": 45.0,
+    "file": "assets/music/dark-tech/dark-tech_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  },
+  {
+    "track_id": "inspiring_01",
+    "title": "CyberPulse: Inspiring",
+    "mood": "inspiring",
+    "energy": 4,
+    "bpm": 118,
+    "duration": 45.0,
+    "file": "assets/music/inspiring/inspiring_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  },
+  {
+    "track_id": "news-urgent_01",
+    "title": "CyberPulse: News-urgent",
+    "mood": "news-urgent",
+    "energy": 5,
+    "bpm": 135,
+    "duration": 45.0,
+    "file": "assets/music/news-urgent/news-urgent_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  },
+  {
+    "track_id": "playful_01",
+    "title": "CyberPulse: Playful",
+    "mood": "playful",
+    "energy": 3,
+    "bpm": 110,
+    "duration": 45.0,
+    "file": "assets/music/playful/playful_pulse.mp3",
+    "license": "Royalty-Free / Generated Studio CC0",
+    "source_url": "studio://internal-synth",
+    "attribution": "Music: AI Auto-Reels Studio"
+  }
+]
