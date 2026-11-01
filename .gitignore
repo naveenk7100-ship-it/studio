@@ -10,6 +10,8 @@ tokens/
 # Output directories & media files
 out/
 runs/
+scratch/
+queue/
 *.mp4
 *.mp3
 *.wav

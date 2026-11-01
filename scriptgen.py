@@ -167,8 +167,43 @@ def _call_openrouter(prompt: str) -> str:
     return content
 
 
+NARAROUTER_MODEL = os.getenv("NARAROUTER_MODEL", "meta-llama/llama-3.3-70b-instruct")
+
+
+def _call_nararouter(prompt: str) -> str:
+    """Third fallback: NaraRouter API."""
+    key = os.getenv("NARAROUTER_API_KEY", "").strip()
+    if not key:
+        raise ValueError("NARAROUTER_API_KEY is not set")
+
+    url = "https://api.nararouter.com/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": NARAROUTER_MODEL,
+        "messages": [
+            {"role": "system", "content": "You are a professional video script engine that outputs pure valid JSON."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.85,
+        "max_tokens": 3000
+    }
+
+    res = requests.post(url, headers=headers, json=payload, timeout=60)
+    if res.status_code != 200:
+        raise RuntimeError(f"NaraRouter error {res.status_code}: {res.text[:200]}")
+
+    data = res.json()
+    choice = data.get("choices", [{}])[0]
+    return choice.get("message", {}).get("content", "")
+
+
 def call_llm(prompt: str, grounded: bool = False) -> str:
-    """Robust LLM chain with automatic failover and exponential backoff."""
+    """Robust LLM chain with automatic failover and exponential backoff:
+    1. Gemini -> 2. OpenRouter -> 3. NaraRouter
+    """
     # 1. Attempt Gemini first
     if os.getenv("GEMINI_API_KEY"):
         for attempt in range(2):
@@ -189,7 +224,17 @@ def call_llm(prompt: str, grounded: bool = False) -> str:
                 print(f"[LLM FAILOVER] OpenRouter attempt {attempt+1} failed: {e}")
                 time.sleep(2 ** attempt)
 
-    raise RuntimeError("All LLM providers failed in failover chain")
+    # 3. Failover to NaraRouter
+    if os.getenv("NARAROUTER_API_KEY"):
+        for attempt in range(2):
+            try:
+                print(f"[LLM 3rd FALLBACK] Querying NaraRouter ({NARAROUTER_MODEL}, attempt {attempt+1})...")
+                return _call_nararouter(prompt)
+            except Exception as e:
+                print(f"[LLM 3rd FALLBACK] NaraRouter attempt {attempt+1} failed: {e}")
+                time.sleep(2 ** attempt)
+
+    raise RuntimeError("All LLM providers (Gemini, OpenRouter, NaraRouter) failed in failover chain")
 
 
 def _clean_json_response(raw_text: str) -> dict:

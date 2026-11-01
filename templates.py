@@ -1,34 +1,51 @@
-"""AI Auto-Reels Studio: 8-Template Motion Engine & Styling System.
+"""AI Auto-Reels Studio: 8 Structurally Distinct Motion Templates.
 
-Templates:
-1. terminal_hacker   - Green/Amber CRT, scanlines, monospace typing, retro terminal window
-2. neon_cyberpunk    - Perspective grid, cyan/magenta neon glow, glitch effects
-3. apple_keynote     - Ultra-clean minimal, soft radial spotlight, huge crisp modern type
-4. glassmorphism_ui  - Floating frosted-glass cards, gradient orbs, soft specular borders
-5. breaking_news     - Red urgent ticker banner, lower thirds, high-impact broadcast layout
-6. blueprint_dev     - Technical navy engineering grid, white architectural lines, blueprint docs
-7. bold_brutalist    - Stark high-contrast electric yellow & black, thick geometric blocks
-8. cinematic_dark    - Film grain, heavy vignette, cinemascope letterbox feel, golden hour accents
+Each template features custom:
+- Canvas Layouts (split-screen, full-screen terminal, keynote slide, broadcast TV, CAD blueprint)
+- Motion Language & Transitions (zoom punch, typewriter, slow dolly, glitch, spring)
+- Visual Elements (real screenshots, terminal output, lower thirds, tickers)
+- Caption Styling (safe-zone compliant, word-pop, highlighters)
+- CTA Designs (auto-fitting pills, ASCII buttons, broadcast banners)
 """
 import math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+import config
 
-W, H = 1080, 1920
+W, H = config.VIDEO_CONFIG["width"], config.VIDEO_CONFIG["height"]
 
-# Safe zone boundaries (in pixels)
-SAFE_TOP = 260
-SAFE_BOTTOM = 1500
+# Safe zone boundaries (in pixels) for Instagram Reels & YouTube Shorts
+SAFE_TOP = config.VIDEO_CONFIG["safe_zone_top"]
+SAFE_BOTTOM = H - config.VIDEO_CONFIG["safe_zone_bottom"]
+BRAND_HANDLE = config.IG_HANDLE
 
 TEMPLATES_CATALOG = {
     "terminal_hacker": {
         "name": "Terminal Hacker",
         "primary": (0, 255, 102),      # Phosphor Green
         "secondary": (255, 176, 0),    # Amber
-        "bg_base": (4, 10, 6),
+        "bg_base": (5, 10, 6),
         "text": (230, 255, 235),
         "mono": True,
         "music_mood": "dark-tech"
+    },
+    "apple_keynote": {
+        "name": "Apple-Keynote Minimal",
+        "primary": (255, 255, 255),    # Pure White
+        "secondary": (160, 160, 175),  # Space Gray
+        "bg_base": (15, 15, 18),
+        "text": (255, 255, 255),
+        "mono": False,
+        "music_mood": "chill-focus"
+    },
+    "breaking_news": {
+        "name": "Breaking News",
+        "primary": (235, 30, 50),      # Crimson Red
+        "secondary": (255, 215, 0),    # Warning Yellow
+        "bg_base": (8, 14, 28),
+        "text": (255, 255, 255),
+        "mono": False,
+        "music_mood": "news-urgent"
     },
     "neon_cyberpunk": {
         "name": "Neon Cyberpunk",
@@ -38,33 +55,6 @@ TEMPLATES_CATALOG = {
         "text": (255, 255, 255),
         "mono": False,
         "music_mood": "futuristic"
-    },
-    "apple_keynote": {
-        "name": "Apple-Keynote Minimal",
-        "primary": (255, 255, 255),    # Pure White
-        "secondary": (160, 160, 170),  # Space Gray
-        "bg_base": (14, 14, 18),
-        "text": (255, 255, 255),
-        "mono": False,
-        "music_mood": "chill-focus"
-    },
-    "glassmorphism_ui": {
-        "name": "Glassmorphism UI",
-        "primary": (120, 180, 255),    # Frost Blue
-        "secondary": (220, 130, 255),  # Soft Purple
-        "bg_base": (12, 16, 35),
-        "text": (255, 255, 255),
-        "mono": False,
-        "music_mood": "inspiring"
-    },
-    "breaking_news": {
-        "name": "Breaking News",
-        "primary": (255, 30, 60),      # Crimson Red
-        "secondary": (255, 215, 0),    # Warning Yellow
-        "bg_base": (8, 14, 28),
-        "text": (255, 255, 255),
-        "mono": False,
-        "music_mood": "news-urgent"
     },
     "blueprint_dev": {
         "name": "Blueprint / Dev Docs",
@@ -78,11 +68,20 @@ TEMPLATES_CATALOG = {
     "bold_brutalist": {
         "name": "Bold Brutalist Typography",
         "primary": (255, 225, 0),      # Electric Yellow
-        "secondary": (255, 255, 255),  # Paper White
+        "secondary": (255, 255, 255),  # White
         "bg_base": (12, 12, 12),       # Pitch Black
         "text": (255, 255, 255),
         "mono": False,
         "music_mood": "hype"
+    },
+    "glassmorphism_ui": {
+        "name": "Glassmorphism UI",
+        "primary": (120, 180, 255),    # Frost Blue
+        "secondary": (220, 130, 255),  # Soft Purple
+        "bg_base": (12, 16, 35),
+        "text": (255, 255, 255),
+        "mono": False,
+        "music_mood": "inspiring"
     },
     "cinematic_dark": {
         "name": "Cinematic Dark",
@@ -97,133 +96,128 @@ TEMPLATES_CATALOG = {
 
 
 def pick_template(topic_type: str, mood_tag: str, last_template: str = "") -> str:
-    """Smart rotation & mood-based template selection logic.
-
-    Guarantees no consecutive repeat and picks visually fitting styles.
-    """
+    """Smart rotation & mood-based template selection. Guarantees no back-to-back repetition."""
     templates = list(TEMPLATES_CATALOG.keys())
-    # Filter out last used template
     eligible = [t for t in templates if t != last_template]
 
-    # Mood-based affinities
     mood_map = {
-        "hype": ["bold_brutalist", "neon_cyberpunk"],
-        "futuristic": ["neon_cyberpunk", "terminal_hacker"],
         "dark-tech": ["terminal_hacker", "cinematic_dark"],
-        "news-urgent": ["breaking_news", "bold_brutalist"],
         "chill-focus": ["apple_keynote", "blueprint_dev"],
+        "news-urgent": ["breaking_news", "bold_brutalist"],
+        "futuristic": ["neon_cyberpunk", "glassmorphism_ui"],
+        "hype": ["bold_brutalist", "neon_cyberpunk"],
         "inspiring": ["glassmorphism_ui", "apple_keynote"],
         "playful": ["bold_brutalist", "glassmorphism_ui"]
     }
 
-    preferred = mood_map.get(mood_tag, [])
-    for p in preferred:
+    for p in mood_map.get(mood_tag, []):
         if p in eligible:
             return p
-
-    # Fallback rotation
     return eligible[0]
 
 
-# --- PROCEDURAL BACKGROUND GENERATORS ---
+# --- STRUCTURAL CANVAS RENDERERS ---
 
-def draw_background(template_key: str, t: float, width: int = W, height: int = H) -> Image.Image:
-    """Render procedural background according to template theme."""
-    cfg = TEMPLATES_CATALOG.get(template_key, TEMPLATES_CATALOG["neon_cyberpunk"])
+def draw_canvas(template_key: str, t: float, width: int = W, height: int = H) -> Image.Image:
+    """Render the base structural canvas for each template."""
+    cfg = TEMPLATES_CATALOG.get(template_key, TEMPLATES_CATALOG["terminal_hacker"])
     im = Image.new("RGBA", (width, height), cfg["bg_base"] + (255,))
     d = ImageDraw.Draw(im)
 
     if template_key == "terminal_hacker":
-        # Green scanlines & CRT phosphor vignette
-        scanline_spacing = 8
-        scan_offset = int((t * 24) % scanline_spacing)
-        for y in range(scan_offset, height, scanline_spacing):
-            d.line([(0, y), (width, y)], fill=(0, 25, 10, 110), width=1)
-        # Terminal header bar
-        d.rectangle([(40, 60), (width - 40, 110)], fill=(0, 35, 15, 230))
-        d.text((60, 72), "[bash - 80x24 - AI_STUDIO_TERMINAL]", fill=cfg["primary"] + (255,))
-        d.line([(40, 110), (width - 40, 110)], fill=cfg["primary"] + (255,), width=2)
-
-    elif template_key == "neon_cyberpunk":
-        # Moving neon grid at bottom
-        grid_y_start = int(height * 0.65)
-        d.line([(0, grid_y_start), (width, grid_y_start)], fill=cfg["primary"] + (180,), width=3)
-        # Perspective vertical grid lines
-        horizon_x = width // 2
-        for x_step in range(-12, 13):
-            dest_x = horizon_x + x_step * 110
-            d.line([(horizon_x, grid_y_start), (dest_x, height)], fill=cfg["secondary"] + (80,), width=2)
-        # Horizontal moving lines
-        grid_cycle = (t * 80) % 60
-        for y_off in range(0, height - grid_y_start, 60):
-            curr_y = grid_y_start + int(((y_off + grid_cycle) ** 1.3) * 0.25)
-            if curr_y < height:
-                d.line([(0, curr_y), (width, curr_y)], fill=cfg["primary"] + (60,), width=2)
+        # Full-screen CRT terminal with authentic scanlines
+        scan_spacing = 8
+        scan_off = int((t * 30) % scan_spacing)
+        for y in range(scan_off, height, scan_spacing):
+            d.line([(0, y), (width, y)], fill=(0, 28, 12, 110), width=1)
+        # Top terminal bar
+        d.rectangle([(30, 50), (width - 30, 110)], fill=(0, 32, 14, 240), outline=(0, 255, 102, 180), width=2)
+        d.ellipse([(55, 72), (73, 90)], fill=(255, 95, 86, 255))
+        d.ellipse([(85, 72), (103, 90)], fill=(255, 189, 46, 255))
+        d.ellipse([(115, 72), (133, 90)], fill=(39, 201, 63, 255))
+        # Terminal title
+        d.text((160, 70), "bash - 80x24 [ai-developer-workspace]", fill=cfg["primary"] + (255,))
 
     elif template_key == "apple_keynote":
-        # Minimalist studio lighting / radial soft gradient
-        spotlight_r = 750
+        # Minimalist presentation canvas with soft radial spotlight
         cx, cy = width // 2, int(height * 0.45)
-        # Subtle layered circles for soft lighting
-        for r_step in range(spotlight_r, 100, -80):
-            alpha = int(22 * (1.0 - (r_step / spotlight_r)))
-            d.ellipse(
-                [(cx - r_step, cy - r_step), (cx + r_step, cy + r_step)],
-                fill=(45, 48, 58, alpha)
-            )
-
-    elif template_key == "glassmorphism_ui":
-        # Floating vibrant pastel orbs behind glass
-        orb_x1 = int(width * 0.3 + 120 * math.sin(t * 0.6))
-        orb_y1 = int(height * 0.35 + 90 * math.cos(t * 0.5))
-        d.ellipse([(orb_x1 - 350, orb_y1 - 350), (orb_x1 + 350, orb_y1 + 350)], fill=(70, 40, 160, 120))
-
-        orb_x2 = int(width * 0.7 + 100 * math.cos(t * 0.7))
-        orb_y2 = int(height * 0.7 + 110 * math.sin(t * 0.55))
-        d.ellipse([(orb_x2 - 320, orb_y2 - 320), (orb_x2 + 320, orb_y2 + 320)], fill=(0, 150, 220, 100))
+        for r in range(700, 100, -80):
+            alpha = int(24 * (1.0 - (r / 700)))
+            d.ellipse([(cx - r, cy - r), (cx + r, cy + r)], fill=(38, 40, 48, alpha))
+        # Top breadcrumb bar
+        d.line([(60, 120), (width - 60, 120)], fill=(45, 45, 55, 255), width=2)
+        d.text((60, 80), "ANTHROPIC // CLAUDE CODE WORKFLOWS", fill=cfg["secondary"] + (255,))
 
     elif template_key == "breaking_news":
-        # Red studio top bar & lower news ticker tape
-        d.rectangle([(0, 60), (width, 120)], fill=cfg["primary"] + (255,))
-        d.text((60, 75), "LIVE // TECH BREAKING // REPO RADAR", fill=(255, 255, 255, 255))
+        # Broadcast Studio Split-Screen Layout
+        # Top Red Breaking Banner
+        d.rectangle([(0, 40), (width, 130)], fill=cfg["primary"] + (255,))
+        # Flashing live dot
+        if int(t * 3) % 2 == 0:
+            d.ellipse([(50, 75), (70, 95)], fill=(255, 255, 255, 255))
+        d.text((85, 72), "LIVE // AI TECH REPORT // OPEN PROTOCOL RADAR", fill=(255, 255, 255, 255))
 
-        # Bottom ticker bar
-        ticker_y = SAFE_BOTTOM + 80
-        d.rectangle([(0, ticker_y), (width, ticker_y + 70)], fill=(15, 22, 40, 240))
-        d.rectangle([(0, ticker_y), (220, ticker_y + 70)], fill=cfg["secondary"] + (255,))
-        d.text((30, ticker_y + 20), "ALERT", fill=(0, 0, 0, 255))
-        # Animated ticker text
-        ticker_offset = int((t * 140) % 800)
-        d.text((250 - ticker_offset, ticker_y + 20), "DAILY AI REPO UPDATE /// CLAUDE CODE WORKFLOWS /// OPEN SOURCE RADAR /// ", fill=(240, 240, 255, 230))
+        # Bottom Live News Ticker Tape (y = 1530 to 1610)
+        ticker_y = SAFE_BOTTOM + 20
+        d.rectangle([(0, ticker_y), (width, ticker_y + 80)], fill=(12, 18, 32, 250))
+        d.rectangle([(0, ticker_y), (220, ticker_y + 80)], fill=cfg["secondary"] + (255,))
+        d.text((35, ticker_y + 24), "BREAKING", fill=(0, 0, 0, 255))
+        # Animated ticker scroll
+        offset = int((t * 160) % 1200)
+        ticker_text = "ANTHROPIC OPEN SOURCES MCP /// OVER 1,000+ SERVERS CONNECTED /// VERIFIED DEV RADAR /// "
+        d.text((250 - offset, ticker_y + 24), ticker_text + ticker_text, fill=(240, 245, 255, 240))
+
+    elif template_key == "neon_cyberpunk":
+        # 3D perspective floor grid
+        grid_start = int(height * 0.65)
+        d.line([(0, grid_start), (width, grid_start)], fill=cfg["primary"] + (180,), width=3)
+        for x in range(-10, 11):
+            dest = width // 2 + x * 120
+            d.line([(width // 2, grid_start), (dest, height)], fill=cfg["secondary"] + (75,), width=2)
+        cycle = (t * 80) % 60
+        for y in range(0, height - grid_start, 60):
+            cy = grid_start + int(((y + cycle) ** 1.3) * 0.25)
+            if cy < height:
+                d.line([(0, cy), (width, cy)], fill=cfg["primary"] + (60,), width=2)
+        # Cyber HUD header
+        d.line([(40, 100), (width - 40, 100)], fill=cfg["primary"] + (140,), width=2)
+        d.text((50, 65), "CYBER_RADAR // VER_2.4 [AI_AGENTS]", fill=cfg["primary"] + (255,))
 
     elif template_key == "blueprint_dev":
-        # Fine technical drafting grid
-        grid_size = 40
-        for x in range(0, width, grid_size):
-            d.line([(x, 0), (x, height)], fill=(20, 65, 120, 90), width=1)
-        for y in range(0, height, grid_size):
-            d.line([(0, y), (width, y)], fill=(20, 65, 120, 90), width=1)
-        # Major 200px lines
-        for x in range(0, width, grid_size * 5):
-            d.line([(x, 0), (x, height)], fill=(30, 95, 160, 160), width=2)
-        # Corner alignment markers
-        d.line([(50, 50), (120, 50)], fill=cfg["primary"] + (255,), width=3)
-        d.line([(50, 50), (50, 120)], fill=cfg["primary"] + (255,), width=3)
-        d.text((60, 60), "SPEC: DEV-01", fill=cfg["primary"] + (255,))
+        # Technical CAD blueprint grid
+        grid = 36
+        for x in range(0, width, grid):
+            d.line([(x, 0), (x, height)], fill=(18, 55, 110, 85), width=1)
+        for y in range(0, height, grid):
+            d.line([(0, y), (width, y)], fill=(18, 55, 110, 85), width=1)
+        # Major 180px lines
+        for x in range(0, width, grid * 5):
+            d.line([(x, 0), (x, height)], fill=(28, 85, 150, 140), width=2)
+        # Corner technical marks
+        d.line([(40, 60), (120, 60)], fill=cfg["primary"] + (255,), width=3)
+        d.line([(40, 60), (40, 140)], fill=cfg["primary"] + (255,), width=3)
+        d.text((50, 75), "SPEC: ARCHITECTURE-DOC-01", fill=cfg["primary"] + (255,))
 
     elif template_key == "bold_brutalist":
-        # Stark geometric blocks & diagonal warning accent
+        # Stark brutalist diagonal warning stripes on top
         d.rectangle([(0, 0), (width, 80)], fill=cfg["primary"] + (255,))
-        d.text((40, 20), "★ TECH DISCOVERY LOG ★", fill=(0, 0, 0, 255))
-        # Brutalist thick border frame
+        d.text((40, 22), "★ VERIFIED OPEN SOURCE REPO ★", fill=(0, 0, 0, 255))
         d.rectangle([(30, 110), (width - 30, height - 110)], outline=cfg["primary"] + (255,), width=8)
 
+    elif template_key == "glassmorphism_ui":
+        # Floating colored gradient orbs behind frosted cards
+        x1 = int(width * 0.3 + 100 * math.sin(t * 0.5))
+        y1 = int(height * 0.35 + 80 * math.cos(t * 0.4))
+        d.ellipse([(x1 - 350, y1 - 350), (x1 + 350, y1 + 350)], fill=(65, 35, 150, 110))
+        x2 = int(width * 0.7 + 90 * math.cos(t * 0.6))
+        y2 = int(height * 0.7 + 100 * math.sin(t * 0.45))
+        d.ellipse([(x2 - 320, y2 - 320), (x2 + 320, y2 + 320)], fill=(0, 140, 210, 95))
+
     elif template_key == "cinematic_dark":
-        # Cinemascope Letterbox bars
-        bar_height = 140
-        d.rectangle([(0, 0), (width, bar_height)], fill=(0, 0, 0, 255))
-        d.rectangle([(0, height - bar_height), (width, height)], fill=(0, 0, 0, 255))
-        # Subtle vignette border
-        d.rectangle([(40, bar_height + 20), (width - 40, height - bar_height - 20)], outline=(35, 30, 25, 90), width=2)
+        # Cinemascope letterbox bars
+        bar_h = 160
+        d.rectangle([(0, 0), (width, bar_h)], fill=(0, 0, 0, 255))
+        d.rectangle([(0, height - bar_h), (width, height)], fill=(0, 0, 0, 255))
+        d.text((50, 175), "FILM SCAN // 35MM CINEMATIC TECH", fill=cfg["primary"] + (180,))
 
     return im

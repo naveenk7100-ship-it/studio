@@ -31,15 +31,15 @@ SAFE_LITERALS = {
 
 def scan():
     try:
-        res = subprocess.run(["git", "diff", "--cached"], capture_output=True, text=True, check=True)
-        diff_text = res.stdout
+        res = subprocess.run(["git", "diff", "--cached"], capture_output=True, check=True)
+        diff_text = res.stdout.decode("utf-8", errors="ignore") if isinstance(res.stdout, bytes) else (res.stdout or "")
     except Exception as e:
         print(f"Error running git diff: {e}")
         return False
 
     if not diff_text.strip():
-        res = subprocess.run(["git", "diff"], capture_output=True, text=True)
-        diff_text = res.stdout
+        res = subprocess.run(["git", "diff"], capture_output=True)
+        diff_text = res.stdout.decode("utf-8", errors="ignore") if isinstance(res.stdout, bytes) else (res.stdout or "")
 
     findings = []
     current_file = ""

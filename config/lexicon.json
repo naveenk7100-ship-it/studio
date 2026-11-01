@@ -1,0 +1,26 @@
+{
+  "description": "User-editable pronunciation lexicon for AI Auto-Reels Studio. Keys are matched case-insensitively for TTS voice engines only. Display captions always retain original clean spelling and numbers.",
+  "terms": {
+    "claude": "Clawd",
+    "anthropic": "Anthropic",
+    "github": "git hub",
+    "repo": "ray-poh",
+    "mcp": "M C P",
+    "api": "A P I",
+    "json": "jay-sahn",
+    "sqlite": "sequel lite",
+    "postgres": "post-gres",
+    "postgresql": "post-gres Q L",
+    "pip": "pip",
+    "npm": "N P M",
+    "npx": "N P X",
+    "cli": "C L I",
+    "gui": "G U I",
+    "chusthe": "choosthey",
+    "shock": "shock",
+    "avthav": "av-thaavu",
+    "avthundi": "av-thundhi",
+    "cheyandi": "cheyandee",
+    "mariyu": "mariyoo"
+  }
+}
