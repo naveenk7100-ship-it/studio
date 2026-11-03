@@ -16,9 +16,13 @@ cache/
 *.mp4
 *.mp3
 *.wav
+
+# Global image ignore EXCEPT for docs and proof assets
 *.png
 *.jpg
 *.jpeg
+!docs/**
+!assets/captured_proofs/**
 
 # Python
 __pycache__/
@@ -30,6 +34,7 @@ env/
 
 # Node
 node_modules/
+**/node_modules/
 npm-debug.log*
 
 # OS / Editor

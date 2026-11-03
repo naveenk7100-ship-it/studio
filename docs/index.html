@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLASH.Ai - Instant Telugu Tech & AI News | FLASH.Ai</title>
+  <meta name="description" content="Official Link-in-Bio & Production Portal for @flash__ai__digital. Daily verified AI intelligence, architecture breakdowns, and CLI tutorials in natural Tenglish.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --card-bg: rgba(16, 22, 40, 0.85);
+      --border: rgba(0, 240, 255, 0.25);
+      --accent: #00f0ff;
+      --secondary: #ff007f;
+      --gold: #ffd700;
+      --green: #27c93f;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at 50% 15%, #0f1c38 0%, #070b14 70%);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    header {
+      padding: 48px 0 32px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .brand-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 640px;
+      margin: 0 auto 24px;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #070b14;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.6);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    .card-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tag-green { background: rgba(39, 201, 63, 0.15); color: var(--green); border: 1px solid var(--green); }
+    .tag-cyan { background: rgba(0, 240, 255, 0.15); color: var(--accent); border: 1px solid var(--accent); }
+    .tag-gold { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+    .code-block {
+      background: #03060c;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      overflow-x: auto;
+      margin: 16px 0;
+      word-break: break-all;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .proof-img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-top: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="brand-badge">⚡ FLASH CONTENT OS</div>
+      <h1>FLASH.Ai (@flash__ai__digital)</h1>
+      <p class="subtitle">2 Fresh, Professionally Edited Tenglish Tech Reels Daily. Zero-Budget. Deterministic Remotion Engine. Single-Source Truth Gates.</p>
+      <div class="nav-links">
+        <a href="https://instagram.com/flash__ai__digital" target="_blank" class="btn btn-primary">📸 Instagram (@flash__ai__digital)</a>
+        <a href="https://t.me" target="_blank" class="btn btn-outline">✈️ Telegram Intelligence</a>
+        <a href="status.html" class="btn btn-outline">📊 Pipeline Status</a>
+        <a href="feed.xml" class="btn btn-outline">📡 RSS Feed</a>
+      </div>
+    </header>
+
+    <!-- Showcase Video Section -->
+    <div class="card">
+      <div class="card-title">
+        <span>⚡ Signature Showcase Reel (Prompt 607)</span>
+        <span class="tag tag-gold">20.00s • Kinetic Typography</span>
+      </div>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        1080x1920 30 fps kinetic bumper with 120 BPM beat sync, audio mastered to -13.6 LUFS, and seamless loop seam difference Δ = 0.3.
+      </p>
+      <div style="text-align: center; margin: 24px 0;">
+        <video controls poster="assets/proofs/vllm-project_vllm/proof_1_repo_card.png" style="max-width: 320px; width: 100%; border-radius: 16px; border: 2px solid var(--accent); box-shadow: 0 20px 50px rgba(0, 240, 255, 0.3);">
+          <source src="../out/showcase_flash_20s.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 16px;">
+        <span class="tag tag-cyan">Loudness: -13.6 LUFS</span>
+        <span class="tag tag-green">True Peak: -1.6 dBTP</span>
+        <span class="tag tag-gold">Loop Diff: 0.3</span>
+      </div>
+    </div>
+
+    <!-- Active Production Queue Section -->
+    <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 24px; color: var(--text);">Active Reels & Resource Packs</h2>
+    
+    <div class="grid-2">
+      <!-- Reel 1: vLLM -->
+      <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <span class="tag tag-cyan">Prompt 164 • Repo Spotlight</span>
+          <span class="tag tag-green">96,121 Stars</span>
+        </div>
+        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">vLLM High-Speed Inference Engine</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+          PagedAttention algorithm eliminates memory fragmentation, allowing 4x higher request throughput on a single GPU.
+        </p>
+        <img src="assets/proofs/vllm-project_vllm/proof_1_repo_card.png" alt="vLLM Preview" class="proof-img" style="margin-bottom: 20px;">
+        <a href="resource_vllm.html" class="btn btn-primary" style="width: 100%; justify-content: center;">View Verified Resource Pack →</a>
+      </div>
+
+      <!-- Reel 2: Claude Code -->
+      <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <span class="tag tag-gold">Prompt 274 • CLI Demo</span>
+          <span class="tag tag-green">18,450 Stars</span>
+        </div>
+        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Claude Code Terminal Agent</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+          Anthropic's terminal-native agent with automated /compact context pruning and verified sandbox isolation.
+        </p>
+        <img src="assets/proofs/anthropics_claude-code/proof_1_repo_card.png" alt="Claude Code Preview" class="proof-img" style="margin-bottom: 20px;">
+        <a href="resource_claude.html" class="btn btn-primary" style="width: 100%; justify-content: center;">View Verified Resource Pack →</a>
+      </div>
+
+      <!-- Reel 3: Anthropic MCP -->
+      <div class="card" style="margin-bottom: 0;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+          <span class="tag tag-cyan">Prompt 242 • Protocol Film</span>
+          <span class="tag tag-green">41,200 Stars</span>
+        </div>
+        <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Model Context Protocol (MCP)</h3>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+          The universal open standard for bidirectional communication between frontier AI models and system tools.
+        </p>
+        <img src="assets/proofs/modelcontextprotocol_servers/proof_1_repo_card.png" alt="MCP Preview" class="proof-img" style="margin-bottom: 20px;">
+        <a href="resource_mcp.html" class="btn btn-primary" style="width: 100%; justify-content: center;">View Verified Resource Pack →</a>
+      </div>
+
+      <!-- System Telemetry & Pipeline -->
+      <div class="card" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span class="tag tag-gold">System Health</span>
+          <h3 style="font-size: 20px; font-weight: 800; margin: 12px 0 8px;">Quality Gates Telemetry</h3>
+          <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+            Every reel is verified against OCR single-source facts, -14 LUFS audio mastering, Whisper forced-alignment word sync, and safe-zone clipping checks.
+          </p>
+          <ul style="list-style: none; font-size: 14px; color: var(--text-muted);">
+            <li style="margin-bottom: 8px;">✓ Slots: 12:30 PM & 8:30 PM IST</li>
+            <li style="margin-bottom: 8px;">✓ Voice: Gemini TTS Sadachbia (48 kHz)</li>
+            <li style="margin-bottom: 8px;">✓ Motion Floor: ≥ 0.35 in every 1s window</li>
+            <li style="margin-bottom: 8px;">✓ Zero-Budget Open Source Architecture</li>
+          </ul>
+        </div>
+        <a href="status.html" class="btn btn-outline" style="width: 100%; justify-content: center; margin-top: 20px;">Inspect Pipeline Telemetry →</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 FLASH.Ai (@flash__ai__digital) • Autonomous Content OS • Zero Secrets Public Build</p>
+    </footer>
+  </div>
+</body>
+</html>

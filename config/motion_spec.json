@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "name": "FLASH Motion Spec",
+  "global_fps": 30,
+  "timing_ms": {
+    "card_enter": 280,
+    "title_reveal": 220,
+    "metadata_fade": 160,
+    "stagger_delay": 60,
+    "bolt_strike_duration": 180,
+    "flash_frame_duration": 66,
+    "radar_sweep_period_sec": 3.0
+  },
+  "easing_curves": {
+    "card": [0.16, 1.0, 0.3, 1.0],
+    "title": [0.22, 1.0, 0.36, 1.0],
+    "metadata": [0.25, 0.1, 0.25, 1.0],
+    "zoom_punch": [0.34, 1.56, 0.64, 1.0],
+    "smooth_drift": [0.4, 0.0, 0.2, 1.0]
+  },
+  "spring_physics": {
+    "mass": 0.8,
+    "damping": 12.0,
+    "stiffness": 100.0,
+    "overshoot_clamping": true
+  },
+  "banned_easings": [
+    "linear"
+  ],
+  "visual_dna": {
+    "colors": {
+      "electric_cyan": "#00f0ff",
+      "magenta_glow": "#ff007f",
+      "deep_bg_top": "#070b14",
+      "deep_bg_bottom": "#0d1424",
+      "gold_accent": "#ffd700",
+      "text_main": "#ffffff",
+      "text_muted": "#8892b0"
+    },
+    "safe_zones": {
+      "top_px": 250,
+      "bottom_px": 380,
+      "horizontal_padding_px": 40
+    }
+  }
+}

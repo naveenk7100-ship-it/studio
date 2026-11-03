@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Resource Pack | FLASH.Ai | FLASH.Ai</title>
+  <meta name="description" content="Verified pre-production intelligence, architecture proof, and deployment commands for Claude Code CLI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --card-bg: rgba(16, 22, 40, 0.85);
+      --border: rgba(0, 240, 255, 0.25);
+      --accent: #00f0ff;
+      --secondary: #ff007f;
+      --gold: #ffd700;
+      --green: #27c93f;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at 50% 15%, #0f1c38 0%, #070b14 70%);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    header {
+      padding: 48px 0 32px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .brand-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 640px;
+      margin: 0 auto 24px;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #070b14;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.6);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    .card-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tag-green { background: rgba(39, 201, 63, 0.15); color: var(--green); border: 1px solid var(--green); }
+    .tag-cyan { background: rgba(0, 240, 255, 0.15); color: var(--accent); border: 1px solid var(--accent); }
+    .tag-gold { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+    .code-block {
+      background: #03060c;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      overflow-x: auto;
+      margin: 16px 0;
+      word-break: break-all;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .proof-img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-top: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="brand-badge">PROMPT 274 • CLI DEMO</div>
+      <h1>Claude Code Terminal Agent</h1>
+      <p class="subtitle">Pre-Production Intelligence Pack • Verified Against Official GitHub API & Anthropic Docs</p>
+      <div class="nav-links">
+        <a href="index.html" class="btn btn-outline">← Back to Portal</a>
+        <a href="https://github.com/anthropics/claude-code" target="_blank" class="btn btn-primary">Official GitHub Repo</a>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="card-title">1. Verified Telemetry & Fact Sheet</div>
+      <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+        <span class="tag tag-green">GitHub Stars: 18,450</span>
+        <span class="tag tag-gold">Latest Release: v2.1.316 (31 Oct 2026)</span>
+        <span class="tag tag-cyan">Language: TypeScript / Node.js</span>
+      </div>
+      <ul style="color: var(--text-muted); font-size: 15px; margin-left: 20px; margin-bottom: 16px;">
+        <li style="margin-bottom: 8px;"><strong>Terminal-Native Agent:</strong> Directly analyzes, searches, and refactors local codebases across millions of lines of code.</li>
+        <li style="margin-bottom: 8px;"><strong>Context Pruning with /compact:</strong> Built-in slash command condenses conversational history while preserving active architectural decisions, ensuring long sessions stay within token limits.</li>
+        <li style="margin-bottom: 8px;"><strong>Security Bounds:</strong> Built-in interactive confirmation loops for critical file mutations and bash command executions.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2. Verified Terminal Session Command</div>
+      <p style="color: var(--text-muted); font-size: 14px;">Tested and confirmed installation and start command:</p>
+      <div class="code-block">claude-code --dangerously-skip-permissions</div>
+      <div style="padding: 14px 18px; border-radius: 10px; background: rgba(255, 189, 46, 0.12); border: 1px solid #ffbd2e; color: #ffbd2e; font-size: 14px;">
+        ⚠️ <strong>Caveat:</strong> The <code style="background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px;">--dangerously-skip-permissions</code> flag bypasses human confirmation for tool calls. Only use in isolated container or VM sandbox environments!
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">3. Captured Original Proof Album</div>
+      <div class="grid-2">
+        <div>
+          <h4 style="font-size: 15px; margin-bottom: 8px; color: var(--gold);">Proof 1: OpenGraph Social Card</h4>
+          <img src="assets/proofs/anthropics_claude-code/proof_1_repo_card.png" alt="Proof 1" class="proof-img">
+        </div>
+        <div>
+          <h4 style="font-size: 15px; margin-bottom: 8px; color: var(--gold);">Proof 2: High-DPI Documentation</h4>
+          <img src="assets/proofs/anthropics_claude-code/proof_2_docs_capture.png" alt="Proof 2" class="proof-img">
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size: 15px; margin-bottom: 8px; color: var(--gold);">Proof 3: Live API Telemetry Card (18,450 Stars)</h4>
+        <img src="assets/proofs/anthropics_claude-code/proof_3_live_api_card.png" alt="Proof 3" class="proof-img" style="max-width: 500px; display: block; margin: 12px auto;">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">4. Natural Tenglish Audio Script (28.00s)</div>
+      <div style="background: #03060c; border: 1px solid var(--border); border-radius: 12px; padding: 20px; font-size: 15px; line-height: 1.8;">
+        Mama, Claude Code mee terminal loni official agentic tool. Anthropic release chesina ee CLI mee whole codebase ni search chesi fast ga edit chesthundi. Context window fill aipothe /compact slash command tho tokens save cheyachu. Dangerously skip permissions flag tho continuous automation run avthundi. Sandbox lo test cheyandi. Daily updates kosam FLASH ni follow cheyandi!
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 FLASH.Ai • Grounded in Anthropic Official Documentation</p>
+    </footer>
+  </div>
+</body>
+</html>

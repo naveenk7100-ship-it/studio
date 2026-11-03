@@ -1,0 +1,35 @@
+[
+  {
+    "id": "proof_1_repo_card",
+    "type": "repo_opengraph_preview",
+    "path": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\assets\\captured_proofs\\modelcontextprotocol_servers\\proof_1_repo_card.png",
+    "source_url": "https://github.com/modelcontextprotocol/servers",
+    "domain": "github.com",
+    "license": "GitHub Open Source Attribution",
+    "timestamp": "2026-11-03T08:55:38.528617+00:00",
+    "attribution_tag": "Source: github.com",
+    "claim_mapped": "Official GitHub repository for modelcontextprotocol/servers"
+  },
+  {
+    "id": "proof_2_docs_capture",
+    "type": "playwright_high_dpi_capture",
+    "path": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\assets\\captured_proofs\\modelcontextprotocol_servers\\proof_2_docs_capture.png",
+    "source_url": "https://modelcontextprotocol.io",
+    "domain": "modelcontextprotocol.io",
+    "license": "Official Documentation Public Display",
+    "timestamp": "2026-11-03T08:56:00.158271+00:00",
+    "attribution_tag": "Source: modelcontextprotocol.io",
+    "claim_mapped": "Official Documentation & Getting Started Guide"
+  },
+  {
+    "id": "proof_3_live_api_telemetry",
+    "type": "live_api_data_card",
+    "path": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\assets\\captured_proofs\\modelcontextprotocol_servers\\proof_3_live_api_card.png",
+    "source_url": "https://api.github.com/repos/modelcontextprotocol/servers",
+    "domain": "api.github.com",
+    "license": "REST API Public Telemetry",
+    "timestamp": "2026-11-03T08:56:00.218946+00:00",
+    "attribution_tag": "Source: api.github.com",
+    "claim_mapped": "Live verified API numbers and release status"
+  }
+]

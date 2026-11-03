@@ -92,7 +92,25 @@ def refresh_instagram_token():
         except Exception as e:
             print(f"[TOKEN REFRESH NOTICE] gh CLI secret update skipped: {e}")
 
-        return True
+        # Send Telegram reminder on Day 45 (15 days or less remaining)
+        bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
+        chat_id = os.getenv("TELEGRAM_CHAT_ID")
+        if bot_token and chat_id and days <= 15:
+            msg = (
+                f"⚠️ *FLASH Instagram Token Alert (Day 45+)*\n\n"
+                f"Your Instagram long-lived token has *{days} days* remaining.\n"
+                f"Auto-refresh has been performed, but please run `python scripts/refresh_tokens.py` locally if needed.\n"
+                f"Account: `@flash__ai__digital`"
+            )
+            try:
+                requests.post(
+                    f"https://api.telegram.org/bot{bot_token}/sendMessage",
+                    json={"chat_id": chat_id, "text": msg, "parse_mode": "Markdown"},
+                    timeout=10
+                )
+                print("[TOKEN REFRESH] Sent Day 45+ reminder to Telegram.")
+            except Exception as te:
+                print(f"[TOKEN REFRESH] Telegram alert failed: {te}")
 
     except Exception as e:
         print(f"[TOKEN REFRESH EXCEPTION] Critical error during token refresh: {e}")

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "proof_1_repo_card",
+    "type": "repo_opengraph_preview",
+    "path": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\assets\\captured_proofs\\anthropics_claude-code\\proof_1_repo_card.png",
+    "source_url": "https://github.com/anthropics/claude-code",
+    "domain": "github.com",
+    "license": "GitHub Open Source Attribution",
+    "timestamp": "2026-11-03T06:31:56.246050+00:00",
+    "attribution_tag": "Source: github.com",
+    "claim_mapped": "Official GitHub repository for anthropics/claude-code"
+  },
+  {
+    "id": "proof_2_docs_capture",
+    "type": "playwright_high_dpi_capture",
+    "path": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\assets\\captured_proofs\\anthropics_claude-code\\proof_2_docs_capture.png",
+    "source_url": "https://docs.anthropic.com/en/docs/claude-code",
+    "domain": "docs.anthropic.com",
+    "license": "Official Documentation Public Display",
+    "timestamp": "2026-11-03T06:32:09.168897+00:00",
+    "attribution_tag": "Source: docs.anthropic.com",
+    "claim_mapped": "Official Documentation & Getting Started Guide"
+  },
+  {
+    "id": "proof_3_live_api_telemetry",
+    "type": "live_api_data_card",
+    "path": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\assets\\captured_proofs\\anthropics_claude-code\\proof_3_live_api_card.png",
+    "source_url": "https://api.github.com/repos/anthropics/claude-code",
+    "domain": "api.github.com",
+    "license": "REST API Public Telemetry",
+    "timestamp": "2026-11-03T06:32:09.440616+00:00",
+    "attribution_tag": "Source: api.github.com",
+    "claim_mapped": "Live verified API numbers and release status"
+  }
+]

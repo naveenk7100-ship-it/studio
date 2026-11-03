@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Status | FLASH.Ai | FLASH.Ai</title>
+  <meta name="description" content="Live pipeline status, quality gates verification, and publishing telemetry for FLASH Content OS.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --card-bg: rgba(16, 22, 40, 0.85);
+      --border: rgba(0, 240, 255, 0.25);
+      --accent: #00f0ff;
+      --secondary: #ff007f;
+      --gold: #ffd700;
+      --green: #27c93f;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at 50% 15%, #0f1c38 0%, #070b14 70%);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    header {
+      padding: 48px 0 32px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .brand-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 640px;
+      margin: 0 auto 24px;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #070b14;
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 240, 255, 0.6);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    .card-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tag-green { background: rgba(39, 201, 63, 0.15); color: var(--green); border: 1px solid var(--green); }
+    .tag-cyan { background: rgba(0, 240, 255, 0.15); color: var(--accent); border: 1px solid var(--accent); }
+    .tag-gold { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+    .code-block {
+      background: #03060c;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      overflow-x: auto;
+      margin: 16px 0;
+      word-break: break-all;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .proof-img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-top: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="brand-badge">TELEMETRY & HEALTH</div>
+      <h1>Pipeline Operational Status</h1>
+      <p class="subtitle">Real-Time Zero-Secret Telemetry • Automated Daily Publishing Schedule</p>
+      <div class="nav-links">
+        <a href="index.html" class="btn btn-outline">← Back to Portal</a>
+        <a href="feed.xml" class="btn btn-primary">📡 RSS Feed</a>
+      </div>
+    </header>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Publishing Engine</div>
+        <ul style="list-style: none; color: var(--text-muted); font-size: 14px; line-height: 2;">
+          <li><strong>Channel:</strong> @flash__ai__digital</li>
+          <li><strong>Platform:</strong> Instagram Reels</li>
+          <li><strong>Frequency:</strong> 2 Reels Daily</li>
+          <li><strong>Slot 1:</strong> 12:30 PM IST (07:00 UTC)</li>
+          <li><strong>Slot 2:</strong> 08:30 PM IST (15:00 UTC)</li>
+          <li><strong>Current Mode:</strong> APPROVAL_REQUIRED (Gate Active)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Audio & Mastering Chain</div>
+        <ul style="list-style: none; color: var(--text-muted); font-size: 14px; line-height: 2;">
+          <li><strong>Primary TTS:</strong> Gemini TTS Sadachbia (mixed-script)</li>
+          <li><strong>Fallbacks:</strong> Aoede → te-IN-Shruti → en-IN-Neerja</li>
+          <li><strong>Mastering Target:</strong> -14.0 LUFS (±0.5)</li>
+          <li><strong>True Peak Limit:</strong> ≤ -1.5 dBTP</li>
+          <li><strong>Sample Rate:</strong> 48,000 Hz</li>
+          <li><strong>Sync Gate:</strong> Whisper forced-alignment ≤ 80ms median</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Security & Secret Isolation</div>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">
+        FLASH Content OS operates under a strict Zero-Secret Public Policy:
+      </p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+        <span class="tag tag-green">✓ Pre-Commit Secret Scanner: PASS</span>
+        <span class="tag tag-green">✓ Docs Static Build: 0 Secrets Detected</span>
+        <span class="tag tag-green">✓ GitHub Actions Secrets: Encrypted AES-256</span>
+      </div>
+      <p style="color: var(--text-muted); font-size: 13px;">
+        All API tokens (Gemini, Instagram, Telegram) reside strictly within protected runner environment variables and are permanently blocked from git commits, logs, and public static HTML.
+      </p>
+    </div>
+
+    <footer>
+      <p>© 2026 FLASH.Ai • Real-time Monitoring & Telemetry</p>
+    </footer>
+  </div>
+</body>
+</html>

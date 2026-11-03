@@ -1,0 +1,49 @@
+name: Telegram Control Plane Poller
+
+on:
+  schedule:
+    # Runs every 5 minutes to poll Telegram updates & callback queries
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: telegram-control-plane
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  poll-telegram:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests python-dotenv
+
+      - name: Run Telegram Command Poller
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python telegram_commands.py
+
+      - name: Commit Updated Offset
+        run: |
+          git config --global user.name "FLASH Content OS Bot"
+          git config --global user.email "bot@flash.ai"
+          git add cache/telegram_offset.json queue/briefing_state.json config/system_state.json || true
+          git commit -m "chore(bot): update telegram polling offset and queue state [skip ci]" || echo "No changes to commit"
+          git push origin master || echo "Push skipped or up-to-date"
