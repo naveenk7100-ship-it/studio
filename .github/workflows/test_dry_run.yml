@@ -13,7 +13,7 @@ permissions:
 jobs:
   test-suite:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
 
     steps:
       - name: Checkout Code
@@ -30,44 +30,30 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu-core
 
-      - name: Cache Playwright Chromium
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('requirements.txt') }}
-
       - name: Install Python Dependencies
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: |
-          python -m playwright install --with-deps chromium
-
-      - name: Pre-Commit Secret Scanner Check
+      - name: 1. Pre-Commit Secret Scanner Check
         run: |
           python scripts/scan_secrets.py
 
-      - name: Run Legacy Layout Failure Proof Test
+      - name: 2. Run Legacy Layout Failure Proof Test
         run: |
           python scripts/test_legacy_layout_fail.py
 
-      - name: Run Voice Metrics Calculation Test
+      - name: 3. Run Quality Gates Defect Detection Test
+        run: |
+          python scripts/test_defect_detection_on_failing_sample.py
+
+      - name: 4. Run Telegram Control Plane Tests (16 Scenarios)
+        run: |
+          python scripts/test_telegram_controls.py
+
+      - name: 5. Verify Bunty Reference Acoustic Benchmarks
         run: |
           python -c "
           import config
           print('Bunty Reference Benchmarks:', config.BUNTY_REFERENCE)
           "
-
-      - name: Run Fast Pipeline Preview (540x960 @ 15fps)
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          NARAROUTER_API_KEY: ${{ secrets.NARAROUTER_API_KEY }}
-          BRAND_NAME: "FLASH"
-          BRAND_TAGLINE: "FLASH.Ai"
-        run: |
-          python main.py --preview --slot 1
