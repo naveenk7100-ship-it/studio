@@ -17,6 +17,9 @@ TELEGRAM_CHAT = os.getenv("TELEGRAM_CHAT_ID")
 
 def send_telegram_alert(message: str):
     """Send text alert to admin Telegram channel."""
+    if os.getenv("TESTING") == "true" or os.getenv("CI") == "true":
+        print(f"[TEST MOCK QUEUE ALERT] Intercepted alert: {message[:60]}...")
+        return
     if not TELEGRAM_BOT or not TELEGRAM_CHAT:
         print(f"[TELEGRAM LOG] {message}")
         return
@@ -29,6 +32,9 @@ def send_telegram_alert(message: str):
 
 def send_telegram_review(video_path: str, contact_sheet_path: str, caption: str, item_id: str):
     """Send finished video and contact sheet to Telegram with inline approval buttons."""
+    if os.getenv("TESTING") == "true" or os.getenv("CI") == "true":
+        print(f"[TEST MOCK QUEUE REVIEW] Intercepted review for {item_id}: {video_path}")
+        return
     if not TELEGRAM_BOT or not TELEGRAM_CHAT:
         print(f"[TELEGRAM LOG] Review for {item_id}: {video_path}")
         return

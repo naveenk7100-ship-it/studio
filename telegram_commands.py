@@ -67,7 +67,16 @@ def save_offset_data(data):
     with open(OFFSET_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
+# Test safety outbox
+MOCK_OUTBOX = []
+
 def send_msg(chat_id: str, text: str, reply_markup=None):
+    # CRITICAL TEST SAFETY GATE: Never hit live Telegram API during automated tests or CI
+    if os.getenv("TESTING") == "true" or os.getenv("CI") == "true":
+        MOCK_OUTBOX.append({"chat_id": chat_id, "text": text, "reply_markup": reply_markup})
+        print(f"[TEST MOCK BOT] Intercepted send_msg to {chat_id}: {text[:60]}...")
+        return {"ok": True, "result": {"message_id": 999999, "chat": {"id": chat_id}, "text": text}}
+
     if not BOT_TOKEN:
         print("[BOT] BOT_TOKEN missing")
         return None
@@ -88,6 +97,9 @@ def send_msg(chat_id: str, text: str, reply_markup=None):
         return None
 
 def answer_callback(cb_id: str, text: str = "Received"):
+    if os.getenv("TESTING") == "true" or os.getenv("CI") == "true":
+        print(f"[TEST MOCK BOT] Intercepted answer_callback {cb_id}: {text}")
+        return {"ok": True}
     if not BOT_TOKEN or not cb_id:
         return
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/answerCallbackQuery"

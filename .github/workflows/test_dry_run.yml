@@ -51,7 +51,11 @@ jobs:
         run: |
           python scripts/test_telegram_controls.py
 
-      - name: 5. Verify Bunty Reference Acoustic Benchmarks
+      - name: 5. Run Shake & Smoothness Quality Gate Benchmarks
+        run: |
+          python scripts/shake_and_smoothness_gates.py
+
+      - name: 6. Verify Bunty Reference Acoustic Benchmarks
         run: |
           python -c "
           import config

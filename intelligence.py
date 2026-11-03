@@ -95,6 +95,25 @@ def load_history():
             return set()
     return set()
 
+def is_builder_relevant(title: str, desc: str) -> bool:
+    """Filter out non-builder news (e.g. corporate financial news, politics, executive hires, stock moves)."""
+    text = (title + " " + desc).lower()
+    # Reject non-builder noise
+    noise_keywords = [
+        "lawsuit", "sues", "antitrust", "shares tumble", "stock rises", "revenue surges",
+        "layoffs", "ceo steps down", "board member", "valuation hits", "ipo filing",
+        "quarterly earnings", "lobbying", "regulatory fine"
+    ]
+    if any(k in text for k in noise_keywords):
+        return False
+    # Must have builder or developer utility
+    builder_keywords = [
+        "model", "weights", "benchmark", "inference", "agent", "tool", "sdk", "api",
+        "code", "repo", "library", "framework", "dataset", "gpu", "token", "cli",
+        "open source", "prompt", "pipeline", "serving", "fine-tuning", "vllm", "claude"
+    ]
+    return any(k in text for k in builder_keywords)
+
 def calculate_score(candidate: dict) -> int:
     """
     Score 0-100:
@@ -142,6 +161,17 @@ def calculate_score(candidate: dict) -> int:
         freshness_mult = 0.45
 
     final_score = int(min(100, max(10, base_score * freshness_mult)))
+    
+    # Attach comprehensive score breakdown
+    candidate["score_breakdown"] = {
+        "impact": impact,
+        "novelty": novelty,
+        "authority": authority,
+        "velocity": velocity,
+        "indian_builder_relevance": in_relevance,
+        "freshness_multiplier": freshness_mult,
+        "final_score": final_score
+    }
     return final_score
 
 def scan_github_repos(history_set):

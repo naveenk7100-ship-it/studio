@@ -3,9 +3,12 @@
 Scans git staged files / git diff for API keys, passwords, client secrets, and tokens.
 Aborts if any secret pattern or non-ignored sensitive file is found.
 """
+import os
 import re
 import subprocess
 import sys
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 PATTERNS = [
     (r"AIza[0-9A-Za-z\-_]{35}", "Google API Key"),
@@ -31,14 +34,14 @@ SAFE_LITERALS = {
 
 def scan():
     try:
-        res = subprocess.run(["git", "diff", "--cached"], capture_output=True, check=True)
+        res = subprocess.run(["git", "diff", "--cached"], cwd=ROOT, capture_output=True, check=True)
         diff_text = res.stdout.decode("utf-8", errors="ignore") if isinstance(res.stdout, bytes) else (res.stdout or "")
     except Exception as e:
         print(f"Error running git diff: {e}")
         return False
 
     if not diff_text.strip():
-        res = subprocess.run(["git", "diff"], capture_output=True)
+        res = subprocess.run(["git", "diff"], cwd=ROOT, capture_output=True)
         diff_text = res.stdout.decode("utf-8", errors="ignore") if isinstance(res.stdout, bytes) else (res.stdout or "")
 
     findings = []

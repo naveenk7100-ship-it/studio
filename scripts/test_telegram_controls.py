@@ -22,14 +22,12 @@ if sys.stdout.encoding != "utf-8":
         pass
 load_dotenv(os.path.join(ROOT, ".env"))
 
+# Enforce strict hermetic testing mode - ZERO real Telegram API calls
+os.environ["TESTING"] = "true"
 import telegram_commands
+telegram_commands.MOCK_OUTBOX.clear()
 
-# Mock outgoing Telegram network calls for fast, hermetic test execution
-sent_messages = []
-telegram_commands.send_message = lambda chat_id, text, reply_markup=None: sent_messages.append({"chat_id": chat_id, "text": text})
-telegram_commands.answer_callback_query = lambda cb_id, text: True
-
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "7031739832")
+CHAT_ID = "99999901"
 
 def run_control_plane_tests():
     print("\n=======================================================")
@@ -103,6 +101,14 @@ def run_control_plane_tests():
     is_deduped = fake_update_id in reloaded_offset["processed_updates"]
     results.append({"target": "update_id_deduplication", "type": "security", "status": "PASS" if is_deduped else "FAIL"})
     print(f"[PASS] update_id deduplication check: {'PASS' if is_deduped else 'FAIL'}")
+
+    # 4. Critical Safety Gate: Assert ZERO messages sent to real chat ID
+    real_chat_id = os.getenv("TELEGRAM_CHAT_ID", "7031739832")
+    for m in telegram_commands.MOCK_OUTBOX:
+        if str(m.get("chat_id")) == str(real_chat_id):
+            raise AssertionError(f"SECURITY VIOLATION: Test message sent to real chat {real_chat_id}!")
+    assert len(telegram_commands.MOCK_OUTBOX) > 0, "No messages were intercepted in mock outbox!"
+    print(f"[SECURITY PASS] Verified {len(telegram_commands.MOCK_OUTBOX)} test messages safely intercepted in mock outbox. ZERO messages touched real chat {real_chat_id}.")
 
     # Summary
     all_passed = all(r["status"] == "PASS" for r in results)

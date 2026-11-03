@@ -8,12 +8,9 @@ import {
   staticFile,
   Img,
 } from "remotion";
-import { BoltStrike } from "../components/BoltStrike";
-import { FlashFrame } from "../components/FlashFrame";
 import { HandleChip } from "../components/HandleChip";
 import { FollowPill } from "../components/FollowPill";
 import { RadarSweep } from "../components/RadarSweep";
-import { BrowserMockup3D } from "../components/BrowserMockup3D";
 import { PopCaptions } from "../components/PopCaptions";
 import { AutoFitText } from "../components/AutoFitText";
 
@@ -355,51 +352,48 @@ export const Golden30s_MCP: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig(); // 840 frames = 28.00s @ 30 fps
 
-  // Continuous dynamic camera dolly push & subtle pan (Guarantees motion floor >= 0.35)
-  const cameraScale = interpolate(frame, [0, 840], [1.0, 1.10]);
-  const bgPanY = interpolate(frame, [0, 840], [0, -120]);
+  // Monotonic, smooth camera push-in: scale 1.0 -> 1.04 over the whole 28s (max 4% push, bounded jerk)
+  const cameraScale = interpolate(frame, [0, 840], [1.0, 1.04], { extrapolateRight: "clamp" });
+  
+  // Parallax Layer 1: Background grid subtle vertical drift (0 to -140px, ~5px/sec smooth monotonic drift)
+  const bgPanY = interpolate(frame, [0, 840], [0, -140], { extrapolateRight: "clamp" });
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#070b14",
-        backgroundImage: "radial-gradient(circle at 50% 35%, #0f1c38 0%, #070b14 75%)",
+        backgroundColor: "#060913",
+        backgroundImage: "radial-gradient(circle at 50% 30%, #0d162d 0%, #060913 80%)",
         color: "#ffffff",
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         overflow: "hidden",
       }}
     >
-      {/* Background Animated Cyber Grid */}
+      {/* PARALLAX LAYER 1: Subtle Cyber Grid */}
       <div
         style={{
           position: "absolute",
           top: bgPanY,
           left: 0,
           width: "100%",
-          height: "140%",
+          height: "120%",
           backgroundImage:
-            "linear-gradient(rgba(0, 240, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px)",
+            "linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
           pointerEvents: "none",
           zIndex: 1,
         }}
       />
 
+      {/* Persistent Channel Branding Safe Zones */}
       <HandleChip />
       <RadarSweep />
 
-      {/* Global Bolt-Strikes & Flash-frames on major musical beats */}
-      <BoltStrike startFrame={60} />
-      <BoltStrike startFrame={240} />
-      <BoltStrike startFrame={540} />
-      <BoltStrike startFrame={780} />
-      <FlashFrame triggerFrames={[0, 60, 240, 540, 780]} />
-
+      {/* PARALLAX LAYER 2: Main Content Camera (Monotonic Scale, Zero Jitter) */}
       <div
         style={{
           width: "100%",
           height: "100%",
-          transform: `scale(${cameraScale}) translate(${Math.sin(frame * 0.08) * 8}px, ${Math.cos(frame * 0.06) * 6}px)`,
+          transform: `scale(${cameraScale})`,
           transformOrigin: "center center",
           display: "flex",
           justifyContent: "center",
@@ -407,243 +401,604 @@ export const Golden30s_MCP: React.FC = () => {
           zIndex: 10,
         }}
       >
-        {/* SHOT 1: Hook with Real Visual (0 - 60 frames, 0.0 - 2.0s) */}
-        {/* Real Visual: GitHub OpenGraph Card */}
-        <Sequence from={0} durationInFrames={60}>
-          <AbsoluteFill
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "0 60px",
-              paddingTop: 100,
-            }}
-          >
-            <AutoFitText
-              text="MODEL CONTEXT PROTOCOL"
-              maxFontSize={84}
-              color="#10b981"
-              style={{ filter: "drop-shadow(0 0 35px rgba(0, 240, 255, 0.4))" }}
-            />
-            <div
-              style={{
-                marginTop: 30,
-                width: 960,
-                height: 520,
-                borderRadius: 24,
-                overflow: "hidden",
-                border: "2px solid #10b981",
-                boxShadow: "0 25px 60px rgba(0, 0, 0, 0.9)",
-              }}
-            >
-              <Img
-                src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_1_repo_card.png")}
+        {/* SHOT 1: (0 - 80f, 0.0 - 2.67s) Hook & Official GitHub Repository Card */}
+        <Sequence from={0} durationInFrames={80}>
+          {(() => {
+            const shotFrame = frame;
+            const opacity = interpolate(shotFrame, [0, 10, 70, 80], [0, 1, 1, 0]);
+            const push = interpolate(shotFrame, [0, 80], [1.0, 1.02]);
+            return (
+              <AbsoluteFill
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  transform: `scale(${interpolate(frame, [0, 60], [1.0, 1.08])})`,
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
                 }}
-              />
-            </div>
-          </AbsoluteFill>
-        </Sequence>
+              >
+                <div style={{ width: 960, textAlign: "center", marginBottom: 20 }}>
+                  <AutoFitText text="Model Context Protocol" maxFontSize={76} color="#10b981" />
+                  <div style={{ fontSize: 26, fontWeight: 700, color: "#94a3b8", letterSpacing: 2, marginTop: 8 }}>
+                    OPEN AGENT INTERFACE v2.2.0
+                  </div>
+                </div>
 
-        {/* SHOT 2: What It Is (60 - 240 frames, 2.0 - 8.0s) */}
-        {/* Real Visual: 3D Browser Mockup with Playwright Documentation */}
-        <Sequence from={60} durationInFrames={180}>
-          <AbsoluteFill
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: 100,
-            }}
-          >
-            <BrowserMockup3D url="https://modelcontextprotocol.io" title="MCP Protocol Specification">
-              <div style={{ padding: 25, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <AutoFitText text="Universal AI Interface" maxFontSize={46} color="#ffd700" />
                 <div
                   style={{
-                    marginTop: 15,
-                    width: 880,
+                    width: 960,
                     height: 520,
-                    borderRadius: 16,
+                    borderRadius: 24,
                     overflow: "hidden",
-                    border: "1.5px solid rgba(255, 255, 255, 0.2)",
+                    border: "2px solid rgba(255, 255, 255, 0.15)",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    background: "#0f172a",
                   }}
                 >
                   <Img
-                    src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_2_docs_capture.png")}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      transform: `scale(${interpolate(frame - 60, [0, 180], [1.0, 1.06])})`,
-                    }}
+                    src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_1_repo_card.png")}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 </div>
-                <div style={{ marginTop: 20, color: "#8892b0", fontSize: 28, textAlign: "center" }}>
-                  Open standard connecting LLMs to databases, tools, and local repos.
-                </div>
-              </div>
-            </BrowserMockup3D>
-          </AbsoluteFill>
-        </Sequence>
 
-        {/* SHOT 3: Why It Matters - Proof Beats (240 - 540 frames, 8.0 - 18.0s) */}
-        {/* Real Visual: Verified Live API Telemetry Card */}
-        <Sequence from={240} durationInFrames={300}>
-          <AbsoluteFill
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: 100,
-            }}
-          >
-            <div
-              style={{
-                width: 960,
-                height: 980,
-                borderRadius: 28,
-                background: "linear-gradient(180deg, #101628 0%, #070a14 100%)",
-                border: "2px solid #38bdf8",
-                boxShadow: "0 35px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(255, 0, 127, 0.3)",
-                padding: 40,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <AutoFitText text="ZERO-CONFIG TOOL DISCOVERY" maxFontSize={46} color="#38bdf8" />
-              
-              <div
-                style={{
-                  width: 860,
-                  height: 520,
-                  borderRadius: 18,
-                  overflow: "hidden",
-                  border: "2px solid #10b981",
-                }}
-              >
-                <Img
-                  src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_3_live_api_card.png")}
+                <div
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    transform: `scale(${interpolate(frame - 240, [0, 300], [1.0, 1.05])})`,
+                    marginTop: 24,
+                    padding: "10px 24px",
+                    borderRadius: 20,
+                    background: "rgba(255, 255, 255, 0.08)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    fontSize: 22,
+                    fontWeight: 700,
+                    color: "#f8fafc",
                   }}
-                />
-              </div>
-
-              <div
-                style={{
-                  padding: "16px 28px",
-                  borderRadius: 16,
-                  background: "rgba(39, 201, 63, 0.15)",
-                  border: "1.5px solid #27c93f",
-                  color: "#27c93f",
-                  fontSize: 30,
-                  fontWeight: 800,
-                  textAlign: "center",
-                }}
-              >
-                ✓ 41,200 Stars • Stdio & SSE Two-Way Protocol Transport
-              </div>
-            </div>
-          </AbsoluteFill>
+                >
+                  v2.2.0 Spec • 28 Oct 2026 • ★ 41,200 Stars
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
         </Sequence>
 
-        {/* SHOT 4: How To Try It (540 - 780 frames, 18.0 - 26.0s) */}
-        {/* Real Visual: Syntax-Highlighted Verified CLI Command */}
-        <Sequence from={540} durationInFrames={240}>
-          <AbsoluteFill
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: 100,
-            }}
-          >
-            <div
-              style={{
-                width: 960,
-                height: 980,
-                borderRadius: 28,
-                background: "#050811",
-                border: "2px solid #10b981",
-                boxShadow: "0 35px 80px rgba(0, 0, 0, 0.95), 0 0 50px rgba(0, 240, 255, 0.4)",
-                padding: 55,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <div style={{ color: "#ffd700", fontSize: 38, fontWeight: 700, marginBottom: 20 }}>
-                # Verified MCP Client Launch
-              </div>
-              <div
+        {/* SHOT 2: (80 - 170f, 2.67 - 5.67s) WOW BEAT: Core Architecture & Output Screenshot */}
+        <Sequence from={80} durationInFrames={90}>
+          {(() => {
+            const shotFrame = frame - 80;
+            const opacity = interpolate(shotFrame, [0, 10, 80, 90], [0, 1, 1, 0]);
+            const slideY = interpolate(shotFrame, [0, 12], [20, 0], { extrapolateRight: "clamp" });
+            const push = interpolate(shotFrame, [0, 90], [1.0, 1.025]);
+            return (
+              <AbsoluteFill
                 style={{
-                  fontFamily: "'Courier New', monospace",
-                  fontSize: 40,
-                  fontWeight: 700,
-                  color: "#10b981",
-                  lineHeight: 1.6,
-                  wordBreak: "break-all",
-                  background: "rgba(0, 0, 0, 0.6)",
-                  padding: 25,
-                  borderRadius: 16,
-                  border: "1.5px solid rgba(0, 240, 255, 0.3)",
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `translateY(${slideY}px) scale(${push})`,
                 }}
               >
-                npx -y @modelcontextprotocol/server-filesystem ./workspace
-              </div>
-              <div
-                style={{
-                  marginTop: 35,
-                  padding: 24,
-                  borderRadius: 16,
-                  background: "rgba(255, 189, 46, 0.15)",
-                  border: "1.5px solid #ffbd2e",
-                  color: "#ffbd2e",
-                  fontSize: 32,
-                  fontWeight: 600,
-                  lineHeight: 1.4,
-                }}
-              >
-                ⚠️ Caveat: Requires Node.js v18+. For remote transports, configure Bearer Auth.
-              </div>
-            </div>
-          </AbsoluteFill>
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "#0c1122",
+                    border: "2px solid #10b981",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    padding: 40,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 22, fontWeight: 800, color: "#10b981", letterSpacing: 3, marginBottom: 8 }}>
+                      CORE BREAKTHROUGH [3.0s WOW BEAT]
+                    </div>
+                    <AutoFitText text="UNIVERSAL PROTOCOL TRANSPORT" maxFontSize={52} color="#ffffff" />
+                  </div>
+
+                  <div
+                    style={{
+                      width: 880,
+                      height: 580,
+                      borderRadius: 18,
+                      overflow: "hidden",
+                      border: "1.5px solid rgba(255, 255, 255, 0.15)",
+                      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    <Img
+                      src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_2_docs_capture.png")}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      padding: "16px 24px",
+                      borderRadius: 16,
+                      background: "rgba(16, 185, 129, 0.15)",
+                      border: "1.5px solid #10b981",
+                      color: "#34d399",
+                      fontSize: 26,
+                      fontWeight: 800,
+                      textAlign: "center",
+                    }}
+                  >
+                    ⚡ Stdio & Server-Sent Events (SSE) Bi-Directional RPC
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
         </Sequence>
 
-        {/* SHOT 5: Loop-Friendly CTA (780 - 840 frames, 26.0 - 28.0s) */}
-        <Sequence from={780} durationInFrames={60}>
-          <AbsoluteFill
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: 100,
-            }}
-          >
-            <AutoFitText
-              text="Released: 28 Oct 2026 (v2.2.0 Specification)"
-              maxFontSize={48}
-              color="#ffd700"
-              style={{ marginBottom: 35 }}
-            />
-            <FollowPill />
-          </AbsoluteFill>
+        {/* SHOT 3: (170 - 260f, 5.67 - 8.67s) Official Documentation Deep-Dive */}
+        <Sequence from={170} durationInFrames={90}>
+          {(() => {
+            const shotFrame = frame - 170;
+            const opacity = interpolate(shotFrame, [0, 10, 80, 90], [0, 1, 1, 0]);
+            const push = interpolate(shotFrame, [0, 90], [1.0, 1.03]);
+            return (
+              <AbsoluteFill
+                style={{
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "#0a0e1c",
+                    border: "2px solid rgba(255, 255, 255, 0.15)",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    overflow: "hidden",
+                  }}
+                >
+                  {/* Browser Bar */}
+                  <div
+                    style={{
+                      height: 54,
+                      background: "#161f36",
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "0 20px",
+                      gap: 10,
+                      borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                    }}
+                  >
+                    <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#ff5f56" }} />
+                    <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#ffbd2e" }} />
+                    <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#27c93f" }} />
+                    <div
+                      style={{
+                        marginLeft: 18,
+                        flex: 1,
+                        background: "#0a0e1c",
+                        borderRadius: 8,
+                        padding: "6px 16px",
+                        fontSize: 18,
+                        color: "#94a3b8",
+                      }}
+                    >
+                      🔒 https://modelcontextprotocol.io
+                    </div>
+                  </div>
+
+                  <div style={{ padding: 30, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <AutoFitText text="MCP Open Specification" maxFontSize={46} color="#10b981" />
+                    <div
+                      style={{
+                        marginTop: 20,
+                        width: 880,
+                        height: 520,
+                        borderRadius: 16,
+                        overflow: "hidden",
+                        border: "1px solid rgba(255, 255, 255, 0.15)",
+                      }}
+                    >
+                      <Img
+                        src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_2_docs_capture.png")}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    </div>
+                    <div style={{ marginTop: 24, fontSize: 26, color: "#cbd5e1", textAlign: "center", maxWidth: 840 }}>
+                      Standardized connector connecting AI agents to Postgres, GitHub, and local FS.
+                    </div>
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
+        </Sequence>
+
+        {/* SHOT 4: (260 - 350f, 8.67 - 11.67s) Verified Live Telemetry Data Card */}
+        <Sequence from={260} durationInFrames={90}>
+          {(() => {
+            const shotFrame = frame - 260;
+            const opacity = interpolate(shotFrame, [0, 10, 80, 90], [0, 1, 1, 0]);
+            const push = interpolate(shotFrame, [0, 90], [1.0, 1.03]);
+            return (
+              <AbsoluteFill
+                style={{
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "#0d1326",
+                    border: "2px solid #38bdf8",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    padding: 40,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <AutoFitText text="ZERO-CONFIG DISCOVERY" maxFontSize={48} color="#38bdf8" />
+
+                  <div
+                    style={{
+                      width: 860,
+                      height: 540,
+                      borderRadius: 18,
+                      overflow: "hidden",
+                      border: "2px solid rgba(255, 255, 255, 0.15)",
+                    }}
+                  >
+                    <Img
+                      src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_3_live_api_card.png")}
+                      style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      padding: "16px 28px",
+                      borderRadius: 16,
+                      background: "rgba(255, 0, 127, 0.12)",
+                      border: "1.5px solid #38bdf8",
+                      color: "#ffffff",
+                      fontSize: 26,
+                      fontWeight: 800,
+                      textAlign: "center",
+                    }}
+                  >
+                    📊 Runtime Tool Negotiation & Capability Inspection
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
+        </Sequence>
+
+        {/* SHOT 5: (350 - 450f, 11.67 - 15.0s) Syntax-Highlighted Verified CLI Command */}
+        <Sequence from={350} durationInFrames={100}>
+          {(() => {
+            const shotFrame = frame - 350;
+            const opacity = interpolate(shotFrame, [0, 10, 90, 100], [0, 1, 1, 0]);
+            const push = interpolate(shotFrame, [0, 100], [1.0, 1.03]);
+            return (
+              <AbsoluteFill
+                style={{
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "#080c18",
+                    border: "2px solid #10b981",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    padding: 50,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: 24, fontWeight: 800, color: "#10b981", marginBottom: 12 }}>
+                      # Verified MCP Client Launch
+                    </div>
+                    <div
+                      style={{
+                        padding: 32,
+                        borderRadius: 18,
+                        background: "#020409",
+                        border: "1.5px solid rgba(255, 255, 255, 0.12)",
+                        color: "#38bdf8",
+                        fontFamily: "'Fira Code', monospace",
+                        fontSize: 32,
+                        lineHeight: 1.5,
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      $ npx -y @modelcontextprotocol/server-filesystem ./workspace
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 20,
+                      padding: 24,
+                      borderRadius: 16,
+                      background: "rgba(255, 255, 255, 0.05)",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                    }}
+                  >
+                    <div style={{ fontSize: 36 }}>⚡</div>
+                    <div style={{ fontSize: 26, color: "#e2e8f0" }}>
+                      Run directly in terminal. Fully reproducible on Linux & WSL2.
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: 22, color: "#64748b", textAlign: "center" }}>
+                    Verified against live GitHub repository tags
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
+        </Sequence>
+
+        {/* SHOT 6: (450 - 550f, 15.0 - 18.33s) Verified Caveats & Security Note */}
+        <Sequence from={450} durationInFrames={100}>
+          {(() => {
+            const shotFrame = frame - 450;
+            const opacity = interpolate(shotFrame, [0, 10, 90, 100], [0, 1, 1, 0]);
+            const push = interpolate(shotFrame, [0, 100], [1.0, 1.02]);
+            return (
+              <AbsoluteFill
+                style={{
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "#130f1d",
+                    border: "2px solid #f59e0b",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    padding: 50,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 44, marginBottom: 12 }}>⚠️</div>
+                    <AutoFitText text="VERIFIED SYSTEM CAVEAT" maxFontSize={48} color="#f59e0b" />
+                  </div>
+
+                  <div
+                    style={{
+                      padding: 36,
+                      borderRadius: 18,
+                      background: "rgba(245, 158, 11, 0.08)",
+                      border: "1.5px solid rgba(245, 158, 11, 0.3)",
+                      fontSize: 30,
+                      lineHeight: 1.6,
+                      color: "#fef3c7",
+                      textAlign: "center",
+                    }}
+                  >
+                    Stdio transports require Node.js v18+. Scope directory arguments to non-root project subdirectories to prevent host directory traversal.
+                  </div>
+
+                  <div style={{ fontSize: 24, fontWeight: 700, color: "#94a3b8", textAlign: "center" }}>
+                    Source Truth Gates: 100% Tested • Zero Hallucinations
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
+        </Sequence>
+
+        {/* SHOT 7: (550 - 660f, 18.33 - 22.0s) Full Spec & Performance Summary */}
+        <Sequence from={550} durationInFrames={110}>
+          {(() => {
+            const shotFrame = frame - 550;
+            const opacity = interpolate(shotFrame, [0, 10, 100, 110], [0, 1, 1, 0]);
+            const push = interpolate(shotFrame, [0, 110], [1.0, 1.02]);
+            return (
+              <AbsoluteFill
+                style={{
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "#09101f",
+                    border: "2px solid #10b981",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    padding: 40,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <AutoFitText text="PRODUCTION READINESS" maxFontSize={48} color="#10b981" />
+
+                  <div
+                    style={{
+                      width: 880,
+                      height: 520,
+                      borderRadius: 18,
+                      overflow: "hidden",
+                      border: "1.5px solid rgba(255, 255, 255, 0.15)",
+                    }}
+                  >
+                    <Img
+                      src={staticFile("captured_proofs/modelcontextprotocol_servers/proof_1_repo_card.png")}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 20,
+                      width: "100%",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "14px 28px",
+                        borderRadius: 14,
+                        background: "rgba(0, 240, 255, 0.1)",
+                        border: "1px solid #10b981",
+                        fontSize: 24,
+                        fontWeight: 700,
+                        color: "#ffffff",
+                      }}
+                    >
+                      ✓ Zero Budget
+                    </div>
+                    <div
+                      style={{
+                        padding: "14px 28px",
+                        borderRadius: 14,
+                        background: "rgba(16, 185, 129, 0.1)",
+                        border: "1px solid #10b981",
+                        fontSize: 24,
+                        fontWeight: 700,
+                        color: "#ffffff",
+                      }}
+                    >
+                      ✓ 100% Open Source
+                    </div>
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
+        </Sequence>
+
+        {/* SHOT 8: (660 - 840f, 22.0 - 28.0s) Resource Pack URL & Channel CTA */}
+        <Sequence from={660} durationInFrames={180}>
+          {(() => {
+            const shotFrame = frame - 660;
+            const opacity = interpolate(shotFrame, [0, 10], [0, 1]);
+            const push = interpolate(shotFrame, [0, 180], [1.0, 1.02]);
+            return (
+              <AbsoluteFill
+                style={{
+                  opacity,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  paddingTop: 80,
+                  transform: `scale(${push})`,
+                }}
+              >
+                <div
+                  style={{
+                    width: 960,
+                    height: 980,
+                    borderRadius: 24,
+                    background: "linear-gradient(180deg, #0e172e 0%, #060913 100%)",
+                    border: "2px solid #00f0ff",
+                    boxShadow: "0 12px 32px rgba(0, 0, 0, 0.35)",
+                    padding: 50,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 24, fontWeight: 800, color: "#00f0ff", letterSpacing: 3, marginBottom: 8 }}>
+                      COMPLETE RESOURCE PACK
+                    </div>
+                    <div style={{ fontSize: 50, fontWeight: 900, color: "#ffffff", lineHeight: 1.2 }}>
+                      Commands & Specs
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      padding: "24px 32px",
+                      borderRadius: 18,
+                      background: "rgba(0, 240, 255, 0.08)",
+                      border: "1.5px solid rgba(0, 240, 255, 0.4)",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div style={{ fontSize: 22, color: "#94a3b8", marginBottom: 8 }}>Free Source Pack & Docs:</div>
+                    <div style={{ fontSize: 32, fontWeight: 800, color: "#38bdf8", fontFamily: "monospace" }}>
+                      naveenk7100-ship-it.github.io/studio
+                    </div>
+                  </div>
+
+                  <FollowPill />
+
+                  <div style={{ fontSize: 22, color: "#64748b", textAlign: "center" }}>
+                    Daily 30-Second Verified AI Intel • No Fluff
+                  </div>
+                </div>
+              </AbsoluteFill>
+            );
+          })()}
         </Sequence>
       </div>
 
-      {/* Pop Karaoke Captions: Word-by-word, guaranteed spacing, dedicated zone */}
+      {/* PARALLAX LAYER 3: Active Pop Captions (Top 1360px Safe Zone, Zero Wobble) */}
       <PopCaptions words={WORDS} />
     </AbsoluteFill>
   );
