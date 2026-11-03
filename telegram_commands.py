@@ -27,7 +27,7 @@ import requests
 import datetime as dt
 from dotenv import load_dotenv
 
-ROOT = r"C:\Users\navee\OneDrive\Desktop\studio"
+ROOT = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(ROOT, ".env"))
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")

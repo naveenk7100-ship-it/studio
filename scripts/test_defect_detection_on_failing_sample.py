@@ -17,17 +17,25 @@ import imageio_ffmpeg
 
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 
-ROOT = r"C:\Users\navee\OneDrive\Desktop\studio"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 OUT_DIR = os.path.join(ROOT, "out")
+os.makedirs(OUT_DIR, exist_ok=True)
 
 FAILING_SAMPLE = os.path.join(OUT_DIR, "proof_1_repo_terminal_hacker.mp4")
 
 def test_defects():
     print(f"\n================ Testing Gates on Legacy Defective Sample ================")
-    print(f"Sample: {FAILING_SAMPLE}")
+    # If legacy sample does not exist on disk (e.g. fresh CI runner), create a synthetic defective video
     if not os.path.exists(FAILING_SAMPLE):
-        print("ERROR: Sample does not exist.")
-        return
+        print(f"Creating synthetic static/defective sample for CI validation...")
+        gen_cmd = [
+            FFMPEG, "-y",
+            "-f", "lavfi", "-i", "color=c=black:s=1080x1920:d=2:r=30",
+            "-f", "lavfi", "-i", "anullsrc=r=44100:cl=mono",
+            "-c:v", "libx264", "-c:a", "aac", "-t", "2",
+            FAILING_SAMPLE
+        ]
+        subprocess.run(gen_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     # Gate A: Audio Loudness
     cmd = [

@@ -13,7 +13,7 @@ import json
 import time
 from dotenv import load_dotenv
 
-ROOT = r"C:\Users\navee\OneDrive\Desktop\studio"
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, ROOT)
 if sys.stdout.encoding != "utf-8":
     try:
@@ -23,6 +23,11 @@ if sys.stdout.encoding != "utf-8":
 load_dotenv(os.path.join(ROOT, ".env"))
 
 import telegram_commands
+
+# Mock outgoing Telegram network calls for fast, hermetic test execution
+sent_messages = []
+telegram_commands.send_message = lambda chat_id, text, reply_markup=None: sent_messages.append({"chat_id": chat_id, "text": text})
+telegram_commands.answer_callback_query = lambda cb_id, text: True
 
 CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "7031739832")
 
