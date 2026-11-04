@@ -1,11 +1,9 @@
 import React from "react";
 import { Composition } from "remotion";
-import { GoldenReel1_vLLM } from "./compositions/GoldenReel1_vLLM";
-import { GoldenReel2_ClaudeCode } from "./compositions/GoldenReel2_ClaudeCode";
 import { ShowcaseBumper } from "./compositions/ShowcaseBumper";
-import { Golden30s_vLLM } from "./compositions/Golden30s_vLLM";
-import { Golden30s_ClaudeCode } from "./compositions/Golden30s_ClaudeCode";
-import { Golden30s_MCP } from "./compositions/Golden30s_MCP";
+import { NewEditorial_SuperAgent } from "./compositions/NewEditorial_SuperAgent";
+import { NewEditorial_Ollama } from "./compositions/NewEditorial_Ollama";
+import { NewEditorial_QwenNews } from "./compositions/NewEditorial_QwenNews";
 
 export const Root: React.FC = () => {
   return (
@@ -19,24 +17,24 @@ export const Root: React.FC = () => {
         height={1920}
       />
       <Composition
-        id="Golden30s-vLLM"
-        component={Golden30s_vLLM}
+        id="NewEditorial-SuperAgent"
+        component={NewEditorial_SuperAgent}
         durationInFrames={840}
         fps={30}
         width={1080}
         height={1920}
       />
       <Composition
-        id="Golden30s-ClaudeCode"
-        component={Golden30s_ClaudeCode}
+        id="NewEditorial-Ollama"
+        component={NewEditorial_Ollama}
         durationInFrames={840}
         fps={30}
         width={1080}
         height={1920}
       />
       <Composition
-        id="Golden30s-MCP"
-        component={Golden30s_MCP}
+        id="NewEditorial-QwenNews"
+        component={NewEditorial_QwenNews}
         durationInFrames={840}
         fps={30}
         width={1080}

@@ -1,11 +1,10 @@
 name: Post Slot (12:30 PM & 8:30 PM IST)
 
 on:
-  schedule:
-    # 12:30 PM IST (07:00 UTC) -> Slot 1
-    - cron: "0 7 * * *"
-    # 8:30 PM IST (15:00 UTC) -> Slot 2
-    - cron: "0 15 * * *"
+  # Cron disabled until user explicitly commands 'GO'
+  # schedule:
+  #   - cron: "0 7 * * *"
+  #   - cron: "0 15 * * *"
   workflow_dispatch:
     inputs:
       slot:

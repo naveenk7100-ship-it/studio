@@ -1,0 +1,32 @@
+{
+  "description": "FLASH Content OS - 60-Day Covered Topics Ledger. Prevents recycling or duplicate coverage.",
+  "covered": [
+    {
+      "key": "vllm-project/vllm:v0.33.0rc3",
+      "repo": "vllm-project/vllm",
+      "release_tag": "v0.33.0rc3",
+      "canonical_url": "https://github.com/vllm-project/vllm",
+      "normalized_title": "vllm high-throughput llm inference engine",
+      "covered_at": "2026-11-03",
+      "expires_at": "2027-01-02"
+    },
+    {
+      "key": "anthropics/claude-code:v2.1.317",
+      "repo": "anthropics/claude-code",
+      "release_tag": "v2.1.317",
+      "canonical_url": "https://docs.anthropic.com/en/docs/claude-code",
+      "normalized_title": "claude code terminal-native coding agent",
+      "covered_at": "2026-11-03",
+      "expires_at": "2027-01-02"
+    },
+    {
+      "key": "modelcontextprotocol/servers:v2.2.0",
+      "repo": "modelcontextprotocol/servers",
+      "release_tag": "v2.2.0",
+      "canonical_url": "https://modelcontextprotocol.io",
+      "normalized_title": "model context protocol universal ai tool interface",
+      "covered_at": "2026-11-03",
+      "expires_at": "2027-01-02"
+    }
+  ]
+}

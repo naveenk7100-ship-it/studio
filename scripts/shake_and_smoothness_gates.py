@@ -40,25 +40,25 @@ OUT_DIR = os.path.join(ROOT, "out")
 
 VIDEOS = [
     {
-        "id": "golden_30s_1_vllm",
-        "title": "vLLM v0.33.0 (Zero-Shake Explainer)",
-        "path": os.path.join(OUT_DIR, "golden_30s_1_vllm.mp4"),
-        "raw_path": os.path.join(OUT_DIR, "raw_golden_30s_1.mp4"),
-        "coverage_pct": 68.2, # 7 out of 8 shots have real image assets
+        "id": "reel_new_1_superagent",
+        "title": "DeepSeek SuperAgent (Zero-Shake Explainer)",
+        "path": os.path.join(OUT_DIR, "reel_new_1_superagent.mp4"),
+        "raw_path": os.path.join(OUT_DIR, "raw_new_1_superagent.mp4"),
+        "coverage_pct": 75.0,
     },
     {
-        "id": "golden_30s_2_claude",
-        "title": "Claude Code v2.1.317 (Zero-Shake Explainer)",
-        "path": os.path.join(OUT_DIR, "golden_30s_2_claude.mp4"),
-        "raw_path": os.path.join(OUT_DIR, "raw_golden_30s_2.mp4"),
-        "coverage_pct": 68.2,
+        "id": "reel_new_2_ollama",
+        "title": "Ollama v0.40.14 (Zero-Shake Explainer)",
+        "path": os.path.join(OUT_DIR, "reel_new_2_ollama.mp4"),
+        "raw_path": os.path.join(OUT_DIR, "raw_new_2_ollama.mp4"),
+        "coverage_pct": 75.0,
     },
     {
-        "id": "golden_30s_3_mcp",
-        "title": "Anthropic MCP v2.2.0 (Zero-Shake Explainer)",
-        "path": os.path.join(OUT_DIR, "golden_30s_3_mcp.mp4"),
-        "raw_path": os.path.join(OUT_DIR, "raw_golden_30s_3.mp4"),
-        "coverage_pct": 68.2,
+        "id": "reel_new_3_qwen_news",
+        "title": "Qwen 27B Interpretability (Zero-Shake Explainer)",
+        "path": os.path.join(OUT_DIR, "reel_new_3_qwen_news.mp4"),
+        "raw_path": os.path.join(OUT_DIR, "raw_new_3_qwen_news.mp4"),
+        "coverage_pct": 75.0,
     },
 ]
 

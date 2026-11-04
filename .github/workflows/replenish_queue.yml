@@ -1,9 +1,9 @@
 name: Replenish Content Queue
 
 on:
-  schedule:
-    # 3x per day: 7:30 AM, 3:30 PM, 11:30 PM IST (02:00, 10:00, 18:00 UTC)
-    - cron: "0 2,10,18 * * *"
+  # Cron disabled until user explicitly commands 'GO'
+  # schedule:
+  #   - cron: "0 2,10,18 * * *"
   workflow_dispatch:
     inputs:
       target_depth:

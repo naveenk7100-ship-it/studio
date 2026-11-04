@@ -1,0 +1,50 @@
+{
+  "description": "Telegram Delivery Ledger. Enforces strict single-send idempotency.",
+  "delivered": {
+    "golden_30s_1_vllm": {
+      "title": "vLLM v0.33.0: High-Throughput Inference Engine",
+      "delivered_at": "2026-11-03 18:04:36",
+      "target_chat": "7031739832",
+      "status": "delivered"
+    },
+    "golden_30s_2_claude": {
+      "title": "Claude Code v2.1.317: Terminal-Native Coding Agent",
+      "delivered_at": "2026-11-03 18:05:08",
+      "target_chat": "7031739832",
+      "status": "delivered"
+    },
+    "golden_30s_3_mcp": {
+      "title": "Anthropic Model Context Protocol (MCP) v2.2",
+      "delivered_at": "2026-11-03 18:05:30",
+      "target_chat": "7031739832",
+      "status": "delivered"
+    },
+    "reel_new_1_superagent": {
+      "title": "DeepSeek SuperAgent: Autonomous Hierarchical LLM Agent",
+      "delivered_at": "2026-11-04 19:01:33",
+      "target_chat": "7031739832",
+      "status": "delivered",
+      "sheet_msg_id": 149,
+      "card_msg_id": 150,
+      "video_msg_id": 151
+    },
+    "reel_new_2_ollama": {
+      "title": "Ollama v0.40.14: Local LLM Unified Runtime & Server",
+      "delivered_at": "2026-11-04 19:01:52",
+      "target_chat": "7031739832",
+      "status": "delivered",
+      "sheet_msg_id": 152,
+      "card_msg_id": 153,
+      "video_msg_id": 154
+    },
+    "reel_new_3_qwen_news": {
+      "title": "Qwen 27B Interpretability: Local Neural Weight Analysis",
+      "delivered_at": "2026-11-04 19:04:19",
+      "target_chat": "7031739832",
+      "status": "delivered",
+      "sheet_msg_id": 155,
+      "card_msg_id": 156,
+      "video_msg_id": 157
+    }
+  }
+}
