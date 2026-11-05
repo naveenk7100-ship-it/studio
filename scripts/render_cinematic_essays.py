@@ -1,9 +1,10 @@
 """
-Render all 3 Cinematic Visual-Metaphor Essay compositions + Showcase Bumper via Remotion CLI.
+Render all 4 Cinematic Visual-Metaphor Essay compositions + Showcase Bumper via Remotion CLI.
 1. CinematicEssay-Unslop (840 frames) -> out/raw_essay_1_unslop.mp4
 2. CinematicEssay-UV (840 frames) -> out/raw_essay_2_uv.mp4
 3. CinematicEssay-Kimi (840 frames) -> out/raw_essay_3_kimi.mp4
-4. ShowcaseBumper (600 frames) -> out/raw_showcase_bumper.mp4
+4. CinematicEssay-Craft (840 frames) -> out/raw_essay_4_craft.mp4
+5. ShowcaseBumper (600 frames) -> out/raw_showcase_bumper.mp4
 """
 
 import os
@@ -20,6 +21,7 @@ RENDERS = [
     ("CinematicEssay-Unslop", os.path.join(OUT_DIR, "raw_essay_1_unslop.mp4")),
     ("CinematicEssay-UV", os.path.join(OUT_DIR, "raw_essay_2_uv.mp4")),
     ("CinematicEssay-Kimi", os.path.join(OUT_DIR, "raw_essay_3_kimi.mp4")),
+    ("CinematicEssay-Craft", os.path.join(OUT_DIR, "raw_essay_4_craft.mp4")),
     ("ShowcaseBumper", os.path.join(OUT_DIR, "raw_showcase_bumper.mp4")),
 ]
 
@@ -53,4 +55,4 @@ if __name__ == "__main__":
         if not ok:
             print(f"FATAL: Render failed for {comp_id}", flush=True)
             sys.exit(1)
-    print("\n[ALL 4 RENDERS COMPLETED SUCCESSFULLY]")
+    print("\n[ALL 5 RENDERS COMPLETED SUCCESSFULLY]")

@@ -3,163 +3,328 @@ import {
   AbsoluteFill,
   interpolate,
   useCurrentFrame,
-  useVideoConfig,
   Sequence,
   staticFile,
   Img,
 } from "remotion";
-import { AutoFitText } from "../components/AutoFitText";
 
-// Prompt Library Index ID: 164 (Signal-Field Waveform & Neural Reasoning Burst)
-const WORDS: [string, number, number][] = [["Mama,", 0.0, 0.79], ["open", 0.0, 0.79], ["weight", 1.224, 2.132], ["AI", 2.132, 2.428], ["models", 2.428, 2.842], ["lo", 2.842, 3.316], ["major", 2.842, 3.316], ["breakthrough", 3.316, 4.343], ["vachindi.", 4.797, 4.915], ["Moonshot", 4.915, 5.172], ["AI", 5.172, 5.547], ["official", 5.902, 6.198], ["ga", 5.902, 6.198], ["Kimi", 6.198, 6.731], ["K", 6.731, 7.205], ["three", 7.205, 7.718], ["point", 7.718, 8.133], ["one", 8.133, 8.468], ["Pro", 8.133, 8.468], ["weights", 8.468, 8.665], ["release", 8.665, 9.001], ["chesindi.", 9.001, 9.495], ["Hacker", 10.146, 10.422], ["News", 10.422, 10.639], ["lo", 10.422, 10.639], ["four", 10.639, 10.955], ["hundred", 10.955, 12.278], ["sixty-three", 12.278, 12.633], ["points", 12.811, 12.87], ["tho", 12.87, 13.363], ["viral", 12.87, 13.363], ["aina", 13.363, 13.817], ["ee", 14.331, 14.686], ["model,", 14.686, 15.179], ["advanced", 15.179, 15.554], ["long", 15.554, 16.107], ["context", 15.554, 16.107], ["reasoning", 16.384, 16.719], ["mariyu", 16.995, 17.528], ["agentic", 17.528, 17.805], ["coding", 17.805, 18.259], ["capabilities", 18.259, 18.93], ["istundi.", 18.259, 18.93], ["Developers", 19.621, 20.016], ["direct", 20.016, 20.292], ["ga", 20.292, 20.529], ["Hugging", 20.529, 20.825], ["Face", 20.825, 21.062], ["nunchi", 20.825, 21.062], ["weights", 21.062, 21.417], ["download", 21.417, 21.674], ["chesi", 21.674, 22.009], ["Transformers", 22.009, 22.404], ["library", 22.976, 23.391], ["tho", 22.976, 23.391], ["run", 23.391, 23.667], ["cheyavachu.", 24.713, 25.385], ["Open", 25.385, 25.72], ["source", 25.72, 25.996], ["AI", 25.996, 26.352], ["community", 25.996, 26.352], ["ki", 26.352, 26.668], ["idi", 26.668, 26.826], ["great", 26.826, 27.122], ["asset.", 27.122, 27.497]];
+const WORDS = [{"word": "Mama,", "start": 0.15, "end": 0.781}, {"word": "Moonshot", "start": 1.107, "end": 1.547}, {"word": "AI", "start": 1.547, "end": 1.891}, {"word": "official", "start": 1.891, "end": 2.905}, {"word": "ga", "start": 3.077, "end": 3.402}, {"word": "Kimi", "start": 3.402, "end": 3.862}, {"word": "K3.1", "start": 3.862, "end": 4.34}, {"word": "Pro", "start": 4.34, "end": 4.684}, {"word": "open", "start": 4.684, "end": 5.029}, {"word": "model", "start": 5.029, "end": 5.296}, {"word": "weights", "start": 5.296, "end": 5.526}, {"word": "release", "start": 5.526, "end": 5.794}, {"word": "chesaru.", "start": 5.794, "end": 6.215}, {"word": "Hacker", "start": 6.731, "end": 7.018}, {"word": "News", "start": 7.018, "end": 7.458}, {"word": "lo", "start": 7.458, "end": 8.396}, {"word": "532", "start": 8.396, "end": 9.104}, {"word": "points", "start": 9.104, "end": 9.314}, {"word": "tho", "start": 9.314, "end": 9.563}, {"word": "top", "start": 9.563, "end": 9.869}, {"word": "trending", "start": 9.869, "end": 10.137}, {"word": "lo", "start": 10.615, "end": 10.94}, {"word": "undi.", "start": 10.94, "end": 11.208}, {"word": "OpenAI", "start": 11.208, "end": 11.514}, {"word": "client", "start": 11.514, "end": 11.897}, {"word": "syntax", "start": 11.897, "end": 12.241}, {"word": "tho", "start": 12.241, "end": 12.566}, {"word": "reasoning", "start": 12.566, "end": 12.93}, {"word": "effort", "start": 12.93, "end": 13.389}, {"word": "max", "start": 13.389, "end": 13.848}, {"word": "configure", "start": 13.848, "end": 14.403}, {"word": "cheyochu.", "start": 14.766, "end": 14.814}, {"word": "2.8T", "start": 14.805, "end": 15.206}, {"word": "parameter", "start": 15.206, "end": 15.417}, {"word": "architecture", "start": 15.417, "end": 15.685}, {"word": "kabatti,", "start": 15.685, "end": 16.22}, {"word": "multi", "start": 16.22, "end": 16.871}, {"word": "node", "start": 17.33, "end": 17.502}, {"word": "GPU", "start": 17.502, "end": 17.808}, {"word": "cluster", "start": 17.808, "end": 18.153}, {"word": "avasaram.", "start": 18.153, "end": 18.478}, {"word": "Open", "start": 18.478, "end": 18.803}, {"word": "weights", "start": 19.281, "end": 19.454}, {"word": "Hugging", "start": 19.454, "end": 19.721}, {"word": "Face", "start": 19.721, "end": 20.047}, {"word": "lo", "start": 20.047, "end": 20.315}, {"word": "Kimi", "start": 20.315, "end": 20.544}, {"word": "model", "start": 20.544, "end": 20.831}, {"word": "license", "start": 20.831, "end": 21.061}, {"word": "tho", "start": 21.061, "end": 21.329}, {"word": "unnayi.", "start": 21.329, "end": 21.577}, {"word": "Official", "start": 21.577, "end": 21.673}, {"word": "model", "start": 21.673, "end": 21.826}, {"word": "card", "start": 22.247, "end": 22.553}, {"word": "link", "start": 22.553, "end": 22.916}, {"word": "bio", "start": 22.916, "end": 23.146}, {"word": "lo", "start": 23.146, "end": 23.337}, {"word": "check", "start": 23.337, "end": 23.835}, {"word": "cheyandi.", "start": 23.835, "end": 24.026}];
+
+const AutoFitText: React.FC<{ text: string; maxFontSize: number; color?: string }> = ({
+  text,
+  maxFontSize,
+  color = "#FFFFFF",
+}) => {
+  const len = text.length;
+  let fontSize = maxFontSize;
+  if (len > 30) fontSize = Math.floor(maxFontSize * 0.72);
+  else if (len > 22) fontSize = Math.floor(maxFontSize * 0.85);
+
+  return (
+    <div
+      style={{
+        fontSize,
+        fontWeight: 800,
+        color,
+        letterSpacing: -0.5,
+        textAlign: "center",
+        lineHeight: 1.15,
+        wordBreak: "break-word",
+        maxWidth: 960,
+      }}
+    >
+      {text}
+    </div>
+  );
+};
 
 export const CinematicEssay_Kimi: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig(); // 840 frames = 28.00s @ 30 fps
 
-  // Monotonic, gentle camera push across entire video: scale 1.0 -> 1.05 (<= 5% total <= 6% gate)
-  const cameraScale = interpolate(frame, [0, 840], [1.0, 1.05], { extrapolateRight: "clamp" });
+  // Controlled chromatic aberration glitch: EXACTLY 4 frames (510..514) on the burst beat
+  const isGlitch = frame >= 510 && frame < 514;
+  const glitchOffset = isGlitch ? 6 : 0;
 
-  // Controlled RGB Split Glitch on frame 490 (Shot 7 Burst Transition, 16.33s)
-  // Exactly 4 frames (490 - 494), zero camera shake
-  const isGlitch = frame >= 490 && frame < 494;
-  const rgbOffset = isGlitch ? (frame % 2 === 0 ? 6 : -6) : 0;
+  // Active word in forced-alignment words list
+  const currentSec = frame / 30;
+  const currentWordObj = WORDS.find((w: any) => currentSec >= w.start && currentSec <= w.end);
+  const currentWordIdx = currentWordObj ? WORDS.indexOf(currentWordObj) : -1;
+
+  // Group into max 3 words window
+  let captionText = "";
+  if (currentWordIdx >= 0 && currentWordIdx < WORDS.length) {
+    const startIdx = Math.max(0, currentWordIdx - 1);
+    const endIdx = Math.min(WORDS.length, startIdx + 3);
+    captionText = WORDS.slice(startIdx, endIdx).map((w: any) => w.word).join(" ");
+  }
+
+  // Camera ease: smooth, monotonic push across the reel
+  const globalPush = interpolate(frame, [0, 840], [1.0, 1.045]);
 
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#0E1116", // Graphite background
-        color: "#F8FAFC",
-        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        backgroundColor: "#07090E",
         overflow: "hidden",
+        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       }}
     >
-      {/* 1. Signal-Field Texture & Coordinate Grid */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundImage:
-            "linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-          pointerEvents: "none",
-          zIndex: 1,
-        }}
-      />
+      {/* GLITCH RGB SPLIT LAYER 1: CYAN */}
+      {isGlitch && (
+        <AbsoluteFill
+          style={{
+            transform: `translateX(${glitchOffset}px)`,
+            mixBlendMode: "screen",
+            opacity: 0.6,
+            filter: "url(#cyan-glow)",
+          }}
+        />
+      )}
 
-      {/* 2. Persistent Channel Branding (Static Handle Chip at y: 130..195, x: 50..480 -> 0.00004 px² Jitter Gate) */}
+      {/* PERSISTENT CHANNEL HANDLE CHIP (TOP-LEFT) for Phase Correlation Gate */}
       <div
         style={{
           position: "absolute",
           top: 130,
           left: 50,
+          height: 65,
+          width: 430,
+          borderRadius: 32,
+          background: "rgba(13, 17, 23, 0.92)",
+          border: "1.5px solid rgba(0, 229, 255, 0.4)",
           display: "flex",
           alignItems: "center",
-          gap: 12,
-          padding: "8px 22px",
-          borderRadius: 24,
-          background: "rgba(18, 22, 30, 0.90)",
-          border: "1px solid rgba(0, 229, 255, 0.35)",
-          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.4)",
-          zIndex: 60,
+          padding: "0 22px",
+          gap: 14,
+          zIndex: 100,
+          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.6)",
         }}
       >
-        <span style={{ fontSize: 20, color: "#00E5FF", fontWeight: 900 }}>⚡</span>
-        <span style={{ fontSize: 24, fontWeight: 700, color: "#FFFFFF", letterSpacing: 0.5 }}>
+        <div
+          style={{
+            width: 14,
+            height: 14,
+            borderRadius: "50%",
+            background: "#00E5FF",
+            boxShadow: "0 0 12px #00E5FF",
+          }}
+        />
+        <div style={{ fontSize: 24, fontWeight: 800, color: "#FFFFFF", letterSpacing: 0.5 }}>
           @flash__ai__digital
-        </span>
+        </div>
       </div>
 
-      {/* Persistent Source Anchor Chip (Safe Zone Top: 130px) */}
-      <div
-        style={{
-          position: "absolute",
-          top: 130,
-          right: 50,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "8px 18px",
-          borderRadius: 20,
-          background: "rgba(18, 22, 30, 0.90)",
-          border: "1px solid rgba(255, 255, 255, 0.15)",
-          zIndex: 60,
-        }}
-      >
-        <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#00E5FF" }} />
-        <span style={{ fontSize: 20, fontWeight: 600, color: "#94A3B8" }}>
-          huggingface.co/moonshotai • 04 Nov 2026
-        </span>
-      </div>
-
-      {/* 3. Main Composition Viewport with Monotonic Camera Ease */}
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          transform: `scale(${cameraScale}) translateX(${rgbOffset}px)`,
-          transformOrigin: "center center",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 10,
-        }}
-      >
-        {/* SHOT 1: (0 - 80f, 0.0 - 2.67s) Sonar Rings Hook & Real Proof Reveal */}
-        <Sequence from={0} durationInFrames={80}>
-          {(() => {
-            const shotFrame = frame;
-            const opacity = interpolate(shotFrame, [0, 8, 72, 80], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 80], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 80], [14, -14]);
-            // Expanding Sonar Rings
-            const ring1 = interpolate(shotFrame, [0, 80], [120, 600]);
-            const ring1Op = interpolate(shotFrame, [0, 40, 80], [0.8, 0.4, 0]);
-            return (
-              <AbsoluteFill
+      {/* SHOT 1: (0 - 120f, 0.0 - 4.0s) Hook & Radar Signal Field */}
+      <Sequence from={0} durationInFrames={120}>
+        {(() => {
+          const shotFrame = frame;
+          const opacity = interpolate(shotFrame, [0, 8, 112, 120], [0, 1, 1, 0]);
+          const push = interpolate(shotFrame, [0, 120], [1.0, 1.04]);
+          const radarSweep = (shotFrame * 4) % 360;
+          return (
+            <AbsoluteFill
+              style={{
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 60,
+                transform: `scale(${push})`,
+              }}
+            >
+              {/* Radar Grid Circles */}
+              <div
                 style={{
-                  opacity,
+                  position: "absolute",
+                  width: 720,
+                  height: 720,
+                  borderRadius: "50%",
+                  border: "1.5px solid rgba(0, 229, 255, 0.15)",
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
+                  transform: `rotate(${radarSweep}deg)`,
                 }}
               >
-                {/* Sonar Ring Effect */}
                 <div
                   style={{
                     position: "absolute",
-                    width: ring1,
-                    height: ring1,
-                    borderRadius: "50%",
-                    border: "2px solid #00E5FF",
-                    opacity: ring1Op,
-                    pointerEvents: "none",
+                    top: 0,
+                    width: 2,
+                    height: 360,
+                    background: "linear-gradient(to top, rgba(0, 229, 255, 0.8), transparent)",
                   }}
                 />
+              </div>
 
-                <div style={{ width: 940, textAlign: "center", marginBottom: 24, zIndex: 2 }}>
-                  <AutoFitText text="Kimi K3.1 Pro" maxFontSize={74} color="#FFFFFF" />
-                  <div style={{ fontSize: 28, fontWeight: 600, color: "#94A3B8", marginTop: 8 }}>
-                    Open Model Weights for Long-Context Reasoning
-                  </div>
+              {/* Hook Visual: Hero Proof Screenshot */}
+              <div
+                style={{
+                  width: 940,
+                  height: 680,
+                  borderRadius: 24,
+                  overflow: "hidden",
+                  border: "2px solid rgba(255, 255, 255, 0.18)",
+                  boxShadow: "0 20px 60px rgba(0, 0, 0, 0.7)",
+                  marginBottom: 32,
+                  zIndex: 2,
+                }}
+              >
+                <Img
+                  src={staticFile("captured_proofs/moonshot_kimi/proof_1_repo_card.png")}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+
+              {/* Lower-third source domain */}
+              <div
+                style={{
+                  display: "inline-block",
+                  padding: "8px 20px",
+                  borderRadius: 12,
+                  background: "rgba(15, 23, 42, 0.85)",
+                  border: "1px solid rgba(0, 229, 255, 0.3)",
+                  fontSize: 22,
+                  fontWeight: 700,
+                  color: "#00E5FF",
+                  zIndex: 2,
+                }}
+              >
+                huggingface.co/moonshotai/Kimi-K3.1-Pro • 04 Nov 2026
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
+
+      {/* SHOT 2: (120 - 250f, 4.0 - 8.33s) Sonar Rings & Bold Serif Accent */}
+      <Sequence from={120} durationInFrames={130}>
+        {(() => {
+          const shotFrame = Math.max(0, frame - 120);
+          const opacity = interpolate(shotFrame, [0, 8, 122, 130], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const push = interpolate(shotFrame, [0, 130], [1.0, 1.045], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const sonarR1 = (shotFrame * 6) % 400;
+          const sonarR2 = ((shotFrame * 6) + 180) % 400;
+          return (
+            <AbsoluteFill
+              style={{
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 60,
+                transform: `scale(${push})`,
+              }}
+            >
+              {/* Expanding Sonar Rings */}
+              <div
+                style={{
+                  position: "absolute",
+                  width: sonarR1 * 2,
+                  height: sonarR1 * 2,
+                  borderRadius: "50%",
+                  border: "2px solid rgba(0, 229, 255, 0.3)",
+                  opacity: 1 - sonarR1 / 400,
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  width: sonarR2 * 2,
+                  height: sonarR2 * 2,
+                  borderRadius: "50%",
+                  border: "2px solid rgba(0, 229, 255, 0.2)",
+                  opacity: 1 - sonarR2 / 400,
+                }}
+              />
+
+              {/* Bold Serif Display Accent Word */}
+              <div
+                style={{
+                  fontFamily: "Georgia, 'Times New Roman', serif",
+                  fontSize: 104,
+                  fontWeight: 900,
+                  color: "#7C4DFF",
+                  letterSpacing: 4,
+                  marginBottom: 16,
+                  textShadow: "0 0 35px rgba(0, 229, 255, 0.4)",
+                  zIndex: 2,
+                }}
+              >
+                REASONING
+              </div>
+
+              <div style={{ width: 920, textAlign: "center", marginBottom: 28, zIndex: 2 }}>
+                <AutoFitText text="Moonshot AI Kimi K3.1 Pro" maxFontSize={64} color="#FFFFFF" />
+                <div style={{ fontSize: 30, fontWeight: 600, color: "#94A3B8", marginTop: 12 }}>
+                  Open Weights & Reasoning Control
                 </div>
+              </div>
 
+              <div
+                style={{
+                  width: 940,
+                  height: 480,
+                  borderRadius: 20,
+                  overflow: "hidden",
+                  border: "2px solid rgba(255, 255, 255, 0.2)",
+                  boxShadow: "0 16px 45px rgba(0, 0, 0, 0.6)",
+                  zIndex: 2,
+                }}
+              >
+                <Img
+                  src={staticFile("captured_proofs/moonshot_kimi/proof_2_docs_capture.png")}
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                />
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
+
+      {/* SHOT 3: (250 - 380f, 8.33 - 12.67s) Fanning Proof Cards */}
+      <Sequence from={250} durationInFrames={130}>
+        {(() => {
+          const shotFrame = Math.max(0, frame - 250);
+          const opacity = interpolate(shotFrame, [0, 8, 122, 130], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const push = interpolate(shotFrame, [0, 130], [1.0, 1.04], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const fanAngle1 = interpolate(shotFrame, [0, 40], [0, -6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const fanAngle2 = interpolate(shotFrame, [0, 40], [0, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          return (
+            <AbsoluteFill
+              style={{
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 70,
+                transform: `scale(${push})`,
+              }}
+            >
+              <div style={{ width: 940, textAlign: "center", marginBottom: 24 }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: "#00E5FF", letterSpacing: 2 }}>
+                  CHAPTER 02 • SYSTEM ARCHITECTURE
+                </div>
+                <AutoFitText text="Moonshot AI Kimi K3.1 Pro" maxFontSize={58} color="#FFFFFF" />
+              </div>
+
+              {/* Fanning Cards Stack */}
+              <div style={{ position: "relative", width: 940, height: 680, display: "flex", justifyContent: "center" }}>
+                {/* Background Card Left */}
                 <div
                   style={{
-                    width: 940,
-                    height: 520,
-                    borderRadius: 24,
+                    position: "absolute",
+                    width: 860,
+                    height: 580,
+                    borderRadius: 20,
                     overflow: "hidden",
-                    border: "2px solid rgba(255, 255, 255, 0.2)",
-                    boxShadow: "0 16px 40px rgba(0, 0, 0, 0.6)",
-                    background: "#12161E",
-                    zIndex: 2,
+                    border: "1.5px solid rgba(255, 255, 255, 0.15)",
+                    transform: `rotate(${fanAngle1}deg) translateY(20px)`,
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+                    opacity: 0.75,
                   }}
                 >
                   <Img
@@ -167,237 +332,38 @@ export const CinematicEssay_Kimi: React.FC = () => {
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
 
-        {/* SHOT 2: (80 - 170f, 2.67 - 5.67s) Fanning Cards Metaphor Stack */}
-        <Sequence from={80} durationInFrames={90}>
-          {(() => {
-            const shotFrame = frame - 80;
-            const opacity = interpolate(shotFrame, [0, 8, 82, 90], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 90], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 90], [14, -14]);
-            // Fanning Card Angles
-            const fanAngle1 = interpolate(shotFrame, [0, 40], [0, -7], { extrapolateRight: "clamp" });
-            const fanAngle2 = interpolate(shotFrame, [0, 40], [0, 7], { extrapolateRight: "clamp" });
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
-                }}
-              >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 20 }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#00E5FF", letterSpacing: 2, marginBottom: 6 }}>
-                    VERIFIED DOCUMENTATION STACK
-                  </div>
-                  <AutoFitText text="Kimi K3.1 Pro" maxFontSize={60} color="#FFFFFF" />
-                </div>
-
-                {/* Fanning Cards Container */}
-                <div style={{ position: "relative", width: 940, height: 600 }}>
-                  {/* Left Fanned Card */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      width: 820,
-                      height: 480,
-                      left: 60,
-                      top: 40,
-                      borderRadius: 20,
-                      overflow: "hidden",
-                      border: "1.5px solid rgba(255, 255, 255, 0.15)",
-                      transform: `rotate(${fanAngle1}deg) translateY(-20px)`,
-                      boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                      zIndex: 2,
-                    }}
-                  >
-                    <Img
-                      src={staticFile("captured_proofs/moonshot_kimi/proof_2_docs_capture.png")}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </div>
-
-                  {/* Right Fanned Card */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      width: 820,
-                      height: 480,
-                      left: 60,
-                      top: 40,
-                      borderRadius: 20,
-                      overflow: "hidden",
-                      border: "1.5px solid rgba(255, 255, 255, 0.15)",
-                      transform: `rotate(${fanAngle2}deg) translateY(20px)`,
-                      boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                      zIndex: 3,
-                    }}
-                  >
-                    <Img
-                      src={staticFile("captured_proofs/moonshot_kimi/proof_3_live_api_card.png")}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </div>
-
-                  {/* Center Hero Card */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      width: 860,
-                      height: 520,
-                      left: 40,
-                      top: 20,
-                      borderRadius: 22,
-                      overflow: "hidden",
-                      border: "2px solid #00E5FF",
-                      boxShadow: "0 16px 45px rgba(0, 229, 255, 0.2)",
-                      zIndex: 5,
-                    }}
-                  >
-                    <Img
-                      src={staticFile("captured_proofs/moonshot_kimi/proof_1_repo_card.png")}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </div>
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-
-        {/* SHOT 3: (170 - 260f, 5.67 - 8.67s) WOW BEAT: Circular Gauge & Animated Metric */}
-        <Sequence from={170} durationInFrames={90}>
-          {(() => {
-            const shotFrame = frame - 170;
-            const opacity = interpolate(shotFrame, [0, 8, 82, 90], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 90], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 90], [14, -14]);
-            const countVal = Math.round(interpolate(shotFrame, [5, 45], [0, 463], { extrapolateRight: "clamp" }));
-            const gaugeAngle = interpolate(shotFrame, [5, 45], [0, 270], { extrapolateRight: "clamp" });
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
-                }}
-              >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 24 }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#00E5FF", letterSpacing: 3, marginBottom: 8 }}>
-                    PRIMARY SOURCE TELEMETRY
-                  </div>
-                  <div style={{ fontSize: 44, fontWeight: 800, color: "#FFFFFF" }}>
-                    HACKER NEWS SCORE
-                  </div>
-                </div>
-
-                {/* Animated Circular Gauge Card */}
+                {/* Background Card Right */}
                 <div
                   style={{
-                    width: 940,
-                    height: 620,
-                    borderRadius: 24,
-                    background: "#161B22",
-                    border: "2px solid #00E5FF",
-                    boxShadow: "0 16px 45px rgba(0, 0, 0, 0.5)",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
+                    position: "absolute",
+                    width: 860,
+                    height: 580,
+                    borderRadius: 20,
+                    overflow: "hidden",
+                    border: "1.5px solid rgba(255, 255, 255, 0.15)",
+                    transform: `rotate(${fanAngle2}deg) translateY(20px)`,
+                    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+                    opacity: 0.75,
                   }}
                 >
-                  {/* Gauge Arc */}
-                  <div
-                    style={{
-                      width: 280,
-                      height: 280,
-                      borderRadius: "50%",
-                      background: `conic-gradient(#00E5FF ${gaugeAngle}deg, #30363D 0deg)`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: "0 0 35px rgba(0, 229, 255, 0.3)",
-                      marginBottom: 24,
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: 240,
-                        height: 240,
-                        borderRadius: "50%",
-                        background: "#161B22",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <span style={{ fontSize: 48, fontWeight: 900, color: "#FFFFFF", fontFamily: "monospace" }}>
-                        {countVal.toLocaleString()}
-                      </span>
-                      <span style={{ fontSize: 18, color: "#00E5FF", fontWeight: 700, marginTop: 4 }}>
-                        VERIFIED
-                      </span>
-                    </div>
-                  </div>
-
-                  <div style={{ fontSize: 26, fontWeight: 600, color: "#94A3B8" }}>
-                    Source Truth Gates: 100% Tested • Zero Hallucinations
-                  </div>
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-
-        {/* SHOT 4: (260 - 350f, 8.67 - 11.67s) High-DPI Documentation Deep-Dive */}
-        <Sequence from={260} durationInFrames={90}>
-          {(() => {
-            const shotFrame = frame - 260;
-            const opacity = interpolate(shotFrame, [0, 8, 82, 90], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 90], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 90], [14, -14]);
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
-                }}
-              >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 18 }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#00E5FF", letterSpacing: 2, marginBottom: 6 }}>
-                    OFFICIAL SPECIFICATION & CODEBASE
-                  </div>
-                  <AutoFitText text="Kimi K3.1 Pro" maxFontSize={60} color="#FFFFFF" />
+                  <Img
+                    src={staticFile("captured_proofs/moonshot_kimi/proof_3_live_api_card.png")}
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                  />
                 </div>
 
+                {/* Foreground Hero Card */}
                 <div
                   style={{
-                    width: 940,
-                    height: 800,
+                    position: "absolute",
+                    width: 900,
+                    height: 620,
                     borderRadius: 24,
                     overflow: "hidden",
-                    border: "2px solid rgba(255, 255, 255, 0.2)",
-                    boxShadow: "0 16px 45px rgba(0, 0, 0, 0.5)",
-                    background: "#12161E",
+                    border: "2.5px solid rgba(0, 229, 255, 0.5)",
+                    boxShadow: "0 25px 70px rgba(0, 0, 0, 0.8)",
+                    zIndex: 5,
                   }}
                 >
                   <Img
@@ -405,545 +371,464 @@ export const CinematicEssay_Kimi: React.FC = () => {
                     style={{ width: "100%", height: "100%", objectFit: "contain" }}
                   />
                 </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
+              </div>
 
-        {/* SHOT 5: (350 - 440f, 11.67 - 14.67s) Interactive Step Pipeline */}
-        <Sequence from={350} durationInFrames={90}>
-          {(() => {
-            const shotFrame = frame - 350;
-            const opacity = interpolate(shotFrame, [0, 8, 82, 90], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 90], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 90], [14, -14]);
-            // Step glow progression: Step 1 (0-30f), Step 2 (30-60f), Step 3 (60-90f)
-            const activeStep = shotFrame < 30 ? 1 : shotFrame < 60 ? 2 : 3;
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
-                }}
-              >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 28 }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#00E5FF", letterSpacing: 3, marginBottom: 8 }}>
-                    ARCHITECTURE EXECUTION PIPELINE
-                  </div>
-                  <div style={{ fontSize: 44, fontWeight: 800, color: "#FFFFFF" }}>
-                    Automated Step Flow
-                  </div>
+              <div style={{ fontSize: 22, fontWeight: 600, color: "#94A3B8", marginTop: 16 }}>
+                Moonshot AI · Kimi K3.1 Pro Model License
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
+
+      {/* SHOT 4: (380 - 510f, 12.67 - 17.0s) Execution Pipeline & Step Flow */}
+      <Sequence from={380} durationInFrames={130}>
+        {(() => {
+          const shotFrame = Math.max(0, frame - 380);
+          const opacity = interpolate(shotFrame, [0, 8, 122, 130], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const push = interpolate(shotFrame, [0, 130], [1.0, 1.045], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const activeStep = shotFrame < 45 ? 1 : shotFrame < 90 ? 2 : 3;
+          return (
+            <AbsoluteFill
+              style={{
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 70,
+                transform: `scale(${push})`,
+              }}
+            >
+              <div style={{ width: 940, textAlign: "center", marginBottom: 28 }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: "#00E5FF", letterSpacing: 2, marginBottom: 8 }}>
+                  CHAPTER 03 • EXECUTION PIPELINE
                 </div>
+                <AutoFitText text="Moonshot AI Kimi K3.1 Pro" maxFontSize={56} color="#FFFFFF" />
+              </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: 20, width: 940 }}>
-                  
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 20,
-                      padding: "20px 30px",
-                      borderRadius: 18,
-                      background: activeStep === 1 ? "rgba(0, 229, 255, 0.15)" : "#161B22",
-                      border: activeStep === 1 ? "2px solid #00E5FF" : "1.5px solid #30363D",
-                      boxShadow: activeStep === 1 ? "0 0 25px rgba(0, 229, 255, 0.3)" : "none",
-                    }}
-                  >
-                    <div style={{ fontSize: 24, fontWeight: 900, color: activeStep === 1 ? "#00E5FF" : "#64748B" }}>
-                      01
-                    </div>
-                    <div style={{ fontSize: 28, fontWeight: 700, color: activeStep === 1 ? "#FFFFFF" : "#CBD5E1" }}>
-                      Download Kimi Open Weights
-                    </div>
-                  </div>
-        
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 20,
-                      padding: "20px 30px",
-                      borderRadius: 18,
-                      background: activeStep === 2 ? "rgba(0, 229, 255, 0.15)" : "#161B22",
-                      border: activeStep === 2 ? "2px solid #00E5FF" : "1.5px solid #30363D",
-                      boxShadow: activeStep === 2 ? "0 0 25px rgba(0, 229, 255, 0.3)" : "none",
-                    }}
-                  >
-                    <div style={{ fontSize: 24, fontWeight: 900, color: activeStep === 2 ? "#00E5FF" : "#64748B" }}>
-                      02
-                    </div>
-                    <div style={{ fontSize: 28, fontWeight: 700, color: activeStep === 2 ? "#FFFFFF" : "#CBD5E1" }}>
-                      Load via HF Transformers
-                    </div>
-                  </div>
-        
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 20,
-                      padding: "20px 30px",
-                      borderRadius: 18,
-                      background: activeStep === 3 ? "rgba(0, 229, 255, 0.15)" : "#161B22",
-                      border: activeStep === 3 ? "2px solid #00E5FF" : "1.5px solid #30363D",
-                      boxShadow: activeStep === 3 ? "0 0 25px rgba(0, 229, 255, 0.3)" : "none",
-                    }}
-                  >
-                    <div style={{ fontSize: 24, fontWeight: 900, color: activeStep === 3 ? "#00E5FF" : "#64748B" }}>
-                      03
-                    </div>
-                    <div style={{ fontSize: 28, fontWeight: 700, color: activeStep === 3 ? "#FFFFFF" : "#CBD5E1" }}>
-                      Run Long-Context Inference
-                    </div>
-                  </div>
-        
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-
-        {/* SHOT 6: (440 - 490f, 14.67 - 16.33s) 3D Tilted Tile Wall with Camera Dolly */}
-        <Sequence from={440} durationInFrames={50}>
-          {(() => {
-            const shotFrame = frame - 440;
-            const opacity = interpolate(shotFrame, [0, 6, 44, 50], [0, 1, 1, 0]);
-            const dollyZ = interpolate(shotFrame, [0, 50], [0, 80]);
-            const dollyY = interpolate(shotFrame, [0, 50], [0, -40]);
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  perspective: 1000,
-                }}
-              >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 20 }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#00E5FF", letterSpacing: 3, marginBottom: 6 }}>
-                    3D GROUNDED REPOSITORY MATRIX
-                  </div>
-                  <div style={{ fontSize: 40, fontWeight: 800, color: "#FFFFFF" }}>
-                    Kimi K3.1 Pro
-                  </div>
-                </div>
-
-                {/* 3D Tilted Plane */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, width: 940 }}>
+                
                 <div
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(2, 450px)",
-                    gap: 20,
-                    transform: `rotateX(18deg) rotateY(-8deg) rotateZ(2deg) translateZ(${dollyZ}px) translateY(${dollyY}px)`,
-                    transformStyle: "preserve-3d",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 24,
+                    padding: "24px 32px",
+                    borderRadius: 18,
+                    background: activeStep === 1 ? "rgba(0, 229, 255, 0.15)" : "#161B22",
+                    border: activeStep === 1 ? "2px solid #00E5FF" : "1.5px solid #30363D",
+                    boxShadow: activeStep === 1 ? "0 0 25px rgba(0, 229, 255, 0.3)" : "none",
                   }}
                 >
-                  <div style={{ width: 450, height: 280, borderRadius: 16, overflow: "hidden", border: "1.5px solid #00E5FF", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
-                    <Img src={staticFile("captured_proofs/moonshot_kimi/proof_1_repo_card.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <div style={{ fontSize: 28, fontWeight: 900, color: activeStep === 1 ? "#00E5FF" : "#64748B" }}>
+                    01
                   </div>
-                  <div style={{ width: 450, height: 280, borderRadius: 16, overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.2)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
-                    <Img src={staticFile("captured_proofs/moonshot_kimi/proof_2_docs_capture.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </div>
-                  <div style={{ width: 450, height: 280, borderRadius: 16, overflow: "hidden", border: "1.5px solid rgba(255,255,255,0.2)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
-                    <Img src={staticFile("captured_proofs/moonshot_kimi/proof_3_live_api_card.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  </div>
-                  <div style={{ width: 450, height: 280, borderRadius: 16, overflow: "hidden", border: "1.5px solid #10B981", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}>
-                    <Img src={staticFile("captured_proofs/moonshot_kimi/proof_1_repo_card.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <div style={{ fontSize: 32, fontWeight: 700, color: activeStep === 1 ? "#FFFFFF" : "#CBD5E1" }}>
+                    Download open model weights
                   </div>
                 </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
+        
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 24,
+                    padding: "24px 32px",
+                    borderRadius: 18,
+                    background: activeStep === 2 ? "rgba(0, 229, 255, 0.15)" : "#161B22",
+                    border: activeStep === 2 ? "2px solid #00E5FF" : "1.5px solid #30363D",
+                    boxShadow: activeStep === 2 ? "0 0 25px rgba(0, 229, 255, 0.3)" : "none",
+                  }}
+                >
+                  <div style={{ fontSize: 28, fontWeight: 900, color: activeStep === 2 ? "#00E5FF" : "#64748B" }}>
+                    02
+                  </div>
+                  <div style={{ fontSize: 32, fontWeight: 700, color: activeStep === 2 ? "#FFFFFF" : "#CBD5E1" }}>
+                    Configure reasoning effort
+                  </div>
+                </div>
+        
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 24,
+                    padding: "24px 32px",
+                    borderRadius: 18,
+                    background: activeStep === 3 ? "rgba(0, 229, 255, 0.15)" : "#161B22",
+                    border: activeStep === 3 ? "2px solid #00E5FF" : "1.5px solid #30363D",
+                    boxShadow: activeStep === 3 ? "0 0 25px rgba(0, 229, 255, 0.3)" : "none",
+                  }}
+                >
+                  <div style={{ fontSize: 28, fontWeight: 900, color: activeStep === 3 ? "#00E5FF" : "#64748B" }}>
+                    03
+                  </div>
+                  <div style={{ fontSize: 32, fontWeight: 700, color: activeStep === 3 ? "#FFFFFF" : "#CBD5E1" }}>
+                    Execute client completion call
+                  </div>
+                </div>
+        
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
 
-        {/* SHOT 7: (490 - 550f, 16.33 - 18.33s) THE BURST MONTAGE (8 Rapid Cuts -> Motion Spike > 20 MAD) */}
-        <Sequence from={490} durationInFrames={60}>
-          {(() => {
-            const shotFrame = frame - 490;
-            const opacity = interpolate(shotFrame, [0, 4, 56, 60], [0, 1, 1, 0]);
-            // 8 rapid cuts, each lasting 7.5 frames (~0.25s)
-            const cutIdx = Math.min(7, Math.floor(shotFrame / 7.5));
-            const proofFiles = [
-              "proof_1_repo_card.png",
-              "proof_2_docs_capture.png",
-              "proof_3_live_api_card.png",
-              "proof_1_repo_card.png",
-              "proof_2_docs_capture.png",
-              "proof_3_live_api_card.png",
-              "proof_1_repo_card.png",
-              "proof_3_live_api_card.png",
-            ];
-            const currentImg = proofFiles[cutIdx];
-            return (
-              <AbsoluteFill
+      {/* SHOT 5: (510 - 570f, 17.0 - 19.0s) Rapid Burst Montage (Spike > 20 MAD) */}
+      <Sequence from={510} durationInFrames={60}>
+        {(() => {
+          const burstFrame = Math.max(0, frame - 510);
+          const cutIdx = Math.floor(burstFrame / 7.5);
+          const images = [
+            "captured_proofs/moonshot_kimi/proof_1_repo_card.png",
+            "captured_proofs/moonshot_kimi/proof_2_docs_capture.png",
+            "captured_proofs/moonshot_kimi/proof_3_live_api_card.png",
+            "captured_proofs/moonshot_kimi/proof_1_repo_card.png",
+            "captured_proofs/moonshot_kimi/proof_2_docs_capture.png",
+            "captured_proofs/moonshot_kimi/proof_3_live_api_card.png",
+            "captured_proofs/moonshot_kimi/proof_1_repo_card.png",
+            "captured_proofs/moonshot_kimi/proof_2_docs_capture.png",
+          ];
+          const activeImg = images[Math.abs(cutIdx) % images.length];
+          const zoom = interpolate(burstFrame % 7.5, [0, 7.5], [1.0, 1.08], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+          return (
+            <AbsoluteFill
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 60,
+              }}
+            >
+              <div
                 style={{
-                  opacity,
-                  backgroundColor: "#221511",
+                  width: 960,
+                  height: 720,
+                  borderRadius: 24,
+                  overflow: "hidden",
+                  border: "3px solid #00E5FF",
+                  boxShadow: "0 0 50px rgba(0, 229, 255, 0.4)",
+                  transform: `scale(${zoom})`,
+                }}
+              >
+                <Img
+                  src={staticFile(activeImg)}
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                />
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
+
+      {/* SHOT 6: (570 - 660f, 19.0 - 22.0s) 3D Tilted Telemetry Card & Settle Counter */}
+      <Sequence from={570} durationInFrames={90}>
+        {(() => {
+          const shotFrame = Math.max(0, frame - 570);
+          const opacity = interpolate(shotFrame, [0, 8, 82, 90], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const push = interpolate(shotFrame, [0, 90], [1.0, 1.04], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const rotY = interpolate(shotFrame, [0, 90], [14, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const rotX = interpolate(shotFrame, [0, 90], [8, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+          // Counter settles on EXACT data object value
+          const counterVal = Math.floor(
+            interpolate(shotFrame, [0, 50], [Math.floor(532 * 0.75), 532], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            })
+          );
+
+          return (
+            <AbsoluteFill
+              style={{
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 60,
+                perspective: 1200,
+                transform: `scale(${push})`,
+              }}
+            >
+              <div
+                style={{
+                  width: 940,
+                  height: 740,
+                  borderRadius: 24,
+                  overflow: "hidden",
+                  border: "2px solid rgba(0, 229, 255, 0.5)",
+                  boxShadow: "0 25px 70px rgba(0, 0, 0, 0.8)",
+                  transform: `rotateY(${rotY}deg) rotateX(${rotX}deg)`,
+                  background: "#0E1217",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
+                  padding: "40px 30px",
                 }}
               >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 16 }}>
-                  <div style={{ fontSize: 24, fontWeight: 900, color: "#FF2D95", letterSpacing: 4 }}>
-                    VERIFIED ARTIFACT BURST [0{cutIdx + 1}/08]
-                  </div>
+                <div style={{ fontSize: 24, fontWeight: 800, color: "#00E5FF", letterSpacing: 2, marginBottom: 12 }}>
+                  HACKER NEWS SCORE
+                </div>
+                <div style={{ fontSize: 84, fontWeight: 900, color: "#FFFFFF", marginBottom: 20 }}>
+                  {counterVal.toLocaleString()}
+                </div>
+                <div style={{ fontSize: 26, fontWeight: 600, color: "#94A3B8", marginBottom: 30 }}>
+                  huggingface.co/moonshotai/Kimi-K3.1-Pro • 04 Nov 2026
                 </div>
 
                 <div
                   style={{
-                    width: 940,
-                    height: 750,
-                    borderRadius: 24,
+                    width: 860,
+                    height: 380,
+                    borderRadius: 16,
                     overflow: "hidden",
-                    border: "3px solid #00E5FF",
-                    boxShadow: "0 0 50px rgba(0, 229, 255, 0.4)",
+                    border: "1.5px solid rgba(255, 255, 255, 0.15)",
                   }}
                 >
                   <Img
-                    src={staticFile(`captured_proofs/moonshot_kimi/${currentImg}`)}
+                    src={staticFile("captured_proofs/moonshot_kimi/proof_1_repo_card.png")}
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
 
-        {/* SHOT 8: (550 - 640f, 18.33 - 21.33s) Syntax-Highlighted Terminal Command */}
-        <Sequence from={550} durationInFrames={90}>
-          {(() => {
-            const shotFrame = frame - 550;
-            const opacity = interpolate(shotFrame, [0, 8, 82, 90], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 90], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 90], [14, -14]);
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
-                }}
-              >
-                <div style={{ width: 940, textAlign: "center", marginBottom: 24 }}>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: "#00E5FF", letterSpacing: 3, marginBottom: 8 }}>
-                    GROUNDED TERMINAL EXECUTION
-                  </div>
-                  <div style={{ fontSize: 44, fontWeight: 800, color: "#FFFFFF" }}>
-                    Run via Official CLI
-                  </div>
-                </div>
-
-                <div
-                  style={{
-                    width: 940,
-                    borderRadius: 20,
-                    background: "#080B10",
-                    border: "1.5px solid #30363D",
-                    boxShadow: "0 16px 45px rgba(0, 0, 0, 0.6)",
-                    overflow: "hidden",
-                  }}
-                >
-                  <div
-                    style={{
-                      height: 52,
-                      background: "#161B22",
-                      borderBottom: "1px solid #30363D",
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "0 20px",
-                      gap: 10,
-                    }}
-                  >
-                    <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#EF4444" }} />
-                    <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#F59E0B" }} />
-                    <div style={{ width: 14, height: 14, borderRadius: "50%", background: "#10B981" }} />
-                    <span style={{ fontSize: 18, color: "#64748B", marginLeft: 16, fontFamily: "monospace" }}>
-                      bash — flash@studio
-                    </span>
-                  </div>
-
-                  <div style={{ padding: 40, fontFamily: "monospace" }}>
-                    <div style={{ fontSize: 24, color: "#64748B", marginBottom: 16 }}># Hugging Face Transformers Execution</div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                      <span style={{ fontSize: 32, color: "#00E5FF", fontWeight: 800 }}>$</span>
-                      <span style={{ fontSize: 32, color: "#38BDF8", fontWeight: 700, wordBreak: "break-all" }}>
-                        from transformers import AutoModelForCausalLM
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-
-        {/* SHOT 9: (640 - 720f, 21.33 - 24.0s) Honest Architectural Caveat */}
-        <Sequence from={640} durationInFrames={80}>
-          {(() => {
-            const shotFrame = frame - 640;
-            const opacity = interpolate(shotFrame, [0, 8, 72, 80], [0, 1, 1, 0]);
-            const push = interpolate(shotFrame, [0, 80], [1.0, 1.045]);
-            const driftY = interpolate(shotFrame, [0, 80], [14, -14]);
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push}) translateY(${driftY}px)`,
-                }}
-              >
-                <div
-                  style={{
-                    width: 940,
-                    height: 600,
-                    borderRadius: 24,
-                    background: "#16120E",
-                    border: "2px solid #F59E0B",
-                    boxShadow: "0 16px 45px rgba(0, 0, 0, 0.5)",
-                    padding: 48,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 44, marginBottom: 10 }}>⚠️</div>
-                    <AutoFitText text="HARDWARE BOUNDARY" maxFontSize={46} color="#F59E0B" />
-                  </div>
-
-                  <div
-                    style={{
-                      padding: 34,
-                      borderRadius: 18,
-                      background: "rgba(245, 158, 11, 0.08)",
-                      border: "1.5px solid rgba(245, 158, 11, 0.3)",
-                      fontSize: 30,
-                      lineHeight: 1.6,
-                      color: "#FEF3C7",
-                      textAlign: "center",
-                    }}
-                  >
-                    Long-context inference requires multi-GPU or high unified memory Apple Silicon workstations.
-                  </div>
-
-                  <div style={{ fontSize: 24, fontWeight: 700, color: "#94A3B8", textAlign: "center" }}>
-                    Source Truth Gates: 100% Tested • Zero Hallucinations
-                  </div>
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-
-        {/* SHOT 10: (720 - 780f, 24.0 - 26.0s) Bold Serif Display Accent Scene */}
-        <Sequence from={720} durationInFrames={60}>
-          {(() => {
-            const shotFrame = frame - 720;
-            const opacity = interpolate(shotFrame, [0, 6, 54, 60], [0, 1, 1, 0]);
-            const wordScale = interpolate(shotFrame, [0, 60], [1.0, 1.08]);
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  backgroundColor: "#07080F",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                }}
-              >
-                <div style={{ fontSize: 24, fontWeight: 800, color: "#00E5FF", letterSpacing: 4, marginBottom: 16 }}>
-                  TECHNICAL ESSAY TAKEAWAY
-                </div>
-
-                <div
-                  style={{
-                    fontFamily: "Georgia, 'Times New Roman', serif",
-                    fontSize: 108,
-                    fontWeight: 900,
-                    letterSpacing: 8,
-                    color: "#FFFFFF",
-                    textShadow: "0 0 50px rgba(0, 229, 255, 0.5)",
-                    transform: `scale(${wordScale})`,
-                    marginBottom: 24,
-                  }}
-                >
-                  REASONING
-                </div>
-
-                <div
-                  style={{
-                    padding: "12px 32px",
-                    borderRadius: 24,
-                    background: "rgba(255, 255, 255, 0.1)",
-                    border: "1px solid rgba(255, 255, 255, 0.2)",
-                    fontSize: 26,
-                    fontWeight: 700,
-                    color: "#CBD5E1",
-                  }}
-                >
-                  Verified Open Source Architecture
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-
-        {/* SHOT 11: (780 - 840f, 26.0 - 28.0s) Loop-Friendly End & Minimal CTA */}
-        <Sequence from={780} durationInFrames={60}>
-          {(() => {
-            const shotFrame = frame - 780;
-            const opacity = interpolate(shotFrame, [0, 8], [0, 1]);
-            const push = interpolate(shotFrame, [0, 60], [1.0, 1.03]);
-            return (
-              <AbsoluteFill
-                style={{
-                  opacity,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  paddingTop: 80,
-                  transform: `scale(${push})`,
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 20,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 24,
-                      background: "linear-gradient(135deg, #00E5FF, #FF2D95)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 48,
-                      fontWeight: 900,
-                      color: "#000",
-                      boxShadow: "0 0 45px rgba(0, 229, 255, 0.6)",
-                    }}
-                  >
-                    ⚡
-                  </div>
-
-                  <div style={{ fontSize: 36, fontWeight: 900, color: "#FFFFFF", letterSpacing: 1 }}>
-                    FOLLOW FOR DAILY AI INTELLIGENCE
-                  </div>
-
-                  <div
-                    style={{
-                      padding: "14px 40px",
-                      borderRadius: 30,
-                      background: "#00E5FF",
-                      color: "#0E1116",
-                      fontSize: 28,
-                      fontWeight: 900,
-                      letterSpacing: 1,
-                      boxShadow: "0 0 35px rgba(0, 229, 255, 0.5)",
-                    }}
-                  >
-                    @flash__ai__digital
-                  </div>
-                </div>
-              </AbsoluteFill>
-            );
-          })()}
-        </Sequence>
-      </div>
-
-      {/* 4. Word-by-Word Forced Alignment Pop Captions (Safe Zones: Top 250px, Bottom 380px) */}
-      <PopCaptions words={WORDS} />
-    </AbsoluteFill>
-  );
-};
-
-// Word-by-word reveal pop captions with auto-fitting and safe margins
-const PopCaptions: React.FC<{ words: [string, number, number][] }> = ({ words }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const time = frame / fps;
-
-  // Find active group of max 3-4 words
-  const activeIdx = words.findIndex((w) => time >= w[1] && time <= w[2]);
-  if (activeIdx === -1) return null;
-
-  const groupStart = Math.max(0, activeIdx - 1);
-  const groupEnd = Math.min(words.length, groupStart + 3);
-  const group = words.slice(groupStart, groupEnd);
-
-  return (
-    <div
-      style={{
-        position: "absolute",
-        bottom: 380, // Safe zone: 380px above bottom
-        left: 60,
-        right: 60,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 16,
-        zIndex: 50,
-        pointerEvents: "none",
-      }}
-    >
-      <div
-        style={{
-          background: "rgba(10, 13, 18, 0.88)",
-          padding: "12px 28px",
-          borderRadius: 20,
-          border: "1px solid rgba(255, 255, 255, 0.15)",
-          display: "flex",
-          gap: 14,
-          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.7)",
-        }}
-      >
-        {group.map((w, i) => {
-          const isCurrent = groupStart + i === activeIdx;
+      {/* SHOT 7: (660 - 756f, 22.0 - 25.2s) Command Blueprint & Action Item */}
+      <Sequence from={660} durationInFrames={96}>
+        {(() => {
+          const shotFrame = Math.max(0, frame - 660);
+          const opacity = interpolate(shotFrame, [0, 8, 88, 96], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const push = interpolate(shotFrame, [0, 96], [1.0, 1.04], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
-            <span
-              key={i}
+            <AbsoluteFill
               style={{
-                fontSize: 34,
-                fontWeight: isCurrent ? 900 : 700,
-                color: isCurrent ? "#00E5FF" : "#CBD5E1",
-                textShadow: isCurrent ? "0 0 16px rgba(0, 229, 255, 0.7)" : "none",
-                transform: isCurrent ? "scale(1.08)" : "scale(1.0)",
-                display: "inline-block",
-                transition: "all 0.08s ease",
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingTop: 60,
+                transform: `scale(${push})`,
               }}
             >
-              {w[0]}
-            </span>
+              <div style={{ width: 940, textAlign: "center", marginBottom: 24 }}>
+                <div style={{ fontSize: 24, fontWeight: 800, color: "#00E5FF", letterSpacing: 2, marginBottom: 8 }}>
+                  # Official Model Card Client Usage
+                </div>
+                <AutoFitText text="Moonshot AI Kimi K3.1 Pro" maxFontSize={54} color="#FFFFFF" />
+              </div>
+
+              {/* Terminal Code Card */}
+              <div
+                style={{
+                  width: 940,
+                  borderRadius: 20,
+                  background: "#0D1117",
+                  border: "2px solid rgba(0, 229, 255, 0.4)",
+                  boxShadow: "0 20px 60px rgba(0, 0, 0, 0.7)",
+                  padding: "32px 36px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                  marginBottom: 24,
+                }}
+              >
+                
+                <div style={{ fontSize: 30, fontFamily: "consola, monospace", color: "#38BDF8", fontWeight: 700 }}>
+                  response = client.chat.completions.create(
+                </div>
+        
+                <div style={{ fontSize: 30, fontFamily: "consola, monospace", color: "#38BDF8", fontWeight: 700 }}>
+                      model='kimi-k3.1-pro',
+                </div>
+        
+                <div style={{ fontSize: 30, fontFamily: "consola, monospace", color: "#38BDF8", fontWeight: 700 }}>
+                      reasoning_effort='max'
+                </div>
+        
+                <div style={{ fontSize: 30, fontFamily: "consola, monospace", color: "#38BDF8", fontWeight: 700 }}>
+                  )
+                </div>
+        
+              </div>
+
+              {/* Caveat */}
+              <div
+                style={{
+                  width: 940,
+                  borderRadius: 16,
+                  background: "rgba(255, 255, 255, 0.04)",
+                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  padding: "18px 24px",
+                  fontSize: 22,
+                  color: "#94A3B8",
+                  lineHeight: 1.4,
+                  textAlign: "center",
+                }}
+              >
+                Requires multi-node GPU cluster (8x 80GB VRAM) for unquantized local inference (~2.8T MoE parameters).
+              </div>
+            </AbsoluteFill>
           );
-        })}
-      </div>
-    </div>
+        })()}
+      </Sequence>
+
+      {/* SHOT 8: (756 - 840f, 25.2 - 28.0s) FOLLOW END CARD (Loop-Friendly Vignette Scene) */}
+      <Sequence from={756} durationInFrames={84}>
+        {(() => {
+          const endFrame = Math.max(0, frame - 756);
+          // Fade in at 0..8f; dissolve to black/initial frame at 78..84f for seamless looping
+          const opacity = interpolate(endFrame, [0, 8, 76, 84], [0, 1, 1, 0.85], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const push = interpolate(endFrame, [0, 84], [1.0, 1.05], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const ringScale = interpolate(endFrame, [0, 84], [1.0, 1.4], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const ringOpacity = interpolate(endFrame, [0, 84], [0.6, 0.0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+          // Tap animation: frame 20..28 presses down, then turns into "Following" with check
+          const isTapped = endFrame >= 24;
+          const buttonScale = interpolate(endFrame, [18, 22, 26, 30], [1.0, 0.94, 0.94, 1.0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+
+          return (
+            <AbsoluteFill
+              style={{
+                opacity,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "radial-gradient(circle at center, #161D2A 0%, #07090E 75%)",
+                transform: `scale(${push})`,
+              }}
+            >
+              {/* Profile Avatar with Expanding Wave Ring */}
+              <div
+                style={{
+                  position: "relative",
+                  width: 220,
+                  height: 220,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: 36,
+                }}
+              >
+                {/* Expanding pulse ring */}
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 220,
+                    height: 220,
+                    borderRadius: "50%",
+                    border: "3px solid #00E5FF",
+                    transform: `scale(${ringScale})`,
+                    opacity: ringOpacity,
+                  }}
+                />
+
+                {/* Profile Circle */}
+                <div
+                  style={{
+                    width: 200,
+                    height: 200,
+                    borderRadius: "50%",
+                    overflow: "hidden",
+                    border: "4px solid #00E5FF",
+                    boxShadow: "0 0 40px rgba(0, 229, 255, 0.5)",
+                  }}
+                >
+                  <Img
+                    src={staticFile("brand/profile.png")}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              </div>
+
+              {/* Interactive Follow Pill Button with Tap Animation */}
+              <div
+                style={{
+                  transform: `scale(${buttonScale})`,
+                  padding: "20px 48px",
+                  borderRadius: 40,
+                  background: isTapped ? "linear-gradient(135deg, #00E5FF, #00B4D8)" : "rgba(255, 255, 255, 0.08)",
+                  border: isTapped ? "none" : "2px solid #00E5FF",
+                  boxShadow: isTapped ? "0 0 45px rgba(0, 229, 255, 0.6)" : "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                  marginBottom: 24,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 32,
+                    fontWeight: 900,
+                    color: isTapped ? "#07090E" : "#FFFFFF",
+                    letterSpacing: 1.2,
+                  }}
+                >
+                  {isTapped ? "Following ✓" : "FOLLOW @flash__ai__digital"}
+                </div>
+              </div>
+
+              {/* Whitelisted Subtitle Line */}
+              <div
+                style={{
+                  fontSize: 26,
+                  fontWeight: 600,
+                  color: "#94A3B8",
+                  textAlign: "center",
+                  maxWidth: 800,
+                  lineHeight: 1.4,
+                }}
+              >
+                Daily AI and dev updates, with sources
+              </div>
+            </AbsoluteFill>
+          );
+        })()}
+      </Sequence>
+
+      {/* POP CAPTIONS (Forced Alignment Driven, Safe Zone Margins) */}
+      {captionText && frame < 756 && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 390,
+            left: 60,
+            right: 60,
+            display: "flex",
+            justifyContent: "center",
+            zIndex: 120,
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              padding: "16px 28px",
+              borderRadius: 20,
+              background: "rgba(9, 12, 16, 0.92)",
+              border: "1.5px solid rgba(0, 229, 255, 0.4)",
+              boxShadow: "0 10px 40px rgba(0, 0, 0, 0.8)",
+              fontSize: 38,
+              fontWeight: 800,
+              color: "#FFFFFF",
+              letterSpacing: 0.5,
+              textAlign: "center",
+              maxWidth: 900,
+            }}
+          >
+            {captionText}
+          </div>
+        </div>
+      )}
+    </AbsoluteFill>
   );
 };

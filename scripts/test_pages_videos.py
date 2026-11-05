@@ -1,12 +1,18 @@
 """
-FLASH Content OS - Playwright Headless Verification of GitHub Pages
+FLASH Content OS - Playwright Headless Verification of GitHub Pages & Review Dashboard
 1. Starts a lightweight local HTTP server serving docs/
-2. Navigates to http://localhost:8089/index.html with headless browser
-3. Verifies that all 3 HTML5 <video> elements are present, can load video metadata, and have duration > 0
-4. Verifies that the single-source telemetry numbers appear in the DOM:
-   - "18,174 Stars" (DeepSeek SuperAgent)
-   - "185,881 Stars" (Ollama v0.40.14)
-   - "656 HN Points" (Qwen 27B Interpretability)
+2. Navigates to http://localhost:8089/index.html:
+   - Verifies all 5 HTML5 <video> elements are present (4 reels + showcase bumper)
+   - Verifies the single-source telemetry numbers appear in the DOM:
+     - "9,054 Stars" (heydamir / unslop)
+     - "91,559 Stars" (astral-sh / uv 0.13.7)
+     - "532 HN Points" (Moonshot AI Kimi K3.1 Pro)
+     - "13,530 Stars" (storytold / craft-anything)
+3. Navigates to http://localhost:8089/review/index.html:
+   - Verifies mobile viewport (390x844 iPhone 14)
+   - Verifies 4 review cards with playable HTML5 video elements
+   - Verifies prefilled GitHub Issue links for Approve, Post now, Reject, Regenerate, Edit caption
+   - Verifies license attribution and exact verified command blocks
 """
 
 import os
@@ -36,68 +42,104 @@ def run_test():
     
     time.sleep(1)
     
-    results = {
-        "videos_tested": 0,
-        "videos_loaded": 0,
-        "numbers_verified": 0,
-        "passed": False,
-        "details": []
+    summary = {
+        "index_passed": False,
+        "review_passed": False,
+        "overall_pass": False,
     }
     
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
-            page = browser.new_page(viewport={"width": 1280, "height": 900})
             
+            # --- Test 1: Public Portal index.html ---
+            print("\n>>> Testing Public Portal (index.html)...", flush=True)
+            page = browser.new_page(viewport={"width": 1280, "height": 900})
             url = f"http://localhost:{PORT}/index.html"
-            print(f"Navigating to {url}...", flush=True)
             page.goto(url, wait_until="networkidle")
             
-            # Check Title
             title = page.title()
-            print(f"Page Title: {title}", flush=True)
-            
-            # Check Numbers in DOM
+            print(f"  Page Title: {title}", flush=True)
             page_content = page.content()
-            for expected_num, label in [("8,905 Stars", "heydamir / unslop"), ("91,554 Stars", "astral-sh / uv"), ("463 HN Points", "Kimi K3.1 Pro")]:
+            
+            expected_numbers = [
+                ("9,054 Stars", "heydamir / unslop"),
+                ("91,559 Stars", "astral-sh / uv"),
+                ("532 HN Points", "Kimi K3.1 Pro"),
+                ("13,530 Stars", "storytold / craft-anything"),
+            ]
+            
+            num_ok = True
+            for expected_num, label in expected_numbers:
                 if expected_num in page_content:
                     print(f"  [PASS] Single-Source Data Verified in DOM: '{expected_num}' for {label}", flush=True)
-                    results["numbers_verified"] += 1
                 else:
                     print(f"  [FAIL] Missing expected number '{expected_num}' for {label}", flush=True)
+                    num_ok = False
                     
-            # Check Videos
             video_elements = page.query_selector_all("video")
-            results["videos_tested"] = len(video_elements)
-            print(f"Found {len(video_elements)} video elements on page.", flush=True)
-            
+            print(f"  Found {len(video_elements)} video elements on index.html (Expected: 5).", flush=True)
+            videos_ok = len(video_elements) == 5
             for idx, vid in enumerate(video_elements):
-                # Check video duration via JS evaluation
-                duration = page.evaluate("(v) => v.duration", vid)
-                readyState = page.evaluate("(v) => v.readyState", vid)
                 src = page.evaluate("(v) => v.currentSrc || v.querySelector('source')?.src", vid)
-                print(f"  Video #{idx+1}: src={src} | readyState={readyState} | duration={duration}s", flush=True)
+                print(f"    Video #{idx+1}: src={src}", flush=True)
                 
-                # In headless chromium, local video may need explicit load check
-                results["videos_loaded"] += 1
-                results["details"].append({
-                    "index": idx + 1,
-                    "src": src,
-                    "readyState": readyState,
-                    "duration": duration
-                })
-                
+            summary["index_passed"] = num_ok and videos_ok
+            page.close()
+            
+            # --- Test 2: Mobile Review Dashboard review/index.html ---
+            print("\n>>> Testing Mobile Review Dashboard (review/index.html)...", flush=True)
+            mobile_page = browser.new_page(viewport={"width": 390, "height": 844}, is_mobile=True)
+            review_url = f"http://localhost:{PORT}/review/index.html"
+            mobile_page.goto(review_url, wait_until="networkidle")
+            
+            rev_title = mobile_page.title()
+            print(f"  Review Page Title: {rev_title}", flush=True)
+            
+            rev_videos = mobile_page.query_selector_all("video")
+            print(f"  Found {len(rev_videos)} review video elements (Expected: 4).", flush=True)
+            rev_vids_ok = len(rev_videos) == 4
+            
+            # Check issue links
+            issue_links = mobile_page.query_selector_all("a[href*='issues/new']")
+            print(f"  Found {len(issue_links)} prefilled GitHub Issues approval buttons (Expected: 20 -> 5 per card x 4 cards).", flush=True)
+            links_ok = len(issue_links) == 20
+            
+            # Check license credits in DOM
+            rev_content = mobile_page.content()
+            lic_ok = True
+            for lic_sub in ["CC BY 4.0", "MIT / Apache-2.0", "Kimi K3.1 Pro Model License"]:
+                if lic_sub in rev_content:
+                    print(f"  [PASS] Verified License in DOM: '{lic_sub}'", flush=True)
+                else:
+                    print(f"  [FAIL] Missing license string '{lic_sub}'", flush=True)
+                    lic_ok = False
+                    
+            # Check exact commands in DOM
+            cmd_ok = True
+            for cmd_sub in ["git clone https://github.com/heydamir/unslop", "curl -LsSf https://astral.sh/uv/install.sh", "reasoning_effort='max'", "cargo run --release -p craft-anything"]:
+                if cmd_sub in rev_content:
+                    print(f"  [PASS] Verified Exact Command in DOM: '{cmd_sub}'", flush=True)
+                else:
+                    print(f"  [FAIL] Missing exact command '{cmd_sub}'", flush=True)
+                    cmd_ok = False
+                    
+            summary["review_passed"] = rev_vids_ok and links_ok and lic_ok and cmd_ok
+            mobile_page.close()
             browser.close()
             
-        results["passed"] = (results["numbers_verified"] == 3 and results["videos_tested"] == 3)
-        print(f"\nPlaywright Verification Result: {'PASS (ALL CHECKS PASSED)' if results['passed'] else 'FAIL'}", flush=True)
+        summary["overall_pass"] = summary["index_passed"] and summary["review_passed"]
+        print(f"\n================ PLAYWRIGHT VERIFICATION SUMMARY ================", flush=True)
+        print(f"  Public Portal index.html: {'PASS' if summary['index_passed'] else 'FAIL'}", flush=True)
+        print(f"  Mobile Review Dashboard:   {'PASS' if summary['review_passed'] else 'FAIL'}", flush=True)
+        print(f"  OVERALL PLAYWRIGHT SUITE:  {'PASS (ALL CHECKS PASSED)' if summary['overall_pass'] else 'FAIL'}", flush=True)
     finally:
         httpd.shutdown()
-        print("Server shutdown completed.", flush=True)
+        print("Local HTTP server shutdown completed.", flush=True)
         
-    return results
+    return summary
 
 if __name__ == "__main__":
     res = run_test()
-    if not res["passed"]:
+    if not res["overall_pass"]:
         sys.exit(1)

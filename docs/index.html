@@ -1,240 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FLASH.Ai - Autonomous AI Video Studio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FLASH.Ai - High-Density Cinematic AI Engineering News & Tool Releases.">
-  <style>
-    :root {
-      --bg: #090C10;
-      --card-bg: #161B22;
-      --border: #30363D;
-      --accent: #00E5FF;
-      --text: #F0F6FC;
-      --text-muted: #8B949E;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      padding-bottom: 60px;
-    }
-    header {
-      background: #0D1117;
-      border-bottom: 1px solid var(--border);
-      padding: 24px 20px;
-      text-align: center;
-    }
-    .brand {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      color: #FFFFFF;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .brand span { color: var(--accent); }
-    .subtitle {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-top: 6px;
-    }
-    .grid {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 32px;
-    }
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(0, 229, 255, 0.4);
-    }
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      background: #000;
-      aspect-ratio: 9/16;
-    }
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .card-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .kicker {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .card-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 6px;
-    }
-    .tagline {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      line-height: 1.4;
-      flex: 1;
-    }
-    .meta-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(0, 229, 255, 0.1);
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 12px;
-      border: 1px solid rgba(0, 229, 255, 0.2);
-    }
-    .date-badge {
-      background: rgba(255, 255, 255, 0.05);
-      color: #94A3B8;
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-    .action-row {
-      display: flex;
-      gap: 12px;
-    }
-    .btn-res {
-      flex: 1;
-      padding: 10px 14px;
-      background: var(--accent);
-      color: #090C10;
-      font-weight: 700;
-      font-size: 13px;
-      border-radius: 8px;
-      text-align: center;
-      text-decoration: none;
-    }
-    .btn-src {
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #E2E8F0;
-      font-weight: 600;
-      font-size: 13px;
-      border-radius: 8px;
-      text-align: center;
-      text-decoration: none;
-      border: 1px solid var(--border);
-    }
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      color: var(--text-muted);
-      font-size: 13px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLASH.Ai — Autonomous Dev & AI Intelligence</title>
+    <style>
+        :root {
+            --bg: #0a0b0e;
+            --surface: #14171f;
+            --surface-border: #222736;
+            --text-primary: #f0f3fa;
+            --text-secondary: #8c96ac;
+            --accent-cyan: #00e5ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 24px 16px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
+        .header-sub { color: var(--accent-cyan); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+        .review-banner {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 700;
+        }
+        .review-banner a { color: var(--accent-cyan); text-decoration: underline; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 24px;
+        }
+        .reel-card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            padding: 18px;
+        }
+        .badge { font-size: 11px; font-weight: 700; border: 1px solid; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
+        h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+        .tagline { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+        .video-wrap { width: 100%; aspect-ratio: 9/16; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+        video { width: 100%; height: 100%; object-fit: contain; }
+        .card-meta { font-size: 12px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; }
+        .pack-link { color: var(--accent-cyan); font-weight: 700; text-decoration: none; margin-top: 6px; }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="brand">⚡ FLASH<span>.Ai</span></div>
-    <div class="subtitle">Autonomous High-Density AI Video Studio • Daily Cinematic Essays</div>
-  </header>
-
-  <main class="grid">
-
-      <article class="card">
-        <div class="video-wrapper">
-          <video controls preload="metadata" playsinline poster="reel_essay_1_unslop_contact_sheet.png">
-            <source src="videos/reel_essay_1_unslop_720p.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+    <header>
+        <h1>FLASH.Ai CONTENT OS</h1>
+        <div class="header-sub">Deterministic Cinematic Essay Re-Engineered Edition</div>
+    </header>
+    <div class="review-banner">
+        Owner Review Dashboard: <a href="review/index.html">Open Mobile-First Review & Approvals Page →</a>
+    </div>
+    <main class="grid">
+        
+        <article class="reel-card">
+            <span class="badge" style="color: #00E5FF; border-color: #00E5FF;">RISING REPO • 7.0 DAYS OLD</span>
+            <h2>heydamir / unslop</h2>
+            <p class="tagline">Clean-Room Claude Skill & Design System De-Slopper</p>
+            <div class="video-wrap">
+                <video controls playsinline preload="metadata" poster="reel_essay_1_unslop_contact_sheet.png">
+                    <source src="videos/reel_essay_1_unslop_720p.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="card-meta">
+                <span>Verified Metric: <strong>9,054 Stars</strong></span>
+                <span>License: <strong>CC BY 4.0</strong></span>
+                <a href="resource_unslop.html" class="pack-link">View Resource Pack →</a>
+            </div>
+        </article>
+        
+        <article class="reel-card">
+            <span class="badge" style="color: #FF9100; border-color: #FF9100;">TOOL RELEASE • 2.3 DAYS OLD</span>
+            <h2>astral-sh / uv 0.13.7</h2>
+            <p class="tagline">High-Velocity Python Package & Project Manager</p>
+            <div class="video-wrap">
+                <video controls playsinline preload="metadata" poster="reel_essay_2_uv_contact_sheet.png">
+                    <source src="videos/reel_essay_2_uv_720p.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="card-meta">
+                <span>Verified Metric: <strong>91,559 Stars</strong></span>
+                <span>License: <strong>MIT / Apache-2.0</strong></span>
+                <a href="resource_uv.html" class="pack-link">View Resource Pack →</a>
+            </div>
+        </article>
+        
+        <article class="reel-card">
+            <span class="badge" style="color: #7C4DFF; border-color: #7C4DFF;">AI NEWS • 20.5 HOURS OLD</span>
+            <h2>Moonshot AI Kimi K3.1 Pro</h2>
+            <p class="tagline">Open Architecture Weights with Configurable Reasoning</p>
+            <div class="video-wrap">
+                <video controls playsinline preload="metadata" poster="reel_essay_3_kimi_contact_sheet.png">
+                    <source src="videos/reel_essay_3_kimi_720p.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="card-meta">
+                <span>Verified Metric: <strong>532 HN Points</strong></span>
+                <span>License: <strong>kimi-k3.1-pro license (Open Weights)</strong></span>
+                <a href="resource_kimi.html" class="pack-link">View Resource Pack →</a>
+            </div>
+        </article>
+        
+        <article class="reel-card">
+            <span class="badge" style="color: #00E676; border-color: #00E676;">RISING REPO • 5.0 DAYS OLD</span>
+            <h2>storytold / craft-anything</h2>
+            <p class="tagline">Rust Clean-Room Voxel & Software Architecture Engine</p>
+            <div class="video-wrap">
+                <video controls playsinline preload="metadata" poster="reel_essay_4_craft_contact_sheet.png">
+                    <source src="videos/reel_essay_4_craft_720p.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="card-meta">
+                <span>Verified Metric: <strong>13,530 Stars</strong></span>
+                <span>License: <strong>MIT / Apache-2.0</strong></span>
+                <a href="resource_craft.html" class="pack-link">View Resource Pack →</a>
+            </div>
+        </article>
+        
+        
+    <article class="reel-card bumper-card">
+        <span class="badge" style="color: #00E5FF; border-color: #00E5FF;">FLASH BRAND ANCHOR</span>
+        <h2>FLASH.Ai — Signature Brand Bumper</h2>
+        <p class="tagline">Broadcast Ident & Motion Metric Showcase (15.00s)</p>
+        <div class="video-wrap">
+            <video controls playsinline preload="metadata">
+                <source src="videos/showcase_bumper_720p.mp4" type="video/mp4">
+            </video>
         </div>
-        <div class="card-body">
-          <div class="kicker" style="color: #00E5FF;">RISING REPO • 7 DAYS OLD</div>
-          <h2 class="card-title">heydamir / unslop</h2>
-          <p class="tagline">Vibecoded UI De-Slopper & Human Styler</p>
-          <div class="meta-row">
-            <span class="badge">8,905 Stars</span>
-            <span class="badge date-badge">29 Oct 2026</span>
-          </div>
-          <div class="action-row">
-            <a href="resource_unslop.html" class="btn-res">Resource Pack ↗</a>
-            <a href="https://github.com/heydamir/unslop" target="_blank" class="btn-src">Source ↗</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="video-wrapper">
-          <video controls preload="metadata" playsinline poster="reel_essay_2_uv_contact_sheet.png">
-            <source src="videos/reel_essay_2_uv_720p.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="card-body">
-          <div class="kicker" style="color: #FF9100;">TOOL RELEASE • 2.3 DAYS OLD</div>
-          <h2 class="card-title">astral-sh / uv 0.13.7</h2>
-          <p class="tagline">High-Velocity Python Package & Project Manager</p>
-          <div class="meta-row">
-            <span class="badge">91,554 Stars</span>
-            <span class="badge date-badge">03 Nov 2026</span>
-          </div>
-          <div class="action-row">
-            <a href="resource_uv.html" class="btn-res">Resource Pack ↗</a>
-            <a href="https://github.com/astral-sh/uv/releases/tag/0.13.7" target="_blank" class="btn-src">Source ↗</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="video-wrapper">
-          <video controls preload="metadata" playsinline poster="reel_essay_3_kimi_contact_sheet.png">
-            <source src="videos/reel_essay_3_kimi_720p.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="card-body">
-          <div class="kicker" style="color: #7C4DFF;">AI NEWS • 20.5 HOURS OLD</div>
-          <h2 class="card-title">Moonshot AI Kimi K3.1 Pro</h2>
-          <p class="tagline">Open Architecture Weights with Hybrid Reasoning</p>
-          <div class="meta-row">
-            <span class="badge">463 HN Points</span>
-            <span class="badge date-badge">04 Nov 2026</span>
-          </div>
-          <div class="action-row">
-            <a href="resource_kimi.html" class="btn-res">Resource Pack ↗</a>
-            <a href="https://huggingface.co/moonshotai/Kimi-K3.1-Pro" target="_blank" class="btn-src">Source ↗</a>
-          </div>
-        </div>
-      </article>
-
-  </main>
-
-  <footer>
-    <p>All videos deterministically rendered via Remotion with forced alignment audio • No stock footage • 100% verified sources</p>
-    <p style="margin-top: 8px;">Instagram: <a href="https://instagram.com/flash__ai__digital" target="_blank" style="color: var(--accent); text-decoration: none;">@flash__ai__digital</a></p>
-  </footer>
+    </article>
+    
+    </main>
 </body>
 </html>

@@ -1,0 +1,99 @@
+name: Process Video Approvals
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+jobs:
+  handle_approval:
+    runs-on: ubuntu-latest
+    if: github.event.issue.user.login == 'naveenk7100-ship-it'
+    steps:
+      - name: Checkout Studio Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Process Issue Action
+        id: process_action
+        run: |
+          python - << 'EOF'
+          import os
+          import json
+          import re
+
+          title = "${{ github.event.issue.title }}"
+          body = """${{ github.event.issue.body }}"""
+          author = "${{ github.event.issue.user.login }}"
+          labels = [l["name"] for l in ${{ toJson(github.event.issue.labels) }}]
+
+          print(f"Author: {author}")
+          print(f"Title: {title}")
+          print(f"Labels: {labels}")
+
+          # Check action
+          action = None
+          if "[APPROVE]" in title or "approval:approved" in labels:
+              action = "APPROVE"
+          elif "[POST NOW]" in title or "approval:post_now" in labels:
+              action = "POST_NOW"
+          elif "[REJECT]" in title or "approval:rejected" in labels:
+              action = "REJECT"
+          elif "[REGENERATE]" in title or "approval:regenerate" in labels:
+              action = "REGENERATE"
+          elif "[EDIT CAPTION]" in title or "approval:edit_caption" in labels:
+              action = "EDIT_CAPTION"
+
+          # Extract video ID
+          match = re.search(r'(reel_essay_[0-9]+_[a-zA-Z0-9_]+|showcase_bumper)', title)
+          vid_id = match.group(1) if match else "unknown"
+
+          print(f"Action determined: {action} for Video ID: {vid_id}")
+
+          # Update queue.json or state.json
+          queue_file = "queue/queue.json"
+          if os.path.exists(queue_file):
+              with open(queue_file, "r") as f:
+                  queue = json.load(f)
+              for item in queue:
+                  if item.get("id") == vid_id:
+                      if action == "APPROVE":
+                          item["approved"] = True
+                          item["approval_status"] = "APPROVED_BY_OWNER"
+                      elif action == "REJECT":
+                          item["approved"] = False
+                          item["approval_status"] = "REJECTED_BY_OWNER"
+                      elif action == "POST_NOW":
+                          item["approved"] = True
+                          item["priority"] = "HIGH"
+              with open(queue_file, "w") as f:
+                  json.dump(queue, f, indent=2)
+
+          EOF
+
+      - name: Comment on Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Processed approval action from verified repository owner **@${context.actor}**.`
+            });
+            github.rest.issues.update({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed'
+            });
