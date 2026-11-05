@@ -59,7 +59,7 @@ def run_test():
             
             # Check Numbers in DOM
             page_content = page.content()
-            for expected_num, label in [("18,174 Stars", "DeepSeek SuperAgent"), ("185,881 Stars", "Ollama"), ("656 HN Points", "Qwen News")]:
+            for expected_num, label in [("8,905 Stars", "heydamir / unslop"), ("91,554 Stars", "astral-sh / uv"), ("463 HN Points", "Kimi K3.1 Pro")]:
                 if expected_num in page_content:
                     print(f"  [PASS] Single-Source Data Verified in DOM: '{expected_num}' for {label}", flush=True)
                     results["numbers_verified"] += 1

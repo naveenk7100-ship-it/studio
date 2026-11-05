@@ -45,6 +45,30 @@
       "sheet_msg_id": 155,
       "card_msg_id": 156,
       "video_msg_id": 157
+    },
+    "reel_essay_1_unslop": {
+      "delivered_at": "2026-11-05 07:20:29 UTC",
+      "title": "heydamir / unslop: Vibecoded UI De-Slopper & Human Styler",
+      "sheet_message_id": 158,
+      "card_message_id": 159,
+      "video_message_id": 160,
+      "status": "DELIVERED_PENDING_APPROVAL"
+    },
+    "reel_essay_2_uv": {
+      "delivered_at": "2026-11-05 07:21:49 UTC",
+      "title": "astral-sh / uv 0.13.7: High-Velocity Python Package Manager",
+      "sheet_message_id": 161,
+      "card_message_id": 162,
+      "video_message_id": 163,
+      "status": "DELIVERED_PENDING_APPROVAL"
+    },
+    "reel_essay_3_kimi": {
+      "delivered_at": "2026-11-05 07:22:04 UTC",
+      "title": "Moonshot AI Kimi K3.1 Pro: Open Architecture Weights",
+      "sheet_message_id": 164,
+      "card_message_id": 165,
+      "video_message_id": 166,
+      "status": "DELIVERED_PENDING_APPROVAL"
     }
   }
 }

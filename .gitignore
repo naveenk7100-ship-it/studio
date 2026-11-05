@@ -24,6 +24,7 @@ cache/
 *.jpeg
 !docs/**
 !assets/captured_proofs/**
+!engine/public/captured_proofs/**
 
 # Python
 __pycache__/

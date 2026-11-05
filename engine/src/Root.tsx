@@ -1,9 +1,9 @@
 import React from "react";
 import { Composition } from "remotion";
 import { ShowcaseBumper } from "./compositions/ShowcaseBumper";
-import { NewEditorial_SuperAgent } from "./compositions/NewEditorial_SuperAgent";
-import { NewEditorial_Ollama } from "./compositions/NewEditorial_Ollama";
-import { NewEditorial_QwenNews } from "./compositions/NewEditorial_QwenNews";
+import { CinematicEssay_Unslop } from "./compositions/CinematicEssay_Unslop";
+import { CinematicEssay_UV } from "./compositions/CinematicEssay_UV";
+import { CinematicEssay_Kimi } from "./compositions/CinematicEssay_Kimi";
 
 export const Root: React.FC = () => {
   return (
@@ -17,24 +17,24 @@ export const Root: React.FC = () => {
         height={1920}
       />
       <Composition
-        id="NewEditorial-SuperAgent"
-        component={NewEditorial_SuperAgent}
+        id="CinematicEssay-Unslop"
+        component={CinematicEssay_Unslop}
         durationInFrames={840}
         fps={30}
         width={1080}
         height={1920}
       />
       <Composition
-        id="NewEditorial-Ollama"
-        component={NewEditorial_Ollama}
+        id="CinematicEssay-UV"
+        component={CinematicEssay_UV}
         durationInFrames={840}
         fps={30}
         width={1080}
         height={1920}
       />
       <Composition
-        id="NewEditorial-QwenNews"
-        component={NewEditorial_QwenNews}
+        id="CinematicEssay-Kimi"
+        component={CinematicEssay_Kimi}
         durationInFrames={840}
         fps={30}
         width={1080}

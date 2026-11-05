@@ -27,6 +27,33 @@
       "normalized_title": "model context protocol universal ai tool interface",
       "covered_at": "2026-11-03",
       "expires_at": "2027-01-02"
+    },
+    {
+      "key": "deepseek-ai/dsh-superagent-prototype:v0.1.0",
+      "repo": "deepseek-ai/dsh-superagent-prototype",
+      "release_tag": "v0.1.0",
+      "canonical_url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+      "normalized_title": "deepseek superagent hierarchical agent prototype",
+      "covered_at": "2026-11-04",
+      "expires_at": "2027-01-03"
+    },
+    {
+      "key": "ollama/ollama:v0.40.14",
+      "repo": "ollama/ollama",
+      "release_tag": "v0.40.14",
+      "canonical_url": "https://github.com/ollama/ollama/releases/tag/v0.40.14",
+      "normalized_title": "ollama local llm runtime server",
+      "covered_at": "2026-11-04",
+      "expires_at": "2027-01-03"
+    },
+    {
+      "key": "simonwillison.net/qwen-27b-local-interpretability",
+      "repo": "simonwillison/qwen-interpretability",
+      "release_tag": "hn-45802194",
+      "canonical_url": "https://simonwillison.net/2026/Nov/3/qwen-27b-local-interpretability/",
+      "normalized_title": "qwen 27b local interpretability neural weights",
+      "covered_at": "2026-11-04",
+      "expires_at": "2027-01-03"
     }
   ]
 }
