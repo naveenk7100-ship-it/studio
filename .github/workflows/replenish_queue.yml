@@ -1,9 +1,8 @@
 name: Replenish Content Queue
 
 on:
-  # Cron disabled until user explicitly commands 'GO'
-  # schedule:
-  #   - cron: "0 2,10,18 * * *"
+  schedule:
+    - cron: "37 22 * * *"
   workflow_dispatch:
     inputs:
       target_depth:

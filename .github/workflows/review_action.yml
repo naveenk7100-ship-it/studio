@@ -1,0 +1,81 @@
+name: Review Action (One-Tap Approval & Publishing)
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action to perform (APPROVE, POST_NOW, REJECT, REGENERATE, EDIT_CAPTION)"
+        required: true
+        default: "APPROVE"
+      video_id:
+        description: "Target video identifier"
+        required: true
+      caption_hash:
+        description: "SHA256 hash of the caption to ensure zero tamper"
+        required: false
+      custom_caption:
+        description: "Updated caption if editing"
+        required: false
+      feedback_direction:
+        description: "Direction for regeneration or rejection reason"
+        required: false
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: review-action-${{ inputs.video_id }}
+  cancel-in-progress: false
+
+jobs:
+  execute_review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout Studio Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install System Dependencies (FFmpeg)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Master Regression Suite (0. Never Repeat a Mistake)
+        run: |
+          python tests/regression/run_all_regression.py
+
+      - name: Validate & Execute Operator Action
+        env:
+          ACTION: ${{ inputs.action }}
+          VIDEO_ID: ${{ inputs.video_id }}
+          CAPTION_HASH: ${{ inputs.caption_hash }}
+          CUSTOM_CAPTION: ${{ inputs.custom_caption }}
+          FEEDBACK: ${{ inputs.feedback_direction }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/execute_review_action.py
+
+      - name: Deploy Updated Dashboard & Status to GitHub Pages
+        run: |
+          git config user.name "FLASH Studio Bot"
+          git config user.email "bot@flash-ai.digital"
+          git add docs/ queue/ history.json
+          git diff --cached --quiet || (git commit -m "chore(review): executed ${{ inputs.action }} for ${{ inputs.video_id }} [skip ci]" && git push)

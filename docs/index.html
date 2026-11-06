@@ -2,145 +2,253 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FLASH.Ai — Autonomous Dev & AI Intelligence</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; img-src 'self' data: blob: https://*; media-src 'self' data: blob:; connect-src 'self' https://api.github.com;">
+    <title>FLASH.Ai — Autonomous Cinematic Explainer Studio</title>
     <style>
         :root {
-            --bg: #0a0b0e;
-            --surface: #14171f;
-            --surface-border: #222736;
-            --text-primary: #f0f3fa;
-            --text-secondary: #8c96ac;
-            --accent-cyan: #00e5ff;
+            --bg: #07090E;
+            --surface: rgba(16, 21, 33, 0.75);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #00E5FF;
+            --accent-pink: #FF2D95;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background: var(--bg);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            padding: 24px 16px;
-            max-width: 900px;
+            font-family: var(--font-stack);
+            line-height: 1.5;
+            padding: 20px 16px 80px;
+            max-width: 720px;
             margin: 0 auto;
         }
-        header { text-align: center; margin-bottom: 40px; }
-        h1 { font-size: 32px; font-weight: 900; letter-spacing: 2px; }
-        .header-sub { color: var(--accent-cyan); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
-        .review-banner {
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid var(--accent-cyan);
-            padding: 12px;
-            border-radius: 10px;
+        header {
             text-align: center;
+            padding: 28px 0 20px;
+            border-bottom: 1px solid var(--surface-border);
+            margin-bottom: 30px;
+        }
+        .brand-logo {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-cyan);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
+            margin-bottom: 12px;
+        }
+        h1 { font-size: 28px; font-weight: 900; letter-spacing: 2px; }
+        p.sub { font-size: 13px; color: var(--accent-cyan); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+        .review-banner {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(255, 45, 149, 0.15));
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 14px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 32px;
-            font-weight: 700;
         }
-        .review-banner a { color: var(--accent-cyan); text-decoration: underline; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 24px;
+        .review-banner a {
+            background: var(--accent-cyan);
+            color: #040810;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: 0.5px;
         }
-        .reel-card {
+        .reel-item {
             background: var(--surface);
             border: 1px solid var(--surface-border);
-            border-radius: 16px;
-            padding: 18px;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 36px;
         }
-        .badge { font-size: 11px; font-weight: 700; border: 1px solid; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
-        h2 { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
-        .tagline { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
-        .video-wrap { width: 100%; aspect-ratio: 9/16; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+        .kicker {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        h2 { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+        p.tagline { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+        .video-wrapper {
+            width: 100%;
+            aspect-ratio: 9/16;
+            max-height: 580px;
+            background: #000;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
         video { width: 100%; height: 100%; object-fit: contain; }
-        .card-meta { font-size: 12px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; }
-        .pack-link { color: var(--accent-cyan); font-weight: 700; text-decoration: none; margin-top: 6px; }
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .m-chip {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--surface-border);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        .m-chip span { font-size: 10px; color: var(--text-secondary); display: block; text-transform: uppercase; }
+        .m-chip strong { font-size: 12px; color: #FFF; }
+        .links-row {
+            display: flex;
+            gap: 10px;
+        }
+        .link-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--surface-border);
+            color: var(--text-secondary);
+        }
+        .link-btn.primary {
+            background: rgba(0, 229, 255, 0.15);
+            border-color: rgba(0, 229, 255, 0.4);
+            color: var(--accent-cyan);
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>FLASH.Ai CONTENT OS</h1>
-        <div class="header-sub">Deterministic Cinematic Essay Re-Engineered Edition</div>
+        <img src="assets/brand/logo.png" alt="FLASH Logo" class="brand-logo">
+        <h1>FLASH.Ai</h1>
+        <p class="sub">Autonomous Daily AI Discovery & Cinematic Explainer Engine</p>
     </header>
+
     <div class="review-banner">
-        Owner Review Dashboard: <a href="review/index.html">Open Mobile-First Review & Approvals Page →</a>
+        <div>
+            <strong style="color:#FFF; font-size:13px; display:block;">Operator Review Control Center</strong>
+            <span style="font-size:11px; color:var(--text-secondary);">One-tap approval, quality gate audits, and schedule controls</span>
+        </div>
+        <a href="review/">Open Dashboard →</a>
     </div>
-    <main class="grid">
-        
-        <article class="reel-card">
-            <span class="badge" style="color: #00E5FF; border-color: #00E5FF;">RISING REPO • 7.0 DAYS OLD</span>
+
+    
+        <div class="reel-item" id="reel_essay_1_unslop">
+            <div class="kicker" style="color: #00E5FF; border: 1px solid #00E5FF;">RISING REPO • 7.0 DAYS OLD</div>
             <h2>heydamir / unslop</h2>
             <p class="tagline">Clean-Room Claude Skill & Design System De-Slopper</p>
-            <div class="video-wrap">
+            <div class="video-wrapper">
                 <video controls playsinline preload="metadata" poster="reel_essay_1_unslop_contact_sheet.png">
                     <source src="videos/reel_essay_1_unslop_720p.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
                 </video>
             </div>
-            <div class="card-meta">
-                <span>Verified Metric: <strong>9,054 Stars</strong></span>
-                <span>License: <strong>CC BY 4.0</strong></span>
-                <a href="resource_unslop.html" class="pack-link">View Resource Pack →</a>
+            <div class="metrics-row">
+                <div class="m-chip"><span>Verified Stars</span><strong>9,054 Stars</strong></div>
+                <div class="m-chip"><span>Loudness</span><strong>-14.5 LUFS</strong></div>
+                <div class="m-chip"><span>Motion MAD</span><strong>0.91</strong></div>
+                <div class="m-chip"><span>Technical Coverage</span><strong>78.57%</strong></div>
             </div>
-        </article>
+            <div class="links-row">
+                <a href="https://github.com/heydamir/unslop" target="_blank" class="link-btn">GitHub Source ↗</a>
+                <a href="resource_unslop.html" class="link-btn primary">Technical Essay & Resource Pack ↗</a>
+            </div>
+        </div>
         
-        <article class="reel-card">
-            <span class="badge" style="color: #FF9100; border-color: #FF9100;">TOOL RELEASE • 2.3 DAYS OLD</span>
+        <div class="reel-item" id="reel_essay_2_uv">
+            <div class="kicker" style="color: #FF9100; border: 1px solid #FF9100;">TOOL RELEASE • 2.3 DAYS OLD</div>
             <h2>astral-sh / uv 0.13.7</h2>
             <p class="tagline">High-Velocity Python Package & Project Manager</p>
-            <div class="video-wrap">
+            <div class="video-wrapper">
                 <video controls playsinline preload="metadata" poster="reel_essay_2_uv_contact_sheet.png">
                     <source src="videos/reel_essay_2_uv_720p.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
                 </video>
             </div>
-            <div class="card-meta">
-                <span>Verified Metric: <strong>91,559 Stars</strong></span>
-                <span>License: <strong>MIT / Apache-2.0</strong></span>
-                <a href="resource_uv.html" class="pack-link">View Resource Pack →</a>
+            <div class="metrics-row">
+                <div class="m-chip"><span>Verified Stars</span><strong>91,559 Stars</strong></div>
+                <div class="m-chip"><span>Loudness</span><strong>-14.2 LUFS</strong></div>
+                <div class="m-chip"><span>Motion MAD</span><strong>0.91</strong></div>
+                <div class="m-chip"><span>Technical Coverage</span><strong>78.57%</strong></div>
             </div>
-        </article>
+            <div class="links-row">
+                <a href="https://github.com/astral-sh/uv/releases/tag/0.13.7" target="_blank" class="link-btn">GitHub Source ↗</a>
+                <a href="resource_uv.html" class="link-btn primary">Technical Essay & Resource Pack ↗</a>
+            </div>
+        </div>
         
-        <article class="reel-card">
-            <span class="badge" style="color: #7C4DFF; border-color: #7C4DFF;">AI NEWS • 20.5 HOURS OLD</span>
+        <div class="reel-item" id="reel_essay_3_kimi">
+            <div class="kicker" style="color: #7C4DFF; border: 1px solid #7C4DFF;">AI NEWS • 20.5 HOURS OLD</div>
             <h2>Moonshot AI Kimi K3.1 Pro</h2>
             <p class="tagline">Open Architecture Weights with Configurable Reasoning</p>
-            <div class="video-wrap">
+            <div class="video-wrapper">
                 <video controls playsinline preload="metadata" poster="reel_essay_3_kimi_contact_sheet.png">
                     <source src="videos/reel_essay_3_kimi_720p.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
                 </video>
             </div>
-            <div class="card-meta">
-                <span>Verified Metric: <strong>532 HN Points</strong></span>
-                <span>License: <strong>kimi-k3.1-pro license (Open Weights)</strong></span>
-                <a href="resource_kimi.html" class="pack-link">View Resource Pack →</a>
+            <div class="metrics-row">
+                <div class="m-chip"><span>Verified Stars</span><strong>532 HN Points</strong></div>
+                <div class="m-chip"><span>Loudness</span><strong>-14.4 LUFS</strong></div>
+                <div class="m-chip"><span>Motion MAD</span><strong>0.91</strong></div>
+                <div class="m-chip"><span>Technical Coverage</span><strong>78.57%</strong></div>
             </div>
-        </article>
+            <div class="links-row">
+                <a href="https://huggingface.co/moonshotai/Kimi-K3.1-Pro" target="_blank" class="link-btn">GitHub Source ↗</a>
+                <a href="resource_kimi.html" class="link-btn primary">Technical Essay & Resource Pack ↗</a>
+            </div>
+        </div>
         
-        <article class="reel-card">
-            <span class="badge" style="color: #00E676; border-color: #00E676;">RISING REPO • 5.0 DAYS OLD</span>
+        <div class="reel-item" id="reel_essay_4_craft">
+            <div class="kicker" style="color: #00E676; border: 1px solid #00E676;">RISING REPO • 5.0 DAYS OLD</div>
             <h2>storytold / craft-anything</h2>
             <p class="tagline">Rust Clean-Room Voxel & Software Architecture Engine</p>
-            <div class="video-wrap">
+            <div class="video-wrapper">
                 <video controls playsinline preload="metadata" poster="reel_essay_4_craft_contact_sheet.png">
                     <source src="videos/reel_essay_4_craft_720p.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
                 </video>
             </div>
-            <div class="card-meta">
-                <span>Verified Metric: <strong>13,530 Stars</strong></span>
-                <span>License: <strong>MIT / Apache-2.0</strong></span>
-                <a href="resource_craft.html" class="pack-link">View Resource Pack →</a>
+            <div class="metrics-row">
+                <div class="m-chip"><span>Verified Stars</span><strong>13,530 Stars</strong></div>
+                <div class="m-chip"><span>Loudness</span><strong>-14.2 LUFS</strong></div>
+                <div class="m-chip"><span>Motion MAD</span><strong>0.91</strong></div>
+                <div class="m-chip"><span>Technical Coverage</span><strong>78.57%</strong></div>
             </div>
-        </article>
-        
-        
-    <article class="reel-card bumper-card">
-        <span class="badge" style="color: #00E5FF; border-color: #00E5FF;">FLASH BRAND ANCHOR</span>
-        <h2>FLASH.Ai — Signature Brand Bumper</h2>
-        <p class="tagline">Broadcast Ident & Motion Metric Showcase (15.00s)</p>
-        <div class="video-wrap">
-            <video controls playsinline preload="metadata">
-                <source src="videos/showcase_bumper_720p.mp4" type="video/mp4">
-            </video>
+            <div class="links-row">
+                <a href="https://github.com/storytold/craft-anything" target="_blank" class="link-btn">GitHub Source ↗</a>
+                <a href="resource_craft.html" class="link-btn primary">Technical Essay & Resource Pack ↗</a>
+            </div>
         </div>
-    </article>
+        
     
-    </main>
+        <div class="reel-item" id="showcase_bumper">
+            <div class="kicker" style="color: #00E5FF; border: 1px solid #00E5FF;">PROMPT ID 607 • BUMPER</div>
+            <h2>FLASH.Ai Production Studio</h2>
+            <p class="tagline">Autonomous Cinematic Explainer Engine Bumper (20.0s)</p>
+            <div class="video-wrapper">
+                <video controls playsinline preload="metadata" poster="assets/brand/profile.png">
+                    <source src="videos/showcase_bumper_720p.mp4" type="video/mp4">
+                    Your browser does not support HTML5 video.
+                </video>
+            </div>
+            <div class="metrics-row">
+                <div class="m-chip"><span>Loudness</span><strong>-14.1 LUFS</strong></div>
+                <div class="m-chip"><span>True Peak</span><strong>-1.9 dBTP</strong></div>
+                <div class="m-chip"><span>Duration</span><strong>20.00s</strong></div>
+                <div class="m-chip"><span>Brand Lockup</span><strong>FLASH Logo</strong></div>
+            </div>
+        </div>
+    
 </body>
 </html>

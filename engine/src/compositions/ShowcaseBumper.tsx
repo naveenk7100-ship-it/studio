@@ -5,6 +5,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
   Sequence,
+  staticFile,
+  Img,
 } from "remotion";
 import { BoltStrike } from "../components/BoltStrike";
 import { FlashFrame } from "../components/FlashFrame";
@@ -50,6 +52,27 @@ export const ShowcaseBumper: React.FC = () => {
         padding: 50,
       }}
     >
+      <div
+        style={{
+          width: 200,
+          height: 200,
+          borderRadius: "50%",
+          overflow: "hidden",
+          border: "4px solid #00E5FF",
+          boxShadow: "0 0 50px rgba(0, 229, 255, 0.6), 0 0 80px rgba(255, 45, 149, 0.4)",
+          marginBottom: 32,
+          background: "#07080F",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Img
+          src={staticFile("assets/brand/logo.png")}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </div>
+
       <div
         style={{
           display: "inline-block",

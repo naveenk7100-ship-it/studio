@@ -1,0 +1,32 @@
+name: "Approve Video for Scheduled Slot"
+description: "Grant operator approval for video publication at scheduled slot (12:30 PM or 8:30 PM IST)."
+title: "[APPROVE] "
+labels: ["approval:approved"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### FLASH Content OS - Human Operator Approval Gate
+        Submitting this issue marks the video as **APPROVED**. It will publish at its designated schedule slot.
+  - type: input
+    id: video_id
+    attributes:
+      label: Video ID
+      description: Exact identifier of the video (e.g. reel_01_uv, reel_02_kimi, showcase_bumper).
+      placeholder: reel_01_uv
+    validations:
+      required: true
+  - type: input
+    id: slot
+    attributes:
+      label: Scheduled Slot
+      description: Target posting slot (1 for 12:30 PM IST, 2 for 8:30 PM IST, or next).
+      placeholder: "1"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Operator Notes / Quality Audit Confirmation
+      description: Optional confirmation of gate audits or special notes.
+      placeholder: All gates verified. Ready for publication.

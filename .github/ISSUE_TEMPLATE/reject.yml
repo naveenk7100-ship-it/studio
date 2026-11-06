@@ -1,0 +1,24 @@
+name: "Reject Video"
+description: "Reject video from posting queue with feedback."
+title: "[REJECT] "
+labels: ["approval:rejected"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### FLASH Content OS - Operator Rejection Gate
+        Rejected videos will NOT be posted under any circumstances.
+  - type: input
+    id: video_id
+    attributes:
+      label: Video ID
+      placeholder: reel_01_uv
+    validations:
+      required: true
+  - type: textarea
+    id: rejection_reason
+    attributes:
+      label: Rejection Reason
+      placeholder: Explain what failed or why this topic should be discarded.
+    validations:
+      required: true

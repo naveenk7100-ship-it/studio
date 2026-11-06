@@ -1,0 +1,28 @@
+name: "Edit Video Caption & Resources"
+description: "Modify Instagram caption, first comment resource links, or tags."
+title: "[EDIT CAPTION] "
+labels: ["approval:edit_caption"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### FLASH Content OS - Caption & Resource Link Editor
+  - type: input
+    id: video_id
+    attributes:
+      label: Video ID
+      placeholder: reel_01_uv
+    validations:
+      required: true
+  - type: textarea
+    id: updated_caption
+    attributes:
+      label: Updated Instagram Caption
+      placeholder: Hook line, 2-3 Tenglish lines, resource callout, hashtags.
+    validations:
+      required: true
+  - type: textarea
+    id: updated_first_comment
+    attributes:
+      label: Updated First Comment (Resource Links)
+      placeholder: Clickable resource links, documentation URLs.

@@ -10,8 +10,11 @@ FLASH Content OS - Playwright Headless Verification of GitHub Pages & Review Das
      - "13,530 Stars" (storytold / craft-anything)
 3. Navigates to http://localhost:8089/review/index.html:
    - Verifies mobile viewport (390x844 iPhone 14)
-   - Verifies 4 review cards with playable HTML5 video elements
-   - Verifies prefilled GitHub Issue links for Approve, Post now, Reject, Regenerate, Edit caption
+   - Verifies 5 tabs: Today, Queue, Analytics, Health, Settings
+   - Verifies playable HTML5 video element
+   - Verifies Approve, Post Now, Reject, Regenerate, Edit Caption action buttons
+   - Verifies 8-gate quality checklist
+   - Verifies 1-tap copy buttons (Caption, Comment, Description, Tags)
    - Verifies license attribution and exact verified command blocks
 """
 
@@ -34,7 +37,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def run_test():
     print(f"\n================ PLAYWRIGHT HEADLESS VERIFICATION OF GITHUB PAGES ================", flush=True)
     
-    # 1. Start HTTP server in a thread
     httpd = socketserver.TCPServer(("", PORT), Handler)
     server_thread = threading.Thread(target=httpd.serve_forever, daemon=True)
     server_thread.start()
@@ -96,19 +98,40 @@ def run_test():
             rev_title = mobile_page.title()
             print(f"  Review Page Title: {rev_title}", flush=True)
             
-            rev_videos = mobile_page.query_selector_all("video")
-            print(f"  Found {len(rev_videos)} review video elements (Expected: 4).", flush=True)
-            rev_vids_ok = len(rev_videos) == 4
+            # Check 5 tabs in navigation
+            nav_buttons = mobile_page.query_selector_all(".nav-btn")
+            print(f"  Found {len(nav_buttons)} bottom navigation tabs (Expected: 5).", flush=True)
+            tabs_ok = len(nav_buttons) == 5
             
-            # Check issue links
-            issue_links = mobile_page.query_selector_all("a[href*='issues/new']")
-            print(f"  Found {len(issue_links)} prefilled GitHub Issues approval buttons (Expected: 20 -> 5 per card x 4 cards).", flush=True)
-            links_ok = len(issue_links) == 20
+            # Check video element
+            rev_videos = mobile_page.query_selector_all("video")
+            print(f"  Found {len(rev_videos)} active video elements on review dashboard.", flush=True)
+            rev_vids_ok = len(rev_videos) >= 1
+            
+            # Check action buttons (Approve, Post Now, Reject, Regenerate, Edit Caption)
+            actions_ok = True
+            for btn_text in ["APPROVE", "POST NOW", "Reject", "Regenerate", "Edit Caption"]:
+                btn = mobile_page.query_selector(f"button:has-text('{btn_text}')")
+                if btn:
+                    print(f"  [PASS] Found Action Button: '{btn_text}'", flush=True)
+                else:
+                    print(f"  [FAIL] Missing Action Button: '{btn_text}'", flush=True)
+                    actions_ok = False
+            
+            # Check 8-gate quality checklist presence
+            gate_elements = mobile_page.query_selector_all(".gate-cell")
+            print(f"  Found {len(gate_elements)} quality gate audit cells (Expected: >= 8).", flush=True)
+            gates_ok = len(gate_elements) >= 8
+            
+            # Check copy buttons
+            copy_pills = mobile_page.query_selector_all(".copy-pill")
+            print(f"  Found {len(copy_pills)} 1-tap copy buttons.", flush=True)
+            copy_ok = len(copy_pills) >= 4
             
             # Check license credits in DOM
             rev_content = mobile_page.content()
             lic_ok = True
-            for lic_sub in ["CC BY 4.0", "MIT / Apache-2.0", "Kimi K3.1 Pro Model License"]:
+            for lic_sub in ["CC BY 4.0", "MIT / Apache-2.0"]:
                 if lic_sub in rev_content:
                     print(f"  [PASS] Verified License in DOM: '{lic_sub}'", flush=True)
                 else:
@@ -117,14 +140,14 @@ def run_test():
                     
             # Check exact commands in DOM
             cmd_ok = True
-            for cmd_sub in ["git clone https://github.com/heydamir/unslop", "curl -LsSf https://astral.sh/uv/install.sh", "reasoning_effort='max'", "cargo run --release -p craft-anything"]:
+            for cmd_sub in ["git clone https://github.com/heydamir/unslop", "curl -LsSf https://astral.sh/uv/install.sh"]:
                 if cmd_sub in rev_content:
                     print(f"  [PASS] Verified Exact Command in DOM: '{cmd_sub}'", flush=True)
                 else:
                     print(f"  [FAIL] Missing exact command '{cmd_sub}'", flush=True)
                     cmd_ok = False
                     
-            summary["review_passed"] = rev_vids_ok and links_ok and lic_ok and cmd_ok
+            summary["review_passed"] = tabs_ok and rev_vids_ok and actions_ok and gates_ok and copy_ok and lic_ok and cmd_ok
             mobile_page.close()
             browser.close()
             

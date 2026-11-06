@@ -17,22 +17,15 @@ raw_mp4 = os.path.join(OUT_DIR, "raw_essay_1_unslop.mp4")
 temp_wav = os.path.join(CACHE_DIR, "temp_unslop_pass1.wav")
 final_mp4 = os.path.join(OUT_DIR, "reel_essay_1_unslop.mp4")
 
-# Test combination of voice pregain and music volume
-configs = [
-    (1.4, 0.06),
-    (1.5, 0.07),
-    (1.6, 0.08),
-    (1.7, 0.09),
-]
-
-for v_gain, m_gain in configs:
-    premix_filter = f"[0:a]volume={v_gain},acompressor=threshold=-14dB:ratio=3.0:attack=5:release=50[v];[1:a]volume={m_gain}[m];[v][m]amix=inputs=2:duration=first:dropout_transition=2[aout]"
+# Test target I values to hit exact -14.0 LUFS
+for target_i in [-13.4, -13.2, -13.0, -12.8]:
+    premix_filter = "[0:a]volume=1.0,acompressor=threshold=-14dB:ratio=3.0:attack=5:release=50[v];[1:a]volume=0.038[m];[v][m]amix=inputs=2:duration=first:dropout_transition=2[aout]"
     subprocess.run([
         FFMPEG, "-y", "-i", voice_mp3, "-stream_loop", "-1", "-i", music_mp3,
         "-filter_complex", premix_filter, "-map", "[aout]", "-c:a", "pcm_s16le", "-ar", "48000", temp_wav
     ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    meas_cmd = [FFMPEG, "-i", temp_wav, "-af", "loudnorm=I=-14.0:TP=-1.8:LRA=7.0:print_format=json", "-f", "null", "-"]
+    meas_cmd = [FFMPEG, "-i", temp_wav, "-af", f"loudnorm=I={target_i}:TP=-1.8:LRA=7.0:print_format=json", "-f", "null", "-"]
     res1 = subprocess.run(meas_cmd, capture_output=True, text=True, errors="ignore")
     lines = res1.stderr.splitlines()
     json_lines = []
@@ -44,7 +37,7 @@ for v_gain, m_gain in configs:
     stats = json.loads("\n".join(json_lines))
 
     ln_filter = (
-        f"loudnorm=I=-14.0:TP=-1.8:LRA=7.0:"
+        f"loudnorm=I={target_i}:TP=-1.8:LRA=7.0:"
         f"measured_I={stats['input_i']}:"
         f"measured_TP={stats['input_tp']}:"
         f"measured_LRA={stats['input_lra']}:"
@@ -67,9 +60,9 @@ for v_gain, m_gain in configs:
     i_val = float(m_i.group(1)) if m_i else None
     tp_val = float(m_tp.group(1)) if m_tp else None
     is_pass = (abs(i_val - (-14.0)) <= 0.5) and (tp_val <= -1.5)
-    print(f"Config (voice={v_gain}, music={m_gain}): Integrated = {i_val} LUFS, Peak = {tp_val} dBTP -> PASS: {is_pass}")
+    print(f"Target I={target_i}: Measured Integrated = {i_val} LUFS, Peak = {tp_val} dBTP -> PASS: {is_pass}")
     if is_pass:
-        print("PERFECT CALIBRATION REACHED!")
+        print(f"SUCCESS: Target I={target_i} achieves compliance!")
         break
 
 if os.path.exists(temp_wav):

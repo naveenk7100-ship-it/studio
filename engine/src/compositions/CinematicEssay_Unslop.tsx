@@ -704,7 +704,29 @@ export const CinematicEssay_Unslop: React.FC = () => {
                 transform: `scale(${push})`,
               }}
             >
-              {/* Profile Avatar with Expanding Wave Ring */}
+                            {/* FLASH Official Brand Logo */}
+              <div
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  border: "3px solid #00E5FF",
+                  boxShadow: "0 0 35px rgba(0, 229, 255, 0.5), 0 0 50px rgba(255, 45, 149, 0.3)",
+                  marginBottom: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "#07090E",
+                }}
+              >
+                <Img
+                  src={staticFile("assets/brand/logo.png")}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+
+{/* Profile Avatar with Expanding Wave Ring */}
               <div
                 style={{
                   position: "relative",
@@ -741,7 +763,7 @@ export const CinematicEssay_Unslop: React.FC = () => {
                   }}
                 >
                   <Img
-                    src={staticFile("brand/profile.png")}
+                    src={staticFile("assets/brand/profile.png")}
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 </div>

@@ -1,0 +1,23 @@
+name: "Post Video Immediately (Post Now)"
+description: "Trigger immediate live publication to Instagram bypassing the scheduled slot."
+title: "[POST NOW] "
+labels: ["approval:post_now"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### FLASH Content OS - Immediate Publishing Trigger
+        Submitting this issue triggers immediate publishing of the master video to Instagram Reels.
+  - type: input
+    id: video_id
+    attributes:
+      label: Video ID
+      description: Exact identifier of the video.
+      placeholder: reel_01_uv
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Immediate Publish Reason
+      placeholder: Breaking news or manual priority release.

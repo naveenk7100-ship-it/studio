@@ -1,0 +1,23 @@
+name: "Regenerate Video"
+description: "Regenerate video scene layout, voice, or visual rhythm."
+title: "[REGENERATE] "
+labels: ["approval:regenerate"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### FLASH Content OS - Scene & Script Regeneration
+  - type: input
+    id: video_id
+    attributes:
+      label: Video ID
+      placeholder: reel_01_uv
+    validations:
+      required: true
+  - type: textarea
+    id: direction
+    attributes:
+      label: Creative Direction / Modification Instructions
+      placeholder: E.g., make opening hook faster, switch to dark-tech palette.
+    validations:
+      required: true

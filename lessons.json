@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-11-06T13:05:00Z",
+  "description": "FLASH Content OS - Mandatory Regression Rules and Defect Safeguards. Every rule has an automated regression test proven to FAIL on past bad samples and PASS on valid samples.",
+  "rules": [
+    {
+      "id": "RULE-01-COMMANDS",
+      "category": "Truth & Grounding",
+      "description": "Commands must be verifiable verbatim from repo README/docs. Forbids fake packages (e.g. 'npx @damir/unslop'), mismatched model commands (e.g. qwen2.5 under Qwen 3.6), unsafe flags ('--dangerously-skip-permissions'), and broken mid-token words.",
+      "test_file": "tests/regression/test_rule_01_commands.py",
+      "gate": "gate_truth_and_commands"
+    },
+    {
+      "id": "RULE-02-NO-HYPE-NO-DATES",
+      "category": "Headings, Hype & Dates",
+      "description": "No invented headings ('Hierarchical Task Decomposer', 'Neural Activation Vectors'), no unsourced claims ('4x higher throughput', 'viral', 'breakthrough'), no self-praise or internal labels ('Source Truth Gates: 100% Tested', 'Zero Hallucinations', 'VERIFIED', 'GROUNDED', 'TECHNICAL ESSAY TAKEAWAY', '[03/08]', 'WOW BEAT'), no chapter labels ('CHAPTER 01 - ...') or slide numbering, and NO DATES anywhere inside the video.",
+      "test_file": "tests/regression/test_rule_02_headings_hype_dates.py",
+      "gate": "gate_headings_hype_and_dates"
+    },
+    {
+      "id": "RULE-03-LANGUAGE-NUMBERS",
+      "category": "Linguistics & Numerics",
+      "description": "No Telugu unicode script on screen (romanized Tenglish Latin characters only). No relative time words in English or romanized Telugu ('yesterday', 'ninna', 'today', 'last week', 'repu', 'tomorrow'). Spelled-out numbers forbidden on screen (must use digits: '5' not 'five', '100' not 'hundred').",
+      "test_file": "tests/regression/test_rule_03_language_numbers.py",
+      "gate": "gate_language_and_numbers"
+    },
+    {
+      "id": "RULE-04-NUMBER-CONSISTENCY",
+      "category": "Consistency & Captures",
+      "description": "Numbers must agree identically between video on-screen text, Pages essays, and Instagram captions. Counters cannot show 0 as a shot. Screenshot URL bars must match the exact repo URL (not org page or missing path). Cookie banners strictly forbidden in captures.",
+      "test_file": "tests/regression/test_rule_04_number_consistency.py",
+      "gate": "gate_number_consistency_and_captures"
+    },
+    {
+      "id": "RULE-05-AUDIO-CAPTIONS",
+      "category": "Audio & Timing Sync",
+      "description": "Forbids frozen captions (> 1.5s while speech continues) and captions mismatched to voice. CTA must start strictly AFTER the last content word. Audio sample rate 48 kHz (not 96 kHz), true peak <= -1.5 dBTP, and integrated loudness strictly -14.0 +/- 0.5 LUFS for both master and 720p web copy.",
+      "test_file": "tests/regression/test_rule_05_audio_captions.py",
+      "gate": "gate_audio_acoustics_and_captions"
+    },
+    {
+      "id": "RULE-06-VISUAL-MOTION-NO-REPEAT",
+      "category": "Visuals & Motion",
+      "description": "Perceptual-hash uniqueness check prevents repeated images/crops. Text contrast >= 4.5:1 with no ghosted text. Hero visual >= 45% height with no empty dark voids. Motion MAD median >= 1.0, burst second > 20, <= 3 consecutive seconds below 0.5. Phase correlation jitter variance <= 0.05 px^2. No top-right link chip; lower-third source domain only while capture is on screen.",
+      "test_file": "tests/regression/test_rule_06_visual_motion_no_repeat.py",
+      "gate": "gate_visual_motion_and_composition"
+    },
+    {
+      "id": "RULE-07-REVIEW-URLS",
+      "category": "Review & URLs",
+      "description": "Review action buttons must generate well-formed URLs without syntax errors (e.g. no 'author:new:'). All query parameters must be safely encoded with encodeURIComponent and parseable via standard URL parser.",
+      "test_file": "tests/regression/test_rule_07_review_urls.py",
+      "gate": "gate_review_action_urls"
+    }
+  ]
+}

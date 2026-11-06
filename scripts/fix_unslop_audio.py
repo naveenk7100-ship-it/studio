@@ -14,8 +14,8 @@ MUSIC_DIR = os.path.join(ROOT, "assets", "music")
 voice_mp3 = os.path.join(CACHE_DIR, "voice_final_unslop.mp3")
 norm_voice = os.path.join(CACHE_DIR, "voice_norm_unslop.wav")
 
-# Pre-normalize voice to -15.5 LUFS
-subprocess.run([FFMPEG, "-y", "-i", voice_mp3, "-af", "loudnorm=I=-15.5:TP=-1.5:LRA=7.0", norm_voice], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+# Pre-normalize voice to -13.8 LUFS
+subprocess.run([FFMPEG, "-y", "-i", voice_mp3, "-af", "loudnorm=I=-13.8:TP=-1.5:LRA=7.0", norm_voice], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 music_mp3 = os.path.join(MUSIC_DIR, "dark-tech", "dark-tech_pulse.mp3")
 raw_mp4 = os.path.join(OUT_DIR, "raw_essay_1_unslop.mp4")
