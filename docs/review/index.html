@@ -428,6 +428,50 @@
 
         <!-- ==================== TAB 1: TODAY'S REELS ==================== -->
         <div id="tab-today" class="tab-panel active">
+            <!-- ==================== 12-SECOND STYLE TEST SHOWCASE ==================== -->
+            <div class="glass-card" style="margin-bottom: 24px; border: 2px solid #00E5FF; background: rgba(11, 37, 46, 0.4);">
+                <div class="card-kicker" style="color: #00E5FF;">STEP 1: 12-SECOND VISUAL OVERHAUL STYLE TEST • wheresryan22 / anatomy</div>
+                <h2 style="font-size: 22px; margin: 8px 0 12px 0;">3 Cinematic Explainer Look Variants</h2>
+                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
+                    Review the 3 lighting & depth variants below (voice + word-by-word captions + ducked music pulse + scene-matched foley). Pick your preferred look before we scale to full 28s reels.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                    <!-- Variant A -->
+                    <div style="background: rgba(4, 18, 23, 0.85); border: 1.5px solid #00E5FF; border-radius: 12px; padding: 14px;">
+                        <div style="font-weight: 800; color: #00E5FF; margin-bottom: 4px; font-size: 16px;">Variant A: Deep Teal Studio</div>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Volumetric light shafts • Cyan accents • Exploded view</div>
+                        <div class="video-box" style="margin-bottom: 10px;">
+                            <video src="../videos/style_test_variant_a_720p.mp4" controls playsinline preload="metadata" poster="../style_test_variant_a_contact_sheet.png"></video>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">
+                            MAD: <b>3.40</b> | Empty: <b>23.1%</b> | Loudness: <b>-13.9 LUFS</b>
+                        </div>
+                    </div>
+                    <!-- Variant B -->
+                    <div style="background: rgba(8, 22, 42, 0.85); border: 2px solid #E2B878; border-radius: 12px; padding: 14px; box-shadow: 0 0 20px rgba(226, 184, 120, 0.2);">
+                        <div style="font-weight: 800; color: #E2B878; margin-bottom: 4px; font-size: 16px;">Variant B: Blueprint Drafting (Recommended)</div>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Drafting board 3D • Sepia gold • Technical crosshairs</div>
+                        <div class="video-box" style="margin-bottom: 10px;">
+                            <video src="../videos/style_test_variant_b_720p.mp4" controls playsinline preload="metadata" poster="../style_test_variant_b_contact_sheet.png"></video>
+                        </div>
+                        <div style="font-size: 12px; color: #10B981; font-weight: 700;">
+                            PASSES ALL GATES: MAD <b>3.29</b> | Empty: <b>16.1%</b> | <b>-13.9 LUFS</b>
+                        </div>
+                    </div>
+                    <!-- Variant C -->
+                    <div style="background: rgba(241, 245, 249, 0.98); color: #0F172A; border: 1.5px solid #059669; border-radius: 12px; padding: 14px;">
+                        <div style="font-weight: 800; color: #059669; margin-bottom: 4px; font-size: 16px;">Variant C: Light Museum Vitrine</div>
+                        <div style="font-size: 12px; color: #475569; margin-bottom: 10px;">Luminous gallery • Frosted acrylic 3D pedestal • Emerald</div>
+                        <div class="video-box" style="margin-bottom: 10px;">
+                            <video src="../videos/style_test_variant_c_720p.mp4" controls playsinline preload="metadata" poster="../style_test_variant_c_contact_sheet.png"></video>
+                        </div>
+                        <div style="font-size: 12px; color: #059669; font-weight: 700;">
+                            MAD: <b>2.71</b> | Empty: <b>15.0%</b> | Loudness: <b>-13.9 LUFS</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Selector Chips -->
             <div class="reel-selector">
                 <div class="reel-chip active" onclick="selectReel('today_1_anatomy', this)">
@@ -608,7 +652,58 @@
     </nav>
 
     <script>
-        const REELS = [
+        const STYLE_TESTS = [
+    {
+        "id": "variant_a",
+        "title": "Style Test: Variant A",
+        "topic": "Deep Teal Studio Aesthetic",
+        "tagline": "Volumetric Light Shafts \u2022 Cyan #00E5FF \u2022 Exploded 3D Assembly",
+        "web_video": "../videos/style_test_variant_a_720p.mp4",
+        "sheet_img": "../style_test_variant_a_contact_sheet.png",
+        "accent": "#00E5FF",
+        "badges": [
+            "12.0s STYLE TEST",
+            "DEEP TEAL STUDIO",
+            "3D EXPLODED VIEW",
+            "-13.9 LUFS"
+        ],
+        "description": "Deep teal studio (#041217 to #0B252E), electric cyan accents (#00E5FF), volumetric light sweeps, millimeter coordinate grid, Raptor 2 3D exploded view with parallax, typed monospace command, and active FLASH logo payoff."
+    },
+    {
+        "id": "variant_b",
+        "title": "Style Test: Variant B",
+        "topic": "Warm Paper-and-Ink Blueprint",
+        "tagline": "Drafting Board 3D \u2022 Sepia Drafting Gold #E2B878 \u2022 Architectural Ticks",
+        "web_video": "../videos/style_test_variant_b_720p.mp4",
+        "sheet_img": "../style_test_variant_b_contact_sheet.png",
+        "accent": "#E2B878",
+        "badges": [
+            "12.0s STYLE TEST",
+            "BLUEPRINT DRAFTING",
+            "3D EXPLODED VIEW",
+            "-13.9 LUFS"
+        ],
+        "description": "Architectural drafting board (#08162A to #10335C), sepia drafting ink (#E2B878), millimeter technical crosshairs, measurement ticks, Raptor 2 deconstruction with mechanical callouts, typed command, and blueprint seal."
+    },
+    {
+        "id": "variant_c",
+        "title": "Style Test: Variant C",
+        "topic": "Light Museum Vitrine Aesthetic",
+        "tagline": "Luminous Gallery \u2022 Frosted Acrylic 3D Pedestal \u2022 Emerald #059669 Accents",
+        "web_video": "../videos/style_test_variant_c_720p.mp4",
+        "sheet_img": "../style_test_variant_c_contact_sheet.png",
+        "accent": "#059669",
+        "badges": [
+            "12.0s STYLE TEST",
+            "MUSEUM VITRINE",
+            "3D EXPLODED VIEW",
+            "-14.0 LUFS"
+        ],
+        "description": "Luminous museum exhibition gallery (#F1F5F9 to #CBD5E1), directional studio key lighting, frosted acrylic vitrine pedestal, emerald precision callouts (#059669), high-contrast charcoal captions, and pristine gallery lockup."
+    }
+];
+
+    const REELS = [
     {
         "id": "today_1_anatomy",
         "title": "wheresryan22 / anatomy",
