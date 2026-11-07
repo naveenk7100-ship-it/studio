@@ -2,58 +2,100 @@
   "description": "FLASH Content OS - 60-Day Covered Topics Ledger. Prevents recycling or duplicate coverage.",
   "covered": [
     {
-      "key": "vllm-project/vllm:v0.33.0rc3",
+      "key": "vllm-project/vllm",
       "repo": "vllm-project/vllm",
-      "release_tag": "v0.33.0rc3",
       "canonical_url": "https://github.com/vllm-project/vllm",
       "normalized_title": "vllm high-throughput llm inference engine",
       "covered_at": "2026-11-03",
       "expires_at": "2027-01-02"
     },
     {
-      "key": "anthropics/claude-code:v2.1.317",
+      "key": "anthropics/claude-code",
       "repo": "anthropics/claude-code",
-      "release_tag": "v2.1.317",
       "canonical_url": "https://docs.anthropic.com/en/docs/claude-code",
       "normalized_title": "claude code terminal-native coding agent",
       "covered_at": "2026-11-03",
       "expires_at": "2027-01-02"
     },
     {
-      "key": "modelcontextprotocol/servers:v2.2.0",
+      "key": "modelcontextprotocol/servers",
       "repo": "modelcontextprotocol/servers",
-      "release_tag": "v2.2.0",
       "canonical_url": "https://modelcontextprotocol.io",
       "normalized_title": "model context protocol universal ai tool interface",
       "covered_at": "2026-11-03",
       "expires_at": "2027-01-02"
     },
     {
-      "key": "deepseek-ai/dsh-superagent-prototype:v0.1.0",
+      "key": "deepseek-ai/dsh-superagent-prototype",
       "repo": "deepseek-ai/dsh-superagent-prototype",
-      "release_tag": "v0.1.0",
       "canonical_url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
       "normalized_title": "deepseek superagent hierarchical agent prototype",
       "covered_at": "2026-11-04",
       "expires_at": "2027-01-03"
     },
     {
-      "key": "ollama/ollama:v0.40.14",
+      "key": "ollama/ollama",
       "repo": "ollama/ollama",
-      "release_tag": "v0.40.14",
-      "canonical_url": "https://github.com/ollama/ollama/releases/tag/v0.40.14",
+      "canonical_url": "https://github.com/ollama/ollama",
       "normalized_title": "ollama local llm runtime server",
       "covered_at": "2026-11-04",
       "expires_at": "2027-01-03"
     },
     {
-      "key": "simonwillison.net/qwen-27b-local-interpretability",
+      "key": "simonwillison/qwen-interpretability",
       "repo": "simonwillison/qwen-interpretability",
-      "release_tag": "hn-45802194",
       "canonical_url": "https://simonwillison.net/2026/Nov/3/qwen-27b-local-interpretability/",
       "normalized_title": "qwen 27b local interpretability neural weights",
       "covered_at": "2026-11-04",
       "expires_at": "2027-01-03"
+    },
+    {
+      "key": "heydamir/unslop",
+      "repo": "heydamir/unslop",
+      "canonical_url": "https://github.com/heydamir/unslop",
+      "normalized_title": "unslop claude design system skill",
+      "covered_at": "2026-11-05",
+      "expires_at": "2027-01-04"
+    },
+    {
+      "key": "astral-sh/uv",
+      "repo": "astral-sh/uv",
+      "canonical_url": "https://github.com/astral-sh/uv",
+      "normalized_title": "uv high-velocity python package manager",
+      "covered_at": "2026-11-05",
+      "expires_at": "2027-01-04"
+    },
+    {
+      "key": "moonshotai/kimi-k3.1-pro",
+      "repo": "moonshotai/kimi-k3.1-pro",
+      "canonical_url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+      "normalized_title": "kimi k3.1 pro reasoning model open weights",
+      "covered_at": "2026-11-05",
+      "expires_at": "2027-01-04"
+    },
+    {
+      "key": "storytold/craft-anything",
+      "repo": "storytold/craft-anything",
+      "canonical_url": "https://github.com/storytold/craft-anything",
+      "normalized_title": "craft-anything rust clean-room voxel engine",
+      "covered_at": "2026-11-05",
+      "expires_at": "2027-01-04"
+    },
+    {
+      "key": "wheresryan22/anatomy",
+      "repo": "wheresryan22/anatomy",
+      "canonical_url": "https://github.com/wheresryan22/anatomy",
+      "normalized_title": "anatomy claude skill physical machine blueprint generator",
+      "covered_at": "2026-11-07",
+      "expires_at": "2027-01-06"
+    },
+    {
+      "key": "browser-use/browser-use",
+      "repo": "browser-use/browser-use",
+      "canonical_url": "https://github.com/browser-use/browser-use",
+      "normalized_title": "browser-use autonomous web agent library playwright llms",
+      "covered_at": "2026-11-07",
+      "expires_at": "2027-01-06"
     }
   ]
 }

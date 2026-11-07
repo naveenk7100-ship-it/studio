@@ -10,6 +10,8 @@ tokens/
 # Output directories & media files
 out/
 runs/
+!runs/**/gates.json
+!runs/**/ocr.txt
 scratch/
 queue/
 cache/

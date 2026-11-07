@@ -5,10 +5,28 @@ import { CinematicEssay_Unslop } from "./compositions/CinematicEssay_Unslop";
 import { CinematicEssay_UV } from "./compositions/CinematicEssay_UV";
 import { CinematicEssay_Kimi } from "./compositions/CinematicEssay_Kimi";
 import { CinematicEssay_Craft } from "./compositions/CinematicEssay_Craft";
+import { TodayReel_Anatomy } from "./compositions/TodayReel_Anatomy";
+import { TodayReel_BrowserUse } from "./compositions/TodayReel_BrowserUse";
 
 export const Root: React.FC = () => {
   return (
     <>
+      <Composition
+        id="TodayReel-Anatomy"
+        component={TodayReel_Anatomy}
+        durationInFrames={840}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="TodayReel-BrowserUse"
+        component={TodayReel_BrowserUse}
+        durationInFrames={840}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
       <Composition
         id="ShowcaseBumper"
         component={ShowcaseBumper}

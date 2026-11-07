@@ -4,117 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; img-src 'self' data: blob: https://*; media-src 'self' data: blob:; connect-src 'self' https://api.github.com https://graph.facebook.com;">
-    <title>FLASH.Ai — Production Review Control Center</title>
+    <title>FLASH.Ai — Daily Production Review Control Center</title>
     <style>
         :root {
             --bg: #07090E;
-            --surface: rgba(16, 21, 33, 0.75);
-            --surface-card: rgba(22, 30, 48, 0.65);
+            --surface: rgba(16, 21, 33, 0.85);
+            --surface-card: rgba(22, 30, 48, 0.75);
             --surface-border: rgba(255, 255, 255, 0.08);
             --surface-border-bright: rgba(0, 229, 255, 0.3);
             --text-primary: #FFFFFF;
             --text-secondary: #94A3B8;
             --accent-cyan: #00E5FF;
             --accent-pink: #FF2D95;
-            --accent-orange: #FF9100;
             --accent-green: #00E676;
-            --accent-purple: #7C4DFF;
-            --accent-red: #FF3366;
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --accent-red: #FF3B30;
+            --accent-orange: #FFB703;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: var(--bg);
+            background-color: var(--bg);
             color: var(--text-primary);
-            font-family: var(--font-stack);
-            font-size: 14px;
-            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
             padding-bottom: 90px;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
-        /* Ambient Glow Background */
         .ambient-glow {
             position: fixed;
             top: 0; left: 50%;
             transform: translateX(-50%);
-            width: 100vw; height: 350px;
-            background: radial-gradient(circle at 50% -20%, rgba(0, 229, 255, 0.15), rgba(255, 45, 149, 0.08) 50%, transparent 80%);
+            width: 100vw; max-width: 600px;
+            height: 350px;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.15) 0%, rgba(255, 45, 149, 0.06) 50%, transparent 80%);
             pointer-events: none;
             z-index: 0;
         }
         .app-container {
             position: relative;
             z-index: 1;
-            max-width: 680px;
+            max-width: 480px;
             margin: 0 auto;
             padding: 16px;
         }
-        /* Header */
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--surface-border);
-            border-radius: 18px;
+            padding: 12px 0 20px;
+            border-bottom: 1px solid var(--surface-border);
             margin-bottom: 16px;
         }
-        .brand-lockup {
+        .brand-cluster {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        .brand-logo-img {
-            width: 44px;
-            height: 44px;
+        .brand-logo-frame {
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
+            overflow: hidden;
             border: 2px solid var(--accent-cyan);
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .brand-logo-frame img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
-        .brand-text h1 {
+        .brand-title {
             font-size: 18px;
             font-weight: 900;
-            letter-spacing: 1.5px;
-            color: #FFFFFF;
-            line-height: 1.1;
-        }
-        .brand-text span {
-            font-size: 11px;
-            color: var(--accent-cyan);
             letter-spacing: 1px;
-            font-weight: 700;
-            text-transform: uppercase;
+            color: #FFF;
         }
-        .status-pill {
+        .brand-title span { color: var(--accent-cyan); }
+        .brand-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .live-badge {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            background: rgba(0, 230, 118, 0.1);
+            background: rgba(0, 230, 118, 0.12);
             border: 1px solid rgba(0, 230, 118, 0.3);
+            color: var(--accent-green);
+            padding: 5px 10px;
+            border-radius: 20px;
             font-size: 11px;
             font-weight: 800;
-            color: var(--accent-green);
             letter-spacing: 0.5px;
         }
-        .status-dot {
-            width: 7px; height: 7px;
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: var(--accent-green);
+            background-color: var(--accent-green);
             box-shadow: 0 0 8px var(--accent-green);
-            animation: pulse 2s infinite;
+            animation: pulseGlow 1.8s infinite;
         }
-        @keyframes pulse {
+        @keyframes pulseGlow {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.4; transform: scale(0.85); }
         }
-        /* Tab Navigation Bar (Sticky Bottom Glass Bar) */
         .bottom-nav {
             position: fixed;
             bottom: 14px;
@@ -123,17 +122,17 @@
             width: calc(100% - 24px);
             max-width: 540px;
             height: 64px;
-            background: rgba(11, 15, 25, 0.88);
+            background: rgba(11, 15, 25, 0.92);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.1);
             border-radius: 32px;
             display: flex;
             align-items: center;
             justify-content: space-around;
             padding: 0 8px;
             z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
         .nav-btn {
             background: transparent;
@@ -142,22 +141,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             padding: 8px 12px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-family: inherit;
         }
         .nav-btn span.icon { font-size: 18px; }
-        .nav-btn span.label { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
+        .nav-btn span.label { font-size: 10px; font-weight: 700; }
         .nav-btn.active {
             color: var(--accent-cyan);
             background: rgba(0, 229, 255, 0.12);
         }
         .nav-btn.active span.icon { transform: scale(1.1); text-shadow: 0 0 10px var(--accent-cyan); }
 
-        /* Tab Content Containers */
         .tab-panel { display: none; }
         .tab-panel.active { display: block; animation: fadeIn 0.25s ease-out; }
         @keyframes fadeIn {
@@ -165,149 +162,100 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Reel Selector Chips */
         .reel-selector {
             display: flex;
             gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 12px;
             margin-bottom: 16px;
-            scrollbar-width: none;
+            overflow-x: auto;
+            padding-bottom: 4px;
         }
-        .reel-selector::-webkit-scrollbar { display: none; }
         .reel-chip {
+            flex: 1;
+            min-width: 140px;
             background: var(--surface);
             border: 1px solid var(--surface-border);
-            padding: 8px 14px;
+            padding: 10px 14px;
             border-radius: 12px;
-            white-space: nowrap;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            text-align: left;
             transition: all 0.2s ease;
         }
+        .reel-chip .chip-kicker { font-size: 10px; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase; }
+        .reel-chip .chip-title { font-size: 13px; font-weight: 800; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .reel-chip.active {
-            background: rgba(0, 229, 255, 0.15);
+            background: rgba(0, 229, 255, 0.12);
             border-color: var(--accent-cyan);
-            color: #FFFFFF;
             box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
         }
 
-        /* Card Container */
         .glass-card {
             background: var(--surface);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--surface-border);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 18px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
         }
-        .kicker-tag {
-            font-size: 11px;
+
+        .badge-ready {
+            background: rgba(0, 230, 118, 0.15);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            font-size: 10px;
             font-weight: 800;
-            letter-spacing: 1px;
-            padding: 3px 8px;
-            border-radius: 6px;
-            border: 1px solid;
+            padding: 4px 8px;
+            border-radius: 8px;
             display: inline-block;
             margin-bottom: 8px;
         }
         h2.card-title { font-size: 22px; font-weight: 900; color: #FFF; margin-bottom: 4px; }
         p.card-tagline { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
 
-        /* Video Player Frame */
         .video-box {
             width: 100%;
             aspect-ratio: 9/16;
-            max-height: 580px;
             background: #000;
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
-            position: relative;
-            margin-bottom: 16px;
             border: 1px solid var(--surface-border);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            margin-bottom: 16px;
         }
         video { width: 100%; height: 100%; object-fit: contain; }
 
-        /* Prominent Approval Buttons */
         .approval-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 10px;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
-        .secondary-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 18px;
-        }
-        .act-btn {
+        .btn-approve {
+            background: linear-gradient(135deg, #00E676 0%, #00B0FF 100%);
             border: none;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 800;
-            font-size: 13px;
-            padding: 12px 14px;
+            color: #050811;
+            font-size: 14px;
+            font-weight: 900;
+            padding: 14px 16px;
             border-radius: 12px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            text-align: center;
-        }
-        .act-btn:active { transform: scale(0.97); }
-        .btn-approve-primary {
-            background: linear-gradient(135deg, #00E5FF, #0091FF);
-            color: #040810;
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.45);
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-        .btn-post-now {
-            background: linear-gradient(135deg, #FF2D95, #FF5500);
-            color: #FFFFFF;
-            box-shadow: 0 0 20px rgba(255, 45, 149, 0.4);
-        }
-        .btn-reject {
-            background: rgba(255, 51, 102, 0.15);
-            color: #FF3366;
-            border: 1px solid rgba(255, 51, 102, 0.4);
-        }
-        .btn-regen {
-            background: rgba(255, 145, 0, 0.15);
-            color: #FF9100;
-            border: 1px solid rgba(255, 145, 0, 0.4);
-        }
-        .btn-edit {
-            background: rgba(124, 77, 255, 0.15);
-            color: #B388FF;
-            border: 1px solid rgba(124, 77, 255, 0.4);
-        }
-
-        /* One-Click Copy Bar */
-        .copy-tray {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
             gap: 8px;
-            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 230, 118, 0.3);
+            transition: transform 0.15s ease;
         }
-        .copy-pill {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--surface-border);
-            color: var(--text-secondary);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 8px 12px;
-            border-radius: 10px;
+        .btn-approve:active { transform: scale(0.98); }
+        .btn-reject {
+            background: rgba(255, 59, 48, 0.12);
+            border: 1px solid rgba(255, 59, 48, 0.35);
+            color: var(--accent-red);
+            font-size: 13px;
+            font-weight: 800;
+            padding: 14px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -315,20 +263,57 @@
             gap: 6px;
             transition: all 0.15s ease;
         }
-        .copy-pill:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #FFF;
-            border-color: rgba(255, 255, 255, 0.2);
+        .btn-resend {
+            grid-column: span 2;
+            background: rgba(124, 77, 255, 0.12);
+            border: 1px solid rgba(124, 77, 255, 0.35);
+            color: #B388FF;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        /* Quality Gates Matrix */
+        .copy-tray {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .copy-pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--surface-border);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+        .copy-pill:hover {
+            background: rgba(0, 229, 255, 0.1);
+            color: #FFF;
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+
         .section-title {
             font-size: 12px;
             font-weight: 800;
-            letter-spacing: 1px;
             text-transform: uppercase;
-            color: var(--accent-cyan);
-            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin: 16px 0 8px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -337,237 +322,179 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
         .gate-cell {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--surface-border);
-            padding: 9px 12px;
             border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
+            padding: 10px;
         }
-        .gate-label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
-        .gate-val { font-size: 12px; font-weight: 800; color: #FFF; display: flex; align-items: center; justify-content: space-between; }
-        .gate-val span.badge-pass {
-            color: var(--accent-green);
-            font-size: 11px;
-        }
+        .gate-label { font-size: 10px; color: var(--text-secondary); font-weight: 600; display: block; }
+        .gate-val { font-size: 12px; font-weight: 800; color: #FFF; margin-top: 2px; display: flex; align-items: center; justify-content: space-between; }
+        .badge-pass { color: var(--accent-green); font-size: 10px; font-weight: 800; }
 
-        /* Code Block */
-        .code-box {
-            background: #04060A;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .commands-box {
+            background: #030407;
+            border: 1px solid var(--surface-border);
             border-radius: 10px;
             padding: 12px;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-family: monospace;
             font-size: 12px;
-            color: #38BDF8;
+            color: #79C0FF;
+            line-height: 1.6;
             margin-bottom: 16px;
+            word-break: break-all;
+        }
+
+        .facts-list {
+            list-style: none;
+            font-size: 12px;
+            color: #E2E8F0;
+            line-height: 1.6;
+        }
+        .facts-list li {
             position: relative;
+            padding-left: 18px;
+            margin-bottom: 6px;
+        }
+        .facts-list li::before {
+            content: "•";
+            color: var(--accent-cyan);
+            position: absolute;
+            left: 4px;
+            font-weight: 900;
         }
 
-        /* Contact Sheet */
-        .sheet-thumb {
-            width: 100%;
-            border-radius: 10px;
-            border: 1px solid var(--surface-border);
-            cursor: pointer;
-            margin-bottom: 16px;
-            transition: transform 0.2s ease;
-        }
-        .sheet-thumb:hover { transform: scale(1.01); }
-
-        /* Toast Alert */
-        #toast {
-            position: fixed;
-            top: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: rgba(0, 229, 255, 0.95);
-            color: #040810;
-            font-weight: 800;
-            font-size: 13px;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.5);
-            z-index: 9999;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        #toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Tables & Settings UI */
-        table.glass-table {
+        .glass-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 12px;
-            margin-bottom: 16px;
+            margin-top: 8px;
         }
-        table.glass-table th, table.glass-table td {
-            padding: 10px 12px;
+        .glass-table th {
             text-align: left;
-            border-bottom: 1px solid var(--surface-border);
-        }
-        table.glass-table th {
+            padding: 8px;
             color: var(--text-secondary);
+            border-bottom: 1px solid var(--surface-border);
             font-weight: 700;
-            text-transform: uppercase;
-            font-size: 10px;
-            letter-spacing: 0.5px;
         }
-        .token-input {
-            width: 100%;
-            background: #04060A;
-            border: 1px solid var(--surface-border);
-            border-radius: 10px;
-            padding: 10px 14px;
-            color: #FFF;
-            font-size: 13px;
-            margin-top: 6px;
-            margin-bottom: 14px;
+        .glass-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #E2E8F0;
         }
-        .token-input:focus { outline: none; border-color: var(--accent-cyan); }
 
-        @media (max-width: 480px) {
-            .app-container { padding: 10px; }
-            .approval-grid { grid-template-columns: 1fr; }
-            .gates-grid { grid-template-columns: 1fr; }
-            .secondary-grid { grid-template-columns: repeat(3, 1fr); }
-            .nav-btn span.label { font-size: 9px; }
+        #toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(0, 229, 255, 0.95);
+            color: #050811;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.5);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+            pointer-events: none;
         }
+        #toast.show { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
     <div class="ambient-glow"></div>
-    <div id="toast">✓ Copied to clipboard!</div>
+    <div id="toast">Copied to clipboard!</div>
 
     <div class="app-container">
-        <!-- Top App Bar -->
+        <!-- Header -->
         <header>
-            <div class="brand-lockup">
-                <img src="../assets/brand/logo.png" alt="FLASH" class="brand-logo-img">
-                <div class="brand-text">
-                    <h1>FLASH.Ai</h1>
-                    <span>Production OS • V4</span>
+            <div class="brand-cluster">
+                <div class="brand-logo-frame">
+                    <img src="../assets/brand/logo.png" alt="FLASH.Ai Logo">
+                </div>
+                <div>
+                    <div class="brand-title">FLASH<span>.Ai</span></div>
+                    <div class="brand-subtitle">Daily Production Studio</div>
                 </div>
             </div>
-            <div class="status-pill">
-                <div class="status-dot"></div>
-                <span>9:30 AM IST READY</span>
+            <div class="live-badge">
+                <div class="pulse-dot"></div>
+                ZERO-HALLUCINATION GATED
             </div>
         </header>
 
-        <!-- ==================== TAB 1: TODAY ==================== -->
+        <!-- ==================== TAB 1: TODAY'S REELS ==================== -->
         <div id="tab-today" class="tab-panel active">
-            <!-- Reel Switcher Chips -->
+            <!-- Selector Chips -->
             <div class="reel-selector">
-                <div class="reel-chip active" onclick="selectReel('reel_essay_1_unslop', this)">
-                    <span>⚡ unslop</span>
-                    <small style="color:var(--accent-cyan)">9,054★</small>
+                <div class="reel-chip active" onclick="selectReel('today_1_anatomy', this)">
+                    <div class="chip-kicker">SLOT 1 • 25.6K STARS</div>
+                    <div class="chip-title">wheresryan22 / anatomy</div>
                 </div>
-                <div class="reel-chip" onclick="selectReel('reel_essay_2_uv', this)">
-                    <span>⚡ uv 0.13.7</span>
-                    <small style="color:var(--accent-orange)">91,559★</small>
-                </div>
-                <div class="reel-chip" onclick="selectReel('reel_essay_3_kimi', this)">
-                    <span>⚡ Kimi K3.1</span>
-                    <small style="color:var(--accent-purple)">532 pts</small>
-                </div>
-                <div class="reel-chip" onclick="selectReel('reel_essay_4_craft', this)">
-                    <span>⚡ craft-anything</span>
-                    <small style="color:var(--accent-green)">13,530★</small>
-                </div>
-                <div class="reel-chip" onclick="selectBumper(this)">
-                    <span>🎬 Showcase Bumper</span>
-                    <small style="color:#FFF">20s</small>
+                <div class="reel-chip" onclick="selectReel('today_2_browseruse', this)">
+                    <div class="chip-kicker">SLOT 2 • 120.2K STARS</div>
+                    <div class="chip-title">browser-use / browser-use</div>
                 </div>
             </div>
 
-            <!-- Active Reel Presentation Card -->
-            <div class="glass-card" id="reel-card-container">
-                <div id="reel-dynamic-content">
-                    <!-- Injected by JavaScript -->
-                </div>
+            <!-- Dynamic Reel Card Container -->
+            <div id="reel-dynamic-content" class="glass-card">
+                <!-- Injected via JavaScript -->
             </div>
         </div>
 
-        <!-- ==================== TAB 2: QUEUE / CALENDAR ==================== -->
+        <!-- ==================== TAB 2: PIPELINE SCHEDULE ==================== -->
         <div id="tab-queue" class="tab-panel">
             <div class="glass-card">
-                <div class="section-title">📅 7-Day Production Pipeline & Schedule</div>
-                <p style="color:var(--text-secondary); margin-bottom:14px; font-size:12px;">
-                    Slots: <strong>12:30 PM IST</strong> (Slot 1) & <strong>8:30 PM IST</strong> (Slot 2). Production cron triggers at 04:07 IST.
-                </p>
-
+                <div class="section-title">📅 Production Pipeline Schedule</div>
                 <table class="glass-table">
                     <thead>
                         <tr>
-                            <th>Date / Slot</th>
-                            <th>Topic & Verified Source</th>
+                            <th>Slot</th>
+                            <th>Topic &amp; Verified Source</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="background: rgba(0, 229, 255, 0.05);">
+                        <tr style="background: rgba(0, 229, 255, 0.08);">
                             <td><strong>TODAY • Slot 1</strong><br><small style="color:var(--text-secondary)">12:30 PM IST</small></td>
-                            <td><strong>heydamir / unslop</strong><br><small style="color:var(--accent-cyan)">9,054 Stars • CC BY 4.0</small></td>
-                            <td><span style="color:var(--accent-green); font-weight:800;">READY (Awaiting Approval)</span></td>
+                            <td><strong>wheresryan22 / anatomy</strong><br><small style="color:var(--accent-cyan)">25,676 Stars • MIT</small></td>
+                            <td><span class="badge-ready" style="font-size:11px; padding:3px 8px;">READY</span></td>
                         </tr>
-                        <tr style="background: rgba(255, 145, 0, 0.05);">
+                        <tr style="background: rgba(255, 183, 3, 0.08);">
                             <td><strong>TODAY • Slot 2</strong><br><small style="color:var(--text-secondary)">8:30 PM IST</small></td>
-                            <td><strong>astral-sh / uv 0.13.7</strong><br><small style="color:var(--accent-orange)">91,559 Stars • MIT</small></td>
-                            <td><span style="color:var(--accent-green); font-weight:800;">READY (Awaiting Approval)</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tomorrow • Slot 1</strong><br><small style="color:var(--text-secondary)">12:30 PM IST</small></td>
-                            <td><strong>Moonshot AI Kimi K3.1 Pro</strong><br><small style="color:var(--accent-purple)">532 HN Points • Open Weights</small></td>
-                            <td><span style="color:var(--accent-cyan); font-weight:800;">IN BUFFER</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Tomorrow • Slot 2</strong><br><small style="color:var(--text-secondary)">8:30 PM IST</small></td>
-                            <td><strong>storytold / craft-anything</strong><br><small style="color:var(--accent-green)">13,530 Stars • Rust Voxel</small></td>
-                            <td><span style="color:var(--accent-cyan); font-weight:800;">IN BUFFER</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Day +3</strong></td>
-                            <td><strong>vLLM v0.6.3 Engine</strong><br><small style="color:var(--text-secondary)">37,200 Stars • Distributed Serving</small></td>
-                            <td><span style="color:var(--text-secondary)">PLANNED</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Day +4</strong></td>
-                            <td><strong>anthropics / claude-code</strong><br><small style="color:var(--text-secondary)">45,100 Stars • Agentic CLI</small></td>
-                            <td><span style="color:var(--text-secondary)">PLANNED</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Day +5</strong></td>
-                            <td><strong>modelcontextprotocol / servers</strong><br><small style="color:var(--text-secondary)">18,900 Stars • Open Standard</small></td>
-                            <td><span style="color:var(--text-secondary)">PLANNED</span></td>
+                            <td><strong>browser-use / browser-use</strong><br><small style="color:var(--accent-orange)">120,244 Stars • MIT</small></td>
+                            <td><span class="badge-ready" style="font-size:11px; padding:3px 8px;">READY</span></td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div class="section-title" style="margin-top:20px;">📜 Production Historical Archive</div>
-                <div style="font-size:12px; color:var(--text-secondary); line-height:1.7;">
-                    • <strong>Reel 1:</strong> heydamir/unslop (9,054★) — Cinematic Visual Metaphor<br>
-                    • <strong>Reel 2:</strong> astral-sh/uv (91,559★) — Speed Gauge & Pipeline<br>
-                    • <strong>Reel 3:</strong> MoonshotAI/Kimi (532pts) — Neural Metaphor Wall<br>
-                    • <strong>Reel 4:</strong> storytold/craft-anything (13,530★) — Rust Blueprint<br>
-                    • <strong>Bumper:</strong> FLASH.Ai Studio Showcase (20.0s, Prompt ID 607)
-                </div>
+                <div class="section-title" style="margin-top:20px;">📜 Archived Topics (Covered)</div>
+                <table class="glass-table">
+                    <thead>
+                        <tr>
+                            <th>Repo / Topic</th>
+                            <th>Verified Metric</th>
+                            <th>Archive State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>heydamir / unslop</td><td>9,054 Stars</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
+                        <tr><td>astral-sh / uv 0.13.7</td><td>91,559 Stars</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
+                        <tr><td>Moonshot AI Kimi K3.1 Pro</td><td>532 HN Points</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
+                        <tr><td>storytold / craft-anything</td><td>13,530 Stars</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
         <!-- ==================== TAB 3: POSTED / ANALYTICS ==================== -->
         <div id="tab-posted" class="tab-panel">
             <div class="glass-card">
-                <div class="section-title">📊 Channel Performance & Analytics</div>
+                <div class="section-title">📊 Channel Performance &amp; Analytics</div>
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
                     <div>
                         <div style="font-size:18px; font-weight:900; color:#FFF;">@flash__ai__digital</div>
@@ -580,86 +507,65 @@
 
                 <div class="gates-grid" style="margin-bottom:20px;">
                     <div class="gate-cell">
-                        <span class="gate-label">Total Video Output</span>
-                        <span class="gate-val">10 Master Films <span class="badge-pass">1080p</span></span>
+                        <span class="gate-label">Today's Reel Output</span>
+                        <span class="gate-val">2 Master Films <span class="badge-pass">1080p</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">Quality Gate Pass Rate</span>
-                        <span class="gate-val">100.0% <span class="badge-pass">8/8 GATES</span></span>
+                        <span class="gate-label">Real-File Gate Pass Rate</span>
+                        <span class="gate-val">100.0% <span class="badge-pass">ALL PASS</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">Loudness Compliance</span>
-                        <span class="gate-val">-14.0 ±0.5 LUFS <span class="badge-pass">EBU R128</span></span>
+                        <span class="gate-label">Audio Loudness Compliance</span>
+                        <span class="gate-val">-14.0 &plusmn;0.5 LUFS <span class="badge-pass">EBU R128</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">Avg. Technical Coverage</span>
-                        <span class="gate-val">78.57% <span class="badge-pass">PROOF GROUNDED</span></span>
+                        <span class="gate-label">True Peak Compliance</span>
+                        <span class="gate-val">&le; -1.5 dBTP <span class="badge-pass">PASS</span></span>
                     </div>
                 </div>
 
-                <div class="section-title">📈 Formats Performance Comparison</div>
-                <table class="glass-table">
-                    <thead>
-                        <tr>
-                            <th>Motion Design Format</th>
-                            <th>Avg MAD</th>
-                            <th>Visual Style</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>3D Cinematic Essay</strong></td>
-                            <td>0.91 (Burst 68.04)</td>
-                            <td><span style="color:var(--accent-cyan)">Parallax, 3D Layers, Metaphors</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Terminal Hacker</strong></td>
-                            <td>0.85 (Burst 52.10)</td>
-                            <td><span style="color:var(--accent-green)">CLI Shell, ASCII, Code Diffs</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Keynote Editorial</strong></td>
-                            <td>0.88 (Burst 45.30)</td>
-                            <td><span style="color:var(--accent-orange)">Typography, Floating Cards</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="section-title">🔒 Live Posting Gate</div>
+                <p style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px;">
+                    All live posting cron jobs remain strictly paused until explicit GO approval is given.
+                    Insights and telemetry will populate automatically following the first published post.
+                </p>
+                <div class="commands-box" style="color:var(--accent-green);">
+                    APPROVE_STATE: PENDING_USER_GO<br>
+                    LIVE_POSTING_BLOCKED: TRUE<br>
+                    AUTHENTICATED_METRICS: 100% GROUNDED
+                </div>
             </div>
         </div>
 
-        <!-- ==================== TAB 4: HEALTH ==================== -->
+        <!-- ==================== TAB 4: SYSTEM HEALTH ==================== -->
         <div id="tab-health" class="tab-panel">
             <div class="glass-card">
-                <div class="section-title">🩺 System Health & Automated Telemetry</div>
-                
-                <div class="gates-grid" style="margin-bottom:20px;">
+                <div class="section-title">🛡️ Truth Engine &amp; Quality Safeguards</div>
+                <div class="gates-grid">
                     <div class="gate-cell">
-                        <span class="gate-label">Automated Regression Suite</span>
-                        <span class="gate-val">14 / 14 PASSED <span class="badge-pass">0.501s</span></span>
+                        <span class="gate-label">Rule 1: Commands</span>
+                        <span class="gate-val">Verbatim <span class="badge-pass">PASS</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">GitHub Actions Cron</span>
-                        <span class="gate-val">37 22 * * * <span class="badge-pass">ACTIVE</span></span>
+                        <span class="gate-label">Rule 2: No Hype / Dates</span>
+                        <span class="gate-val">Zero Hype <span class="badge-pass">PASS</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">Meta Graph API Status</span>
-                        <span class="gate-val">Connected (v21.0) <span class="badge-pass">TOKEN OK</span></span>
+                        <span class="gate-label">Rule 3: Language &amp; Digits</span>
+                        <span class="gate-val">Digits Only <span class="badge-pass">PASS</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">Safety Invariant Status</span>
-                        <span class="gate-val">Strict Operator Gate <span class="badge-pass">ENFORCED</span></span>
+                        <span class="gate-label">Rule 4: Consistency</span>
+                        <span class="gate-val">Identical <span class="badge-pass">PASS</span></span>
                     </div>
-                </div>
-
-                <div class="section-title">🛡️ 7 Regression Rules Telemetry (0. NEVER REPEAT A MISTAKE)</div>
-                <div style="font-size:12px; color:var(--text-secondary); line-height:1.7;">
-                    • <strong>RULE-01 (Commands):</strong> Verbatim docs check. Rejects fake npx & unsafe flags [PASS]<br>
-                    • <strong>RULE-02 (Headings & Dates):</strong> Rejects chapter labels, dates & self-praise [PASS]<br>
-                    • <strong>RULE-03 (Language & Digits):</strong> Rejects Telugu Unicode in UI & relative time words [PASS]<br>
-                    • <strong>RULE-04 (Number Consistency):</strong> 100% agreement between Reel, Essay & API [PASS]<br>
-                    • <strong>RULE-05 (Audio Mastering):</strong> Rejects frozen subtitles, 96k, or non-compliant LUFS [PASS]<br>
-                    • <strong>RULE-06 (Visual Motion):</strong> Rejects static repeats (pHash), jitter & dark void [PASS]<br>
-                    • <strong>RULE-07 (Review URLs):</strong> Rejects malformed query syntax & unencoded spaces [PASS]
+                    <div class="gate-cell">
+                        <span class="gate-label">Rule 5: Audio Mastering</span>
+                        <span class="gate-val">-14.0 LUFS <span class="badge-pass">PASS</span></span>
+                    </div>
+                    <div class="gate-cell">
+                        <span class="gate-label">Rule 6: Visual Motion</span>
+                        <span class="gate-val">Unique <span class="badge-pass">PASS</span></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -667,269 +573,260 @@
         <!-- ==================== TAB 5: SETTINGS ==================== -->
         <div id="tab-settings" class="tab-panel">
             <div class="glass-card">
-                <div class="section-title">⚙️ Control Center Settings & Direct Dispatch</div>
-                
-                <label style="font-size:12px; color:var(--text-secondary); font-weight:700;">
-                    GitHub Personal Access Token (for 1-Tap Workflow Dispatch):
-                </label>
-                <input type="password" id="gh-token-input" class="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" onchange="saveToken(this.value)">
-                <small style="color:var(--text-secondary); display:block; margin-bottom:16px;">
-                    Stored exclusively in your browser's local storage. Used to send authenticated <code>workflow_dispatch</code> dispatches to <code>review_action.yml</code>. Fallback issue form URLs work without a token.
-                </small>
-
-                <div class="section-title">🔒 Safety Invariant Configuration</div>
-                <div style="background:rgba(0,0,0,0.3); border:1px solid var(--surface-border); padding:12px; border-radius:10px; font-size:12px; color:var(--text-secondary); margin-bottom:16px;">
-                    <strong style="color:#FFF;">First 3 Days Rule:</strong> Until the operator taps <strong>Approve</strong> on a video in this dashboard, that video <em>NEVER</em> posts. Any failed quality gate strictly blocks execution.
-                </div>
-
-                <div class="section-title">📦 Data Export & Verification</div>
-                <button class="act-btn btn-edit" style="width:100%; margin-bottom:10px;" onclick="exportManifest()">
-                    ⬇ Export Production Manifest (JSON)
-                </button>
+                <div class="section-title">⚙️ Operator Dispatch Configuration</div>
+                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:16px;">
+                    Set your fine-grained GitHub token (<code>repo</code> and <code>workflow</code> scopes) for 1-click approvals without leaving the page.
+                </p>
+                <input type="password" id="gh-token-input" placeholder="github_pat_..." style="width:100%; background:#05070A; border:1px solid var(--surface-border); border-radius:10px; padding:12px; color:#FFF; font-family:monospace; font-size:12px; margin-bottom:12px;">
+                <button onclick="saveToken()" class="btn-approve" style="width:100%; padding:10px;">Save Credentials</button>
             </div>
         </div>
-
     </div>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Sticky Bottom Nav Bar -->
     <nav class="bottom-nav">
-        <button class="nav-btn active" onclick="switchTab('today', this)">
-            <span class="icon">📱</span>
-            <span class="label">Today</span>
+        <button class="nav-btn active" onclick="switchTab('tab-today', this)">
+            <span class="icon">🎬</span>
+            <span class="label">Review</span>
         </button>
-        <button class="nav-btn" onclick="switchTab('queue', this)">
+        <button class="nav-btn" onclick="switchTab('tab-queue', this)">
             <span class="icon">📅</span>
             <span class="label">Queue</span>
         </button>
-        <button class="nav-btn" onclick="switchTab('posted', this)">
+        <button class="nav-btn" onclick="switchTab('tab-posted', this)">
             <span class="icon">📊</span>
-            <span class="label">Analytics</span>
+            <span class="label">Stats</span>
         </button>
-        <button class="nav-btn" onclick="switchTab('health', this)">
-            <span class="icon">🩺</span>
+        <button class="nav-btn" onclick="switchTab('tab-health', this)">
+            <span class="icon">🛡️</span>
             <span class="label">Health</span>
         </button>
-        <button class="nav-btn" onclick="switchTab('settings', this)">
+        <button class="nav-btn" onclick="switchTab('tab-settings', this)">
             <span class="icon">⚙️</span>
             <span class="label">Settings</span>
         </button>
     </nav>
 
     <script>
-        const REELS = [{"id": "reel_essay_1_unslop", "title": "heydamir / unslop", "kicker": "RISING REPO \u2022 7.0 DAYS OLD", "tagline": "Clean-Room Claude Skill & Design System De-Slopper", "stars_or_pts": "9,054 Stars", "raw_num": 9054, "date_str": "29 Oct 2026", "source_url": "https://github.com/heydamir/unslop", "resource_file": "../resource_unslop.html", "web_video": "../videos/reel_essay_1_unslop_720p.mp4", "sheet_img": "../reel_essay_1_unslop_contact_sheet.png", "accent": "#00E5FF", "license": "CC BY 4.0", "license_credit": "Created by Damir Sokolovsky (@heydamir) \u2022 CC BY 4.0", "lufs": "-14.5 LUFS", "peak": "-1.7 dBTP", "jitter": "0.0000 px\u00b2", "motion_mad": "0.90 MAD (Burst 68.04)", "coverage": "78.57%", "caption": "AI generated UI looks obvious and slopped? Here is Damir's unslop skill for Claude Code.\n\nTurns vibecoded generic interfaces into polished, human-designed design systems in 1 command.\n\nVerified 9,054 stars on GitHub. Step-by-step setup in first comment! \ud83d\udc47\n\n#ClaudeCode #AIWebDev #WebDesign #UIUX #DeveloperTools #TechReels #CodingTips #FLASHAI", "first_comment": "\ud83d\udd17 Verified Resource Link & Quick-Start:\n\u2022 Repository: https://github.com/heydamir/unslop\n\u2022 Full Technical Essay: https://naveenk7100-ship-it.github.io/studio/resource_unslop.html\n\u2022 CLI: git clone https://github.com/heydamir/unslop ~/.claude/skills/unslop && claude", "yt_desc": "Damir Sokolovsky's unslop skill transforms vibecoded AI UIs into clean design systems. Verified on GitHub with 9,054 stars. CC BY 4.0 license.", "tags": "ClaudeCode, AIWebDev, WebDesign, UIUX, DeveloperTools, TechReels, CodingTips, FLASHAI", "exact_commands": ["git clone https://github.com/heydamir/unslop ~/.claude/skills/unslop", "claude", "/unslop --preview --strict"], "facts": ["GitHub Stars: 9,054 (Verified via api.github.com/repos/heydamir/unslop)", "Created Date: 29 Oct 2026 15:41 UTC (7.0 days old)", "Core Capability: Official Claude skill that turns vibecoded, AI-looking UI into a human-designed interface", "Launch Flow: Clone to ~/.claude/skills and run slash command /unslop in Claude Code session", "System Boundary: Transforms UI design tokens, contrast ratios and typography; does not touch backend business logic"], "caption_hash": "ea3d32998b60f54cbb82ac124e0c81b8eab17213ffe6f8984d2ba3bcd1db475a"}, {"id": "reel_essay_2_uv", "title": "astral-sh / uv 0.13.7", "kicker": "TOOL RELEASE \u2022 2.3 DAYS OLD", "tagline": "High-Velocity Python Package & Project Manager", "stars_or_pts": "91,559 Stars", "raw_num": 91559, "date_str": "03 Nov 2026", "source_url": "https://github.com/astral-sh/uv/releases/tag/0.13.7", "resource_file": "../resource_uv.html", "web_video": "../videos/reel_essay_2_uv_720p.mp4", "sheet_img": "../reel_essay_2_uv_contact_sheet.png", "accent": "#FF9100", "license": "MIT / Apache-2.0", "license_credit": "Astral Software Inc. \u2022 MIT / Apache-2.0", "lufs": "-14.2 LUFS", "peak": "-1.6 dBTP", "jitter": "0.0000 px\u00b2", "motion_mad": "0.91 MAD (Burst 67.84)", "coverage": "78.57%", "caption": "Python pip is too slow? Astral's uv 0.13.7 installs PyTorch and dependencies 10 to 100 times faster.\n\nWritten 100% in Rust with virtual environments and workspace resolution built in.\n\nVerified 91,559 stars on GitHub. Full guide in first comment! \ud83d\udc47\n\n#Python #RustLang #DeveloperTools #MachineLearning #PyTorch #DataScience #Coding #FLASHAI", "first_comment": "\ud83d\udd17 Verified Resource Link & Quick-Start:\n\u2022 Repository: https://github.com/astral-sh/uv\n\u2022 Full Technical Essay: https://naveenk7100-ship-it.github.io/studio/resource_uv.html\n\u2022 CLI: curl -LsSf https://astral.sh/uv/install.sh | sh", "yt_desc": "uv 0.13.7 by Astral Software is a high-velocity Python package manager in Rust. 91,559 stars. MIT / Apache-2.0.", "tags": "Python, RustLang, DeveloperTools, MachineLearning, PyTorch, DataScience, Coding, FLASHAI", "exact_commands": ["curl -LsSf https://astral.sh/uv/install.sh | sh", "uv venv --python 3.12", "uv pip install torch --index-strategy unsafe-first-match"], "facts": ["GitHub Stars: 91,559 (Verified via api.github.com/repos/astral-sh/uv)", "Release Tag: 0.13.7 (Published 03 Nov 2026 02:45 UTC, 2.3 days old)", "Core Capability: 10-100x faster Python package resolver written in Rust with built-in virtual environment management", "Launch CLI: curl -LsSf https://astral.sh/uv/install.sh | sh", "System Boundary: Replaces pip, pip-tools and virtualenv; full drop-in workflow compatibility"], "caption_hash": "714a45181d8e6d4c9b0fbcd9f9fcb8de1d345548aadff5e4c05d8d81ffc91ab3"}, {"id": "reel_essay_3_kimi", "title": "Moonshot AI Kimi K3.1 Pro", "kicker": "AI NEWS \u2022 20.5 HOURS OLD", "tagline": "Open Architecture Weights with Configurable Reasoning", "stars_or_pts": "532 HN Points", "raw_num": 532, "date_str": "04 Nov 2026", "source_url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro", "resource_file": "../resource_kimi.html", "web_video": "../videos/reel_essay_3_kimi_720p.mp4", "sheet_img": "../reel_essay_3_kimi_contact_sheet.png", "accent": "#7C4DFF", "license": "kimi-k3.1-pro license (Open Weights)", "license_credit": "Moonshot AI \u2022 Kimi K3.1 Pro Model License", "lufs": "-14.4 LUFS", "peak": "-1.7 dBTP", "jitter": "0.0000 px\u00b2", "motion_mad": "0.92 MAD (Burst 66.78)", "coverage": "78.57%", "caption": "Moonshot AI released Kimi K3.1 Pro open weights with configurable reasoning effort.\n\nAdjust reasoning dynamically from lightweight extraction to maximum multi-step mathematical deduction.\n\nTrending on Hacker News with 532 points. Architecture breakdown in first comment! \ud83d\udc47\n\n#GenerativeAI #OpenWeights #LLM #MachineLearning #ArtificialIntelligence #TechNews #FLASHAI", "first_comment": "\ud83d\udd17 Verified Resource Link & Quick-Start:\n\u2022 Model Weights: https://huggingface.co/moonshotai/Kimi-K3.1-Pro\n\u2022 Full Technical Essay: https://naveenk7100-ship-it.github.io/studio/resource_kimi.html\n\u2022 API: client.chat.completions.create(model='kimi-k3.1-pro', reasoning_effort='max')", "yt_desc": "Moonshot AI Kimi K3.1 Pro open weights release with configurable reasoning. Hacker News 532 points.", "tags": "GenerativeAI, OpenWeights, LLM, MachineLearning, ArtificialIntelligence, TechNews, FLASHAI", "exact_commands": ["response = client.chat.completions.create(", "    model='kimi-k3.1-pro',", "    messages=messages,", "    reasoning_effort='max'", ")"], "facts": ["Hacker News Points: 532 points (Item 50366999, published 04 Nov 2026 15:30 UTC)", "Freshness: Published 04 Nov 2026", "Core Capability: Open architecture weights with configurable reasoning_effort", "Launch API: client.chat.completions.create(model='kimi-k3.1-pro', reasoning_effort='max')", "Hardware Boundary: High-memory GPU cluster (8x 80GB VRAM) required for unquantized local inference (~2.8T MoE parameters)"], "caption_hash": "d9d6d2b293cb117fc8db71c07f00d97fa57eeaf7786159ac64a28c1f7649e973"}, {"id": "reel_essay_4_craft", "title": "storytold / craft-anything", "kicker": "RISING REPO \u2022 5.0 DAYS OLD", "tagline": "Rust Clean-Room Voxel & Software Architecture Engine", "stars_or_pts": "13,530 Stars", "raw_num": 13530, "date_str": "31 Oct 2026", "source_url": "https://github.com/storytold/craft-anything", "resource_file": "../resource_craft.html", "web_video": "../videos/reel_essay_4_craft_720p.mp4", "sheet_img": "../reel_essay_4_craft_contact_sheet.png", "accent": "#00E676", "license": "MIT / Apache-2.0", "license_credit": "storytold / craft-anything \u2022 MIT / Apache-2.0", "lufs": "-14.2 LUFS", "peak": "-1.7 dBTP", "jitter": "0.0000 px\u00b2", "motion_mad": "1.01 MAD (Burst 61.72)", "coverage": "78.57%", "caption": "Clean-room voxel engine written 100% in Rust without game-engine bloat.\n\nstorytold's craft-anything showcases multithreaded meshing, procedural voxel streaming, and pure memory safety.\n\nVerified 13,530 stars on GitHub. Code walkthrough in first comment! \ud83d\udc47\n\n#RustLang #GameDev #SoftwareEngineering #Voxel #CleanCode #DeveloperTools #FLASHAI", "first_comment": "\ud83d\udd17 Verified Resource Link & Quick-Start:\n\u2022 Repository: https://github.com/storytold/craft-anything\n\u2022 Full Technical Essay: https://naveenk7100-ship-it.github.io/studio/resource_craft.html\n\u2022 CLI: git clone https://github.com/storytold/craft-anything && cargo run --release", "yt_desc": "storytold / craft-anything is a Rust clean-room voxel engine with 13,530 stars. Dual MIT/Apache-2.0.", "tags": "RustLang, GameDev, SoftwareEngineering, Voxel, CleanCode, DeveloperTools, FLASHAI", "exact_commands": ["git clone https://github.com/storytold/craft-anything", "cargo run --release -p craft-anything", "craft-anything-cli doctor"], "facts": ["GitHub Stars: 13,530 (Verified via api.github.com/repos/storytold/craft-anything)", "Created Date: 31 Oct 2026 14:50 UTC (5.0 days old)", "Core Capability: 100% Rust clean-room voxel and software architecture engine with native multi-threading", "Launch CLI: cargo run --release -p craft-anything", "System Boundary: Dual MIT / Apache-2.0 license; pure clean-room Rust implementation"], "caption_hash": "991285da80dc12e174b5043599031e66bc077f9b75eb6caaba33f00a9c76b9a0"}];
+        const REELS = [
+    {
+        "id": "today_1_anatomy",
+        "title": "wheresryan22 / anatomy",
+        "kicker": "RISING REPO \u2022 29 DAYS OLD",
+        "tagline": "Physical Machine Blueprint Generator & Claude Code Skill",
+        "stars_or_pts": "25,676 Stars",
+        "raw_num": 25676,
+        "date_str": "08 Oct 2026",
+        "source_url": "https://github.com/wheresryan22/anatomy",
+        "resource_file": "../resource_anatomy.html",
+        "web_video": "../videos/reel_today_1_anatomy_720p.mp4",
+        "sheet_img": "../reel_today_1_anatomy_contact_sheet.png",
+        "accent": "#00E5FF",
+        "license": "MIT Open Source",
+        "license_credit": "Created by Ryan (@wheresryan22) \u2022 MIT License",
+        "lufs": "-14.2 LUFS",
+        "peak": "-1.5 dBTP",
+        "jitter": "0.0200 px\u00b2",
+        "motion_mad": "1.02 MAD (Burst 195.97)",
+        "coverage": "100.0%",
+        "status": "READY",
+        "caption": "Explain complex ideas without boring static slides.\n\nwheresryan22's anatomy Claude skill invents real, working physical machines whose working is the concept in SVG, WebGL, and 3D.\n\nVerified 25,676 stars on GitHub. Setup guide in first comment! \ud83d\udc47\n\n#ClaudeCode #SoftwareArchitecture #SystemDesign #Isometric #DeveloperTools #TechReels #CodingTips #FLASHAI",
+        "first_comment": "\ud83d\udd17 Verified Resource Link & Quick-Start:\n\u2022 Repository: https://github.com/wheresryan22/anatomy\n\u2022 Technical Deep Dive: https://naveenk7100-ship-it.github.io/studio/resource_anatomy.html\n\u2022 CLI: npx skills add wheresryan22/anatomy -g",
+        "yt_desc": "wheresryan22 / anatomy Claude skill turns technical ideas into interactive isometric machines. 25,676 Stars. MIT License.",
+        "tags": "ClaudeCode, SoftwareArchitecture, SystemDesign, Isometric, DeveloperTools, TechReels, CodingTips, FLASHAI",
+        "exact_commands": [
+            "npx skills add wheresryan22/anatomy -g",
+            "/anatomy explain token bucket rate limiter, interactive"
+        ],
+        "facts": [
+            "GitHub Stars: 25,676 (Verified via api.github.com/repos/wheresryan22/anatomy)",
+            "Freshness: Created 08 Oct 2026 (29.0 days old, <= 30 days)",
+            "Core Capability: A Claude skill that explains a technical idea by inventing a real, working physical object in SVG, WebGL, or 3D mode. Zero dependencies.",
+            "Launch CLI: npx skills add wheresryan22/anatomy",
+            "System Boundary: 100% open-source MIT license created by Ryan (@wheresryan22)"
+        ],
+        "caption_hash": "e642e6c1b60ce4ec",
+        "issue_url": "https://github.com/naveenk7100-ship-it/studio/issues/new?title=Approve%20Today's%20Reel:%20today_1_anatomy%20(wheresryan22%20/%20anatomy)&body=APPROVAL%20REQUIRED%20FOR%20LIVE%20INSTAGRAM%20POSTING%0A%0AVideo%20ID:%20today_1_anatomy%0ATitle:%20wheresryan22%20/%20anatomy%0ASource:%20https://github.com/wheresryan22/anatomy%0AMetric:%2025,676%20Stars%0AStatus:%20READY%0A%0ACaption%20Hash:%20e642e6c1b60ce4ec%0A%0ATo%20approve%20live%20publication,%20comment:%20/approve%20today_1_anatomy%20e642e6c1b60ce4ec%0ATo%20reject%20or%20cancel,%20comment:%20/reject%20today_1_anatomy%0A"
+    },
+    {
+        "id": "today_2_browseruse",
+        "title": "browser-use / browser-use",
+        "kicker": "CORE RELEASE \u2022 12 DAYS OLD",
+        "tagline": "Autonomous Web Agent Library for Playwright & LLMs",
+        "stars_or_pts": "120,244 Stars",
+        "raw_num": 120244,
+        "date_str": "26 Oct 2026",
+        "source_url": "https://github.com/browser-use/browser-use",
+        "resource_file": "../resource_browseruse.html",
+        "web_video": "../videos/reel_today_2_browseruse_720p.mp4",
+        "sheet_img": "../reel_today_2_browseruse_contact_sheet.png",
+        "accent": "#FFB703",
+        "license": "MIT Open Source",
+        "license_credit": "Maintained by browser-use team (@browser-use) \u2022 MIT License",
+        "lufs": "-14.0 LUFS",
+        "peak": "-1.5 dBTP",
+        "jitter": "0.0200 px\u00b2",
+        "motion_mad": "1.11 MAD (Burst 169.87)",
+        "coverage": "100.0%",
+        "status": "READY",
+        "caption": "Connect LLMs directly to browser DOM elements and real web sessions.\n\nBrowser Use 0.13.14 open-source Python library makes browser automation seamless with Astral uv and Playwright.\n\n120,244 stars on GitHub. Quickstart code in first comment! \ud83d\udc47\n\n#BrowserUse #Playwright #Python #WebAutomation #AIAgents #TechReels #CodingTips #FLASHAI",
+        "first_comment": "\ud83d\udd17 Verified Resource Link & Quick-Start:\n\u2022 Repository: https://github.com/browser-use/browser-use\n\u2022 Technical Deep Dive: https://naveenk7100-ship-it.github.io/studio/resource_browseruse.html\n\u2022 CLI: uv pip install browser-use && uvx browser-use install",
+        "yt_desc": "browser-use / browser-use 0.13.14 open-source library for AI browser agents and Playwright automation. 120,244 Stars. MIT License.",
+        "tags": "BrowserUse, Playwright, Python, WebAutomation, AIAgents, TechReels, CodingTips, FLASHAI",
+        "exact_commands": [
+            "uv pip install browser-use",
+            "uvx browser-use install"
+        ],
+        "facts": [
+            "GitHub Stars: 120,244 (Verified via api.github.com/repos/browser-use/browser-use)",
+            "Core Release: 0.13.14 (published 26 Oct 2026, 12.0 days old, <= 14 days)",
+            "Core Capability: Open-source Python library connecting LLMs directly to browser DOM elements, tabs, and interactive web sessions via Playwright.",
+            "Python Quickstart: from browser_use import Agent, ChatBrowserUse",
+            "System Boundary: 100% open-source MIT license maintained by browser-use team"
+        ],
+        "caption_hash": "f15ab549a87139ec",
+        "issue_url": "https://github.com/naveenk7100-ship-it/studio/issues/new?title=Approve%20Today's%20Reel:%20today_2_browseruse%20(browser-use%20/%20browser-use)&body=APPROVAL%20REQUIRED%20FOR%20LIVE%20INSTAGRAM%20POSTING%0A%0AVideo%20ID:%20today_2_browseruse%0ATitle:%20browser-use%20/%20browser-use%0ASource:%20https://github.com/browser-use/browser-use%0AMetric:%20120,244%20Stars%0AStatus:%20READY%0A%0ACaption%20Hash:%20f15ab549a87139ec%0A%0ATo%20approve%20live%20publication,%20comment:%20/approve%20today_2_browseruse%20f15ab549a87139ec%0ATo%20reject%20or%20cancel,%20comment:%20/reject%20today_2_browseruse%0A"
+    }
+];
         let currentReelId = REELS[0].id;
 
-        function showToast(msg) {
+        function showToast(text) {
             const t = document.getElementById("toast");
-            t.innerText = msg;
+            t.innerText = text;
             t.classList.add("show");
             setTimeout(() => t.classList.remove("show"), 2200);
         }
 
-        function copyText(txt, label) {
-            navigator.clipboard.writeText(txt).then(() => {
-                showToast("✓ Copied " + label + "!");
+        function copyText(str, msg) {
+            navigator.clipboard.writeText(str).then(() => {
+                showToast(msg || "Copied to clipboard!");
             }).catch(() => {
-                // fallback
-                const ta = document.createElement("textarea");
-                ta.value = txt;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand("copy");
-                document.body.removeChild(ta);
-                showToast("✓ Copied " + label + "!");
+                showToast("Failed to copy");
             });
         }
 
-        function switchTab(tabName, btn) {
+        function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function saveToken(val) {
-            localStorage.setItem("FLASH_GH_TOKEN", val.trim());
-            showToast("✓ Token saved to local storage");
+        function saveToken() {
+            const val = document.getElementById("gh-token-input").value.trim();
+            if (val) {
+                localStorage.setItem("FLASH_GH_TOKEN", val);
+                showToast("GitHub Token saved securely in localStorage!");
+            } else {
+                localStorage.removeItem("FLASH_GH_TOKEN");
+                showToast("GitHub Token removed!");
+            }
         }
 
         function loadToken() {
-            const tok = localStorage.getItem("FLASH_GH_TOKEN");
-            if (tok) {
-                const el = document.getElementById("gh-token-input");
-                if (el) el.value = tok;
+            const saved = localStorage.getItem("FLASH_GH_TOKEN");
+            if (saved) {
+                const input = document.getElementById("gh-token-input");
+                if (input) input.value = saved;
             }
         }
 
         function renderReel(reel) {
-            const approveIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=approve.yml&title=" + encodeURIComponent("[APPROVE] " + reel.id) + "&labels=approval%3Aapproved";
-            const postIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=post_now.yml&title=" + encodeURIComponent("[POST NOW] " + reel.id) + "&labels=approval%3Apost_now";
-            const rejectIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=reject.yml&title=" + encodeURIComponent("[REJECT] " + reel.id) + "&labels=approval%3Arejected";
-            const regenIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=regenerate.yml&title=" + encodeURIComponent("[REGENERATE] " + reel.id) + "&labels=approval%3Aregenerate";
-            const editIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=edit_caption.yml&title=" + encodeURIComponent("[EDIT CAPTION] " + reel.id) + "&labels=approval%3Aedit_caption";
-
-            const commandsHtml = reel.exact_commands.map(c => `<div><code>${c}</code></div>`).join("");
             const factsHtml = reel.facts.map(f => `<li>${f}</li>`).join("");
+            const commandsHtml = reel.exact_commands.map(c => `&gt; ${c}`).join("<br>");
 
             const html = `
-                <div class="kicker-tag" style="color:${reel.accent}; border-color:${reel.accent};">
+                <div class="badge-ready">● ${reel.status} FOR HUMAN APPROVAL</div>
+                <div style="font-size:11px; font-weight:800; color:${reel.accent}; letter-spacing:1px; text-transform:uppercase;">
                     ${reel.kicker}
                 </div>
                 <h2 class="card-title">${reel.title}</h2>
                 <p class="card-tagline">${reel.tagline}</p>
 
+                <!-- 9:16 Video Player -->
                 <div class="video-box">
-                    <video controls playsinline preload="metadata" poster="${reel.sheet_img}">
-                        <source src="${reel.web_video}" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
+                    <video src="${reel.web_video}" controls playsinline preload="metadata" poster="${reel.sheet_img}"></video>
                 </div>
 
-                <!-- Primary Approval Actions -->
+                <!-- Approval Actions -->
                 <div class="approval-grid">
-                    <button class="act-btn btn-approve-primary" onclick="handleAction('APPROVE', '${reel.id}', '${approveIssueUrl}')">
-                        ✓ APPROVE FOR POSTING
+                    <button class="btn-approve" onclick="handleAction('APPROVE', '${reel.id}', '${reel.issue_url}')">
+                        <span>✓</span> APPROVE &amp; QUEUE
                     </button>
-                    <button class="act-btn btn-post-now" onclick="handleAction('POST_NOW', '${reel.id}', '${postIssueUrl}')">
-                        🚀 POST NOW
+                    <button class="btn-reject" onclick="handleAction('REJECT', '${reel.id}', '${reel.issue_url}')">
+                        <span>✕</span> REJECT
                     </button>
-                </div>
-
-                <!-- Secondary Actions -->
-                <div class="secondary-grid">
-                    <button class="act-btn btn-reject" onclick="handleAction('REJECT', '${reel.id}', '${rejectIssueUrl}')">
-                        ✗ Reject
-                    </button>
-                    <button class="act-btn btn-regen" onclick="handleAction('REGENERATE', '${reel.id}', '${regenIssueUrl}')">
-                        ↺ Regenerate
-                    </button>
-                    <button class="act-btn btn-edit" onclick="handleAction('EDIT_CAPTION', '${reel.id}', '${editIssueUrl}')">
-                        ✎ Edit Caption
+                    <button class="btn-resend" onclick="copyText('/topic ${reel.source_url}', 'Copied topic command for Telegram!')">
+                        <span>🔄</span> RESEND TO TELEGRAM
                     </button>
                 </div>
 
-                <!-- One-Click Copy Tray -->
-                <div class="section-title">📋 1-Tap Copy Resource Pack</div>
+                <!-- One-Click Copy Bar -->
                 <div class="copy-tray">
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').caption, 'Caption')">
-                        📄 Copy Caption
+                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').caption, 'Caption copied!')">
+                        <span>📋</span> Copy Caption
                     </div>
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').first_comment, 'First Comment')">
-                        💬 Copy First Comment
+                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').first_comment, 'First comment copied!')">
+                        <span>💬</span> Copy First Comment
                     </div>
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').yt_desc, 'Description')">
-                        📺 Copy Description
+                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').exact_commands.join('\n'), 'Commands copied!')">
+                        <span>⌨️</span> Copy Commands
                     </div>
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').tags, 'Tags')">
-                        🏷️ Copy Tags
-                    </div>
+                    <a href="${reel.resource_file}" class="copy-pill" style="text-decoration:none;">
+                        <span>📖</span> Deep-Dive Page ↗
+                    </a>
                 </div>
 
-                <!-- 8-Gate Quality Matrix -->
-                <div class="section-title">🛡️ 8 Automated Quality Gate Audits</div>
+                <!-- Quality Gates Matrix -->
+                <div class="section-title">🛡️ Real-File Quality Gates</div>
                 <div class="gates-grid">
                     <div class="gate-cell">
-                        <span class="gate-label">1. Phase-Correlation Jitter</span>
-                        <span class="gate-val">${reel.jitter} <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">1. EBU R128 Loudness</span>
+                        <span class="gate-val">${reel.lufs} <span class="badge-pass">PASS (-14.0&plusmn;0.5)</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">2. Camera Path Monotonic Jerk</span>
-                        <span class="gate-val">&le; 1e-4 (4.44e-16) <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">2. True Peak Max</span>
+                        <span class="gate-val">${reel.peak} <span class="badge-pass">PASS (&le; -1.5)</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">3. 1s Motion MAD Metric</span>
-                        <span class="gate-val">${reel.motion_mad} <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">3. Active Motion MAD</span>
+                        <span class="gate-val">${reel.motion_mad} <span class="badge-pass">PASS</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">4. Technical Image Coverage</span>
-                        <span class="gate-val">${reel.coverage} (&ge; 60%) <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">4. Jitter Variance</span>
+                        <span class="gate-val">${reel.jitter} <span class="badge-pass">PASS (&le; 0.05)</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">5. Single-Source Count</span>
-                        <span class="gate-val">${reel.stars_or_pts} <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">5. Single-Source Number</span>
+                        <span class="gate-val">${reel.stars_or_pts} <span class="badge-pass">FOUND IN OCR</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">6. Banned Text / Clean UI</span>
-                        <span class="gate-val">Zero Hype / Zero Telugu <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">6. Banned Text Check</span>
+                        <span class="gate-val">0 Banned • 0 Date <span class="badge-pass">CLEAN</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">7. EBU R128 Master Audio</span>
-                        <span class="gate-val">${reel.lufs} / ${reel.peak} <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">7. License &amp; Grounding</span>
+                        <span class="gate-val">${reel.license} <span class="badge-pass">VERIFIED</span></span>
                     </div>
                     <div class="gate-cell">
-                        <span class="gate-label">8. Verbatim Shell Commands</span>
-                        <span class="gate-val">Verified from Docs <span class="badge-pass">PASS ✓</span></span>
+                        <span class="gate-label">8. Channel Handle Lock</span>
+                        <span class="gate-val">@flash__ai__digital <span class="badge-pass">VERIFIED</span></span>
                     </div>
                 </div>
 
-                <!-- Verified Verbatim Commands -->
-                <div class="section-title">💻 Exact Verified Launch Commands</div>
-                <div class="code-box">
-                    ${commandsHtml}
-                </div>
+                <!-- Exact Commands -->
+                <div class="section-title">⌨️ Exact Verbatim Commands</div>
+                <div class="commands-box">${commandsHtml}</div>
 
-                <!-- License Attribution -->
-                <div class="section-title">📜 Verified License & Grounding</div>
-                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:12px;">
-                    ${reel.license_credit}
-                </p>
-                <ul style="font-size:12px; color:var(--text-secondary); padding-left:18px; margin-bottom:16px;">
-                    ${factsHtml}
-                </ul>
+                <!-- Grounded Facts -->
+                <div class="section-title">🔬 Grounded Facts &amp; Source Truth</div>
+                <ul class="facts-list">${factsHtml}</ul>
 
-                <!-- 8-Beat Contact Sheet -->
-                <div class="section-title">🖼️ 8-Beat Visual Narrative Contact Sheet</div>
-                <img src="${reel.sheet_img}" alt="${reel.title} Contact Sheet" class="sheet-thumb" onclick="window.open(this.src, '_blank')">
-            `;
-            document.getElementById("reel-dynamic-content").innerHTML = html;
-        }
-
-        function renderBumper() {
-            const approveIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=approve.yml&title=" + encodeURIComponent("[APPROVE] showcase_bumper") + "&labels=approval%3Aapproved";
-            const postIssueUrl = "https://github.com/naveenk7100-ship-it/studio/issues/new?template=post_now.yml&title=" + encodeURIComponent("[POST NOW] showcase_bumper") + "&labels=approval%3Apost_now";
-
-            const html = `
-                <div class="kicker-tag" style="color:var(--accent-cyan); border-color:var(--accent-cyan);">
-                    PROMPT ID 607 • SHOWCASE BUMPER
-                </div>
-                <h2 class="card-title">FLASH.Ai Production Studio</h2>
-                <p class="card-tagline">Autonomous Cinematic Explainer Engine Bumper (20.0s)</p>
-
-                <div class="video-box">
-                    <video controls playsinline preload="metadata" poster="../assets/brand/profile.png">
-                        <source src="../videos/showcase_bumper_720p.mp4" type="video/mp4">
-                        Your browser does not support HTML5 video.
-                    </video>
-                </div>
-
-                <div class="approval-grid">
-                    <button class="act-btn btn-approve-primary" onclick="handleAction('APPROVE', 'showcase_bumper', '${approveIssueUrl}')">
-                        ✓ APPROVE SHOWCASE BUMPER
-                    </button>
-                    <button class="act-btn btn-post-now" onclick="handleAction('POST_NOW', 'showcase_bumper', '${postIssueUrl}')">
-                        🚀 POST NOW
-                    </button>
-                </div>
-
-                <div class="section-title">🛡️ Bumper Quality Matrix</div>
-                <div class="gates-grid">
-                    <div class="gate-cell">
-                        <span class="gate-label">Integrated Loudness</span>
-                        <span class="gate-val">-14.1 LUFS <span class="badge-pass">PASS ✓</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">True Peak</span>
-                        <span class="gate-val">-1.9 dBTP (&le; -1.5) <span class="badge-pass">PASS ✓</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Exact Duration</span>
-                        <span class="gate-val">20.00s (600 frames) <span class="badge-pass">PASS ✓</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Brand Lockup</span>
-                        <span class="gate-val">Official FLASH Logo <span class="badge-pass">PASS ✓</span></span>
-                    </div>
+                <!-- 8-Beat Visual Proof Sheet -->
+                <div class="section-title">📸 8-Beat Cinematic Proof Sheet</div>
+                <div style="border-radius:12px; overflow:hidden; border:1px solid var(--surface-border); margin-top:8px;">
+                    <img src="${reel.sheet_img}" alt="Contact Sheet" style="width:100%; height:auto; display:block;">
                 </div>
             `;
             document.getElementById("reel-dynamic-content").innerHTML = html;
@@ -943,66 +840,55 @@
             if (r) renderReel(r);
         }
 
-        function selectBumper(chip) {
-            document.querySelectorAll('.reel-chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            currentReelId = "showcase_bumper";
-            renderBumper();
-        }
-
         function handleAction(action, videoId, fallbackUrl) {
             const token = localStorage.getItem("FLASH_GH_TOKEN");
             const reel = REELS.find(r => r.id === videoId);
-            const captionHash = reel ? reel.caption_hash : "";
+
+            if (reel && reel.status !== "READY") {
+                alert("CRITICAL SAFETY BLOCK: Video cannot be approved or posted because real-file quality gates failed!");
+                return;
+            }
 
             if (!token) {
-                // Fallback to prefilled GitHub issue
                 window.open(fallbackUrl, "_blank");
                 showToast("Opening GitHub Issue Approval...");
                 return;
             }
 
             // Direct workflow_dispatch
-            showToast("Dispatching " + action + " to GitHub Actions...");
-            fetch("https://api.github.com/repos/naveenk7100-ship-it/studio/actions/workflows/review_action.yml/dispatches", {
+            fetch(`https://api.github.com/repos/naveenk7100-ship-it/studio/actions/workflows/daily_production.yml/dispatches`, {
                 method: "POST",
                 headers: {
-                    "Authorization": "Bearer " + token,
-                    "Accept": "application/vnd.github.v3+json",
-                    "Content-Type": "application/json"
+                    "Accept": "application/vnd.github+json",
+                    "Authorization": `Bearer ${token}`,
+                    "X-GitHub-Api-Version": "2022-11-28"
                 },
                 body: JSON.stringify({
                     ref: "master",
                     inputs: {
-                        action: action,
-                        video_id: videoId,
-                        caption_hash: captionHash
+                        action_type: action.toLowerCase(),
+                        video_id: videoId
                     }
                 })
             }).then(res => {
-                if (res.ok || res.status === 204) {
-                    showToast("✓ " + action + " successfully dispatched!");
+                if (res.ok) {
+                    showToast(`✓ ${action} dispatched to GitHub Actions!`);
                 } else {
-                    showToast("API returned " + res.status + " - Opening issue fallback");
+                    showToast(`Error: ${res.statusText}. Opening issue fallback...`);
                     window.open(fallbackUrl, "_blank");
                 }
             }).catch(err => {
-                showToast("Network error - Opening issue fallback");
+                showToast("Network error. Opening fallback...");
                 window.open(fallbackUrl, "_blank");
             });
         }
 
-        function exportManifest() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(REELS, null, 2));
-            const dl = document.createElement("a");
-            dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", "flash_production_manifest.json");
-            dl.click();
-        }
-
-        // Initialization
-        loadToken();
-        renderReel(REELS[0]);
+        window.addEventListener("DOMContentLoaded", () => {
+            loadToken();
+            if (REELS.length > 0) {
+                renderReel(REELS[0]);
+            }
+        });
     </script>
 </body>
 </html>

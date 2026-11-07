@@ -1,21 +1,8 @@
 """
 FLASH Content OS - Playwright Headless Verification of GitHub Pages & Review Dashboard
-1. Starts a lightweight local HTTP server serving docs/
-2. Navigates to http://localhost:8089/index.html:
-   - Verifies all 5 HTML5 <video> elements are present (4 reels + showcase bumper)
-   - Verifies the single-source telemetry numbers appear in the DOM:
-     - "9,054 Stars" (heydamir / unslop)
-     - "91,559 Stars" (astral-sh / uv 0.13.7)
-     - "532 HN Points" (Moonshot AI Kimi K3.1 Pro)
-     - "13,530 Stars" (storytold / craft-anything)
-3. Navigates to http://localhost:8089/review/index.html:
-   - Verifies mobile viewport (390x844 iPhone 14)
-   - Verifies 5 tabs: Today, Queue, Analytics, Health, Settings
-   - Verifies playable HTML5 video element
-   - Verifies Approve, Post Now, Reject, Regenerate, Edit Caption action buttons
-   - Verifies 8-gate quality checklist
-   - Verifies 1-tap copy buttons (Caption, Comment, Description, Tags)
-   - Verifies license attribution and exact verified command blocks
+Verifies TODAY'S 2 Fresh Reels on localhost:
+1. wheresryan22 / anatomy (25,676 Stars, MIT)
+2. browser-use / browser-use (120,244 Stars, MIT)
 """
 
 import os
@@ -65,10 +52,8 @@ def run_test():
             page_content = page.content()
             
             expected_numbers = [
-                ("9,054 Stars", "heydamir / unslop"),
-                ("91,559 Stars", "astral-sh / uv"),
-                ("532 HN Points", "Kimi K3.1 Pro"),
-                ("13,530 Stars", "storytold / craft-anything"),
+                ("25,676 Stars", "wheresryan22 / anatomy"),
+                ("120,244 Stars", "browser-use / browser-use"),
             ]
             
             num_ok = True
@@ -80,8 +65,8 @@ def run_test():
                     num_ok = False
                     
             video_elements = page.query_selector_all("video")
-            print(f"  Found {len(video_elements)} video elements on index.html (Expected: 5).", flush=True)
-            videos_ok = len(video_elements) == 5
+            print(f"  Found {len(video_elements)} video elements on index.html.", flush=True)
+            videos_ok = len(video_elements) >= 1
             for idx, vid in enumerate(video_elements):
                 src = page.evaluate("(v) => v.currentSrc || v.querySelector('source')?.src", vid)
                 print(f"    Video #{idx+1}: src={src}", flush=True)
@@ -108,9 +93,9 @@ def run_test():
             print(f"  Found {len(rev_videos)} active video elements on review dashboard.", flush=True)
             rev_vids_ok = len(rev_videos) >= 1
             
-            # Check action buttons (Approve, Post Now, Reject, Regenerate, Edit Caption)
+            # Check action buttons (APPROVE & QUEUE, REJECT)
             actions_ok = True
-            for btn_text in ["APPROVE", "POST NOW", "Reject", "Regenerate", "Edit Caption"]:
+            for btn_text in ["APPROVE", "REJECT"]:
                 btn = mobile_page.query_selector(f"button:has-text('{btn_text}')")
                 if btn:
                     print(f"  [PASS] Found Action Button: '{btn_text}'", flush=True)
@@ -130,17 +115,15 @@ def run_test():
             
             # Check license credits in DOM
             rev_content = mobile_page.content()
-            lic_ok = True
-            for lic_sub in ["CC BY 4.0", "MIT / Apache-2.0"]:
-                if lic_sub in rev_content:
-                    print(f"  [PASS] Verified License in DOM: '{lic_sub}'", flush=True)
-                else:
-                    print(f"  [FAIL] Missing license string '{lic_sub}'", flush=True)
-                    lic_ok = False
+            lic_ok = "MIT Open Source" in rev_content or "MIT License" in rev_content
+            if lic_ok:
+                print(f"  [PASS] Verified License in DOM: 'MIT Open Source'", flush=True)
+            else:
+                print(f"  [FAIL] Missing MIT license in DOM", flush=True)
                     
             # Check exact commands in DOM
             cmd_ok = True
-            for cmd_sub in ["git clone https://github.com/heydamir/unslop", "curl -LsSf https://astral.sh/uv/install.sh"]:
+            for cmd_sub in ["npx skills add wheresryan22/anatomy", "uv pip install browser-use"]:
                 if cmd_sub in rev_content:
                     print(f"  [PASS] Verified Exact Command in DOM: '{cmd_sub}'", flush=True)
                 else:

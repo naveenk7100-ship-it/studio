@@ -1,0 +1,75 @@
+{
+  "video_id": "today_1_anatomy",
+  "title": "wheresryan22 / anatomy",
+  "timestamp": "2026-11-07T19:27:46",
+  "status": "READY",
+  "gates": {
+    "banned_text": {
+      "pass": true,
+      "found_banned": [],
+      "date_matches": []
+    },
+    "single_source_number": {
+      "pass": true,
+      "expected": "25,676",
+      "found": true
+    },
+    "brand_handle": {
+      "pass": true,
+      "expected": "@flash__ai__digital",
+      "found": true
+    },
+    "audio_ebu_r128": {
+      "pass": true,
+      "master": {
+        "lufs": -14.2,
+        "true_peak": -1.5,
+        "sample_rate": 48000
+      },
+      "web_720p": {
+        "lufs": -14.2,
+        "true_peak": -1.5
+      }
+    },
+    "motion_mad": {
+      "pass": true,
+      "median_mad": 1.02,
+      "burst_max_mad": 195.97,
+      "max_consecutive_under_0_5": 0,
+      "per_second_array": [
+        0.96,
+        1.05,
+        0.96,
+        17.62,
+        0.73,
+        0.71,
+        32.01,
+        0.98,
+        1.75,
+        1.47,
+        1.35,
+        20.34,
+        0.96,
+        0.84,
+        0.94,
+        31.2,
+        1.38,
+        1.43,
+        1.31,
+        20.82,
+        0.96,
+        0.98,
+        17.74,
+        0.88,
+        17.68,
+        0.79,
+        0.79,
+        0.77
+      ]
+    },
+    "no_reused_images": {
+      "pass": true,
+      "reused_count": 0
+    }
+  }
+}

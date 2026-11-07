@@ -1,0 +1,30 @@
+REAL-FILE OCR DUMP FOR today_2_browseruse
+============================================================
+[SEC 01]: FLASH AUTOMATION AUTONOMOUS WEB ENGINE Browser Use RELEASE 0.13.14 Open-source Python library for AI browser agents and Playwright automation A1 Mama,
+[SEC 02]: FLASH AUTOMATION AUTONOMOUS WEB ENGINE Browser Use RELEASE 0.13.14 Open-source Python library for Al browser agents and Playwright automation
+[SEC 03]: FLASH AUTOMATION AUTONOMOUS WEB ENGINE Browser Use RELEASE 0.13.14 Open-source Python library for Al browser agents and Playwright agents automation websites automate
+[SEC 04]: FLASH AUTOMATION AUTONOMOUS WEB ENGINE Browser Use RELEASE 0.13.14 Open-source Python library for Al browser agents and Playwright automate automation cheyadaniki browser
+[SEC 05]: FLASH AUTOMATION AUTONOMOUS WEB ENGINE Browser Use RELEASE 0.13.14 Open-source Python library for Al browser agents and Playwright automation
+[SEC 06]: FLASH AUTOMATION CORE RELEASE O. 13.14 O Browser RELEASE 0.13.14 Use Connects LLMs directly to browser DOM elements, tabs, and interactive sessions
+[SEC 07]: FLASH AUTOMATION CORE RELEASE 0.13.14 O Browser Use Connects LLMs directly to browser DOM elements, tabs, and interactive sessions RELEASE 0.13.14 Browser Use 0.13.14
+[SEC 08]: • FLASH AUTOMATION INSTALLATION terminal $ uv pip install browser—use $ uvx browser—use install Official quickstart with Astral uv package manager and Playwright browser binaries. RELEASE 0.13.14 library. Playwright tho
+[SEC 09]: FLASH AUTOMATION INSTALLATION terminal $ uv pip install browser—use $ uvx browser—use install Official quickstart with Astral uv package manager and Playwright browser binaries. RELEASE 0.13.14 tho LLMs direct
+[SEC 10]: FLASH AUTOMATION INSTALLATION terminal $ uv pip install browser—use $ uvx browser—use install RELEASE 0.13.14 Official quickstart with Astral uv package manager and Playwright browser binaries.
+[SEC 11]: FLASH AUTOMATION INSTALLATION terminal $ uv pip install browser—use $ uvx browser—use install RELEASEo.13.14 Official quickstart with Astral uv package manager and Playwright browser binaries. buttons click chesi
+[SEC 12]: FLASH AUTOMATION INSTALLATION terminal $ uv pip install browser—use $ Uvx browser—use install RELEASE 0.13.14 Official quickstart with Astral uv package manager and Playwright browser binaries.
+[SEC 13]: • FLASH AUTOMATION PYTHON CONTROLLER from browser use import Agent, ChatBrowserUse agent = Agent ( task="Find stars Of browser—use repo 11m=ChatBrowserUse ) RELEASE 0.13.14 history await agent. ( ) pip install
+[SEC 14]: • FLASH AUTOMATION PYTHON CONTROLLER from browser use import Agent/ ChatBrowserüse agent = Agent ( stars Of browser—use repo" , 11m=ChatBrowserUse RELEASE 0.13.14 history await agent. run ( ) install browser use
+[SEC 15]: • FLASH AUTOMATION PYTHON CONTROLLER from browser use import Agent, ChatBrowserÜse agent = Agent < task—I' Find stars Of browser—use repo" 11m=ChatBrowserUse RELEASE 0.13.14 history await agent . run ( )
+[SEC 16]: • FLASH AUTOMATION PYTHON CONTROLLER from browser use import Agent ChatBrowserUse agent = Agent ( stars of browser—use repo" 11rn—ChatBrowserÜse ) RELEASE 0.13.14 history await agent . run O run cheyandi. GitHub
+[SEC 17]: • FLASH AUTOMATION 74.5% AUTOMATION BENCHMARK 9ø 85. B 8ø 7ø 5ø Cloud v4 Opus 4.8 BU Bench VI: Success Rate 68.0% bu 2-0 66. B gpt 5.5 65.0% gemini 3.5- nash 45. quen 3. éplus RELEASE 0.13.14 Browser use Cloud Open Source Library 37.ø% 31 . Cloud v4 (default) Claude opus-a-7 "eepseek V4-nash-Ø731 Luna Official Benchmark • Web Navigation Success Rate Across LLMs GitHub 120244
+[SEC 18]: • FLASH AUTOMATION AUTOMATION BENCHMARK 85 -E Cloud va opus 4.8 78.0% Cloud (detauJt) BU 74.0% claude opus-4-7 Bench VI: Success Rate 70 60 5mø 30 66.0% RELEASE 0.13.14 Browser Use Cloud Open Source Library 37.0% 31.0% bu 2-ø 65. gemlnl 3.5- flash 45.0% qwen 3.6p1us deepseek v4-nash -0731; Luna Official Benchmark • Web Navigation Success Rate Across LLMs
+[SEC 19]: • FLASH AUTOMATION GITHUB REPOSITORY METRICS 120,244 STARS REACHED RELEASE 0.13.14 aindi. Open source
+[SEC 20]: • FLASH AUTOMATION GITHUB REPOSITORY METRICS 120,244 STARS REACHED RELEASE 0.13.14 source MIT license
+[SEC 21]: • FLASH AUTOMATION GITHUB REPOSITORY METRICS 120,244 STARS REACHED RELEASE 0.13.14 MIT license ho
+[SEC 22]: • FLASH AUTOMATION GITHUB REPOSITORY METRICS 120,244 STARS REACHED RELEASE 0.13.14 tho available
+[SEC 23]: • FLASH AUTOMATION SOURCE & LICENSE MIT OPEN-SOURCE LICENSE Maintained by browser-use team (@browser-use) github , RELEASE 0.13.ta undi. Details link
+[SEC 24]: • FLASH AUTOMATION SOURCE & LICENSE MIT OPEN-SOURCE LICENSE Maintained by browser-use team (@browser-use) RELEASE 0.13.ta Details link in
+[SEC 25]: • FLASH AUTOMATION SOURCE & LICENSE MIT OPEN-SOURCE LICENSE Maintained by browser-use team (@browser-use) RELEASE 0.13.14
+[SEC 26]: • FLASH AUTOMATION FLASH + FOLLOW @flash ai digital Daily AI and dev updates, with sources RELEASE 0.13.14
+[SEC 27]: • FLASH AUTOMATION FLASH •e/ Following Daily AI and dev updates, with sources RELEASE 0-13.14
+[SEC 28]: • FLASH AUTOMATION FLASH ../ Following Daily AI and dev updates, with sources RELEASE 0.13.14
