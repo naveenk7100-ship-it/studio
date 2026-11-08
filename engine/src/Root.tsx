@@ -1,5 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
+import { PillarA_HowChatGPTWorks } from "./compositions/PillarA_HowChatGPTWorks";
+import { PillarB_BestToolForJob } from "./compositions/PillarB_BestToolForJob";
 import { StyleTest_VariantA } from "./compositions/StyleTest_VariantA";
 import { StyleTest_VariantB } from "./compositions/StyleTest_VariantB";
 import { StyleTest_VariantC } from "./compositions/StyleTest_VariantC";
@@ -14,6 +16,24 @@ import { TodayReel_BrowserUse } from "./compositions/TodayReel_BrowserUse";
 export const Root: React.FC = () => {
   return (
     <>
+      {/* V5 Content Overhaul Compositions (30.0s, 720x1280, 900 frames) */}
+      <Composition
+        id="PillarA-HowChatGPTWorks"
+        component={PillarA_HowChatGPTWorks}
+        durationInFrames={900}
+        fps={30}
+        width={720}
+        height={1280}
+      />
+      <Composition
+        id="PillarB-BestToolForJob"
+        component={PillarB_BestToolForJob}
+        durationInFrames={900}
+        fps={30}
+        width={720}
+        height={1280}
+      />
+
       {/* 12-Second Visual Overhaul Style Tests */}
       <Composition
         id="StyleTest-VariantA"

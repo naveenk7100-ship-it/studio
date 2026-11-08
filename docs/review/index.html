@@ -472,15 +472,31 @@
                 </div>
             </div>
 
+            <!-- Content Pillars Roadmap Bar -->
+            <div style="display:flex; gap:8px; overflow-x:auto; margin-bottom:16px; padding-bottom:4px;">
+                <div style="background:rgba(0, 229, 255, 0.15); border:1px solid #00E5FF; color:#00E5FF; padding:6px 12px; border-radius:16px; font-size:11px; font-weight:800; white-space:nowrap;">
+                    PILLAR A: HOW IT WORKS IN 3D (ACTIVE)
+                </div>
+                <div style="background:rgba(226, 184, 120, 0.15); border:1px solid #E2B878; color:#E2B878; padding:6px 12px; border-radius:16px; font-size:11px; font-weight:800; white-space:nowrap;">
+                    PILLAR B: BEST TOOL FOR JOB (ACTIVE)
+                </div>
+                <div style="background:rgba(255, 255, 255, 0.05); border:1px solid var(--surface-border); color:var(--text-secondary); padding:6px 12px; border-radius:16px; font-size:11px; font-weight:700; white-space:nowrap;">
+                    PILLAR C: REAL-LIFE PLAYBOOK
+                </div>
+                <div style="background:rgba(255, 255, 255, 0.05); border:1px solid var(--surface-border); color:var(--text-secondary); padding:6px 12px; border-radius:16px; font-size:11px; font-weight:700; white-space:nowrap;">
+                    PILLAR D: FRESH DROP
+                </div>
+            </div>
+
             <!-- Selector Chips -->
             <div class="reel-selector">
-                <div class="reel-chip active" onclick="selectReel('today_1_anatomy', this)">
-                    <div class="chip-kicker">SLOT 1 • 25.6K STARS</div>
-                    <div class="chip-title">wheresryan22 / anatomy</div>
+                <div class="reel-chip active" onclick="selectReel('pillar_a_how_chatgpt_works', this)">
+                    <div class="chip-kicker">PILLAR A • 3D EXPLAINER</div>
+                    <div class="chip-title">How ChatGPT Works in 3D</div>
                 </div>
-                <div class="reel-chip" onclick="selectReel('today_2_browseruse', this)">
-                    <div class="chip-kicker">SLOT 2 • 120.2K STARS</div>
-                    <div class="chip-title">browser-use / browser-use</div>
+                <div class="reel-chip" onclick="selectReel('pillar_b_best_tool_pdf_paper', this)">
+                    <div class="chip-kicker">PILLAR B • BEST TOOL</div>
+                    <div class="chip-title">Best PDF Parser (6.5x Race)</div>
                 </div>
             </div>
 
@@ -783,7 +799,7 @@
         "issue_url": "https://github.com/naveenk7100-ship-it/studio/issues/new?title=Approve%20Today's%20Reel:%20today_2_browseruse%20(browser-use%20/%20browser-use)&body=APPROVAL%20REQUIRED%20FOR%20LIVE%20INSTAGRAM%20POSTING%0A%0AVideo%20ID:%20today_2_browseruse%0ATitle:%20browser-use%20/%20browser-use%0ASource:%20https://github.com/browser-use/browser-use%0AMetric:%20120,244%20Stars%0AStatus:%20READY%0A%0ACaption%20Hash:%20f15ab549a87139ec%0A%0ATo%20approve%20live%20publication,%20comment:%20/approve%20today_2_browseruse%20f15ab549a87139ec%0ATo%20reject%20or%20cancel,%20comment:%20/reject%20today_2_browseruse%0A"
     }
 ];
-        let currentReelId = REELS[0].id;
+        let currentReelId = 'pillar_a_how_chatgpt_works';
 
         function showToast(text) {
             const t = document.getElementById("toast");
@@ -830,9 +846,19 @@
         function renderReel(reel) {
             const factsHtml = reel.facts.map(f => `<li>${f}</li>`).join("");
             const commandsHtml = reel.exact_commands.map(c => `&gt; ${c}`).join("<br>");
+            const sourcesHtml = (reel.primary_sources || []).map(s => `
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--surface-border); border-radius:8px; padding:10px; margin-bottom:8px;">
+                    <a href="${s.url}" target="_blank" style="color:var(--accent-cyan); font-weight:700; text-decoration:none; font-size:13px;">${s.title} ↗</a>
+                    <div style="font-size:11px; color:var(--text-secondary); margin-top:4px; font-style:italic;">"${s.quote}"</div>
+                </div>
+            `).join("");
+            const mythsHtml = (reel.misconceptions || []).map(m => `<li>${m}</li>`).join("");
 
             const html = `
                 <div class="badge-ready">● ${reel.status} FOR HUMAN APPROVAL</div>
+                <div style="display:inline-block; background:rgba(0,229,255,0.15); border:1px solid ${reel.accent}; color:${reel.accent}; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-bottom:6px;">
+                    ${reel.pillar_badge || 'CONTENT PILLAR'}
+                </div>
                 <div style="font-size:11px; font-weight:800; color:${reel.accent}; letter-spacing:1px; text-transform:uppercase;">
                     ${reel.kicker}
                 </div>
@@ -917,6 +943,15 @@
                 <!-- Grounded Facts -->
                 <div class="section-title">🔬 Grounded Facts &amp; Source Truth</div>
                 <ul class="facts-list">${factsHtml}</ul>
+
+                <!-- Primary Sources & Entailment -->
+                <div class="section-title">📚 Primary Research Sources &amp; Entailment Check</div>
+                <div>${sourcesHtml}</div>
+
+                <!-- Common Misconceptions Corrected -->
+                ${mythsHtml ? `
+                <div class="section-title">💡 Misconceptions Corrected &amp; Boundaries</div>
+                <ul class="facts-list">${mythsHtml}</ul>` : ''}
 
                 <!-- 8-Beat Visual Proof Sheet -->
                 <div class="section-title">📸 8-Beat Cinematic Proof Sheet</div>

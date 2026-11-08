@@ -1,0 +1,77 @@
+[
+  {
+    "start": 0.0,
+    "end": 1.36,
+    "text": "Ever wondered how chat"
+  },
+  {
+    "start": 1.36,
+    "end": 3.02,
+    "text": "GPT actually answers?"
+  },
+  {
+    "start": 3.62,
+    "end": 4.76,
+    "text": "It does not search"
+  },
+  {
+    "start": 4.76,
+    "end": 5.34,
+    "text": "a database."
+  },
+  {
+    "start": 5.94,
+    "end": 7.3,
+    "text": "Your question is sliced"
+  },
+  {
+    "start": 7.3,
+    "end": 8.78,
+    "text": "into numerical tokens."
+  },
+  {
+    "start": 9.46,
+    "end": 10.74,
+    "text": "Each token enters a"
+  },
+  {
+    "start": 10.74,
+    "end": 12.54,
+    "text": "three -dimensional embedding space,"
+  },
+  {
+    "start": 12.84,
+    "end": 14.28,
+    "text": "finding related concepts,"
+  },
+  {
+    "start": 14.8,
+    "end": 16.88,
+    "text": "attention beams calculate context,"
+  },
+  {
+    "start": 17.3,
+    "end": 19.06,
+    "text": "while transformer layers predict"
+  },
+  {
+    "start": 19.06,
+    "end": 20.58,
+    "text": "the next most probable"
+  },
+  {
+    "start": 20.58,
+    "end": 20.94,
+    "text": "word."
+  },
+  {
+    "start": 21.52,
+    "end": 22.1,
+    "text": "Patterns,"
+  },
+  {
+    "start": 22.28,
+    "end": 22.82,
+    "text": "not magic."
+  }
+]

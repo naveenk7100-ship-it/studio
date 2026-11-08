@@ -1,0 +1,72 @@
+[
+  {
+    "start": 0.0,
+    "end": 2.12,
+    "text": "Summarizing research papers with"
+  },
+  {
+    "start": 2.12,
+    "end": 4.3,
+    "text": "AI never paced messy"
+  },
+  {
+    "start": 4.3,
+    "end": 5.54,
+    "text": "PDFs directly."
+  },
+  {
+    "start": 6.02,
+    "end": 7.72,
+    "text": "We benchmarked Pi PDF"
+  },
+  {
+    "start": 7.72,
+    "end": 9.62,
+    "text": "versus Pi PDFium 2."
+  },
+  {
+    "start": 10.32,
+    "end": 12.82,
+    "text": "Pure Python took 386"
+  },
+  {
+    "start": 12.82,
+    "end": 14.98,
+    "text": "milliseconds and scrambled multi"
+  },
+  {
+    "start": 14.98,
+    "end": 15.82,
+    "text": "-column text."
+  },
+  {
+    "start": 16.42,
+    "end": 19.16,
+    "text": "Google's C++ PDFium parsed"
+  },
+  {
+    "start": 19.16,
+    "end": 20.26,
+    "text": "it in just 59"
+  },
+  {
+    "start": 20.26,
+    "end": 21.0,
+    "text": "milliseconds,"
+  },
+  {
+    "start": 21.5,
+    "end": 23.0,
+    "text": "over six times faster,"
+  },
+  {
+    "start": 23.54,
+    "end": 24.24,
+    "text": "clean context,"
+  },
+  {
+    "start": 24.66,
+    "end": 25.36,
+    "text": "zero bloat."
+  }
+]
