@@ -1,5 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
+import { V7_Tools_PyPdfium2 } from "./compositions/V7_Tools_PyPdfium2";
+import { V7_Discovery_HowChatGPTWorks } from "./compositions/V7_Discovery_HowChatGPTWorks";
 import { PillarA_HowChatGPTWorks } from "./compositions/PillarA_HowChatGPTWorks";
 import { PillarB_BestToolForJob } from "./compositions/PillarB_BestToolForJob";
 import { StyleTest_VariantA } from "./compositions/StyleTest_VariantA";
@@ -16,6 +18,24 @@ import { TodayReel_BrowserUse } from "./compositions/TodayReel_BrowserUse";
 export const Root: React.FC = () => {
   return (
     <>
+      {/* FLASH SPEC V7 STAGE 1 PRODUCTIONS */}
+      <Composition
+        id="V7-Tools-PyPdfium2"
+        component={V7_Tools_PyPdfium2}
+        durationInFrames={1440}
+        fps={30}
+        width={720}
+        height={1280}
+      />
+      <Composition
+        id="V7-Discovery-HowChatGPTWorks"
+        component={V7_Discovery_HowChatGPTWorks}
+        durationInFrames={1500}
+        fps={30}
+        width={720}
+        height={1280}
+      />
+
       {/* V5 Content Overhaul Compositions (30.0s, 720x1280, 900 frames) */}
       <Composition
         id="PillarA-HowChatGPTWorks"

@@ -1,0 +1,271 @@
+{
+  "video_id": "v7_tools",
+  "title": "pypdfium2: Best PDF Parser for Research Paper LLM Summarization",
+  "pillar": "TOOLS",
+  "slot": "12:30 PM IST",
+  "duration_s": 48.0,
+  "evaluated_at": "2026-11-08T21:16:27+05:30",
+  "overall_status": "APPROVED_STAGE_1",
+  "gates": {
+    "motion_mad": {
+      "median_mad": 5.84,
+      "min_sec_mad": 3.69,
+      "per_second_mad": [
+        5.95,
+        5.63,
+        6.13,
+        7.28,
+        5.36,
+        4.8,
+        8.12,
+        7.41,
+        3.8,
+        6.04,
+        8.42,
+        7.57,
+        4.31,
+        5.83,
+        6.67,
+        4.73,
+        5.12,
+        6.38,
+        6.0,
+        5.34,
+        5.38,
+        6.06,
+        5.65,
+        6.02,
+        7.96,
+        4.96,
+        5.59,
+        7.15,
+        7.26,
+        4.28,
+        6.27,
+        7.95,
+        6.14,
+        3.69,
+        7.49,
+        6.93,
+        5.04,
+        5.64,
+        9.3,
+        6.45,
+        6.16,
+        7.21,
+        6.66,
+        5.54,
+        7.25,
+        9.26,
+        5.81,
+        6.52
+      ],
+      "pass": true
+    },
+    "user_empty_area": {
+      "max_empty_pct": 18.71,
+      "avg_empty_pct": 11.63,
+      "per_second_empty": [
+        6.63,
+        6.37,
+        5.39,
+        8.53,
+        6.36,
+        6.34,
+        6.03,
+        6.32,
+        6.78,
+        6.2,
+        7.8,
+        10.89,
+        16.73,
+        16.91,
+        16.53,
+        13.69,
+        9.54,
+        18.6,
+        18.1,
+        17.88,
+        17.84,
+        7.62,
+        17.32,
+        18.71,
+        16.54,
+        13.17,
+        11.67,
+        12.25,
+        13.05,
+        12.57,
+        13.52,
+        13.67,
+        12.79,
+        14.2,
+        13.43,
+        15.98,
+        13.86,
+        14.15,
+        14.0,
+        10.62,
+        10.7,
+        11.15,
+        11.54,
+        8.06,
+        11.45,
+        10.59,
+        2.34,
+        3.96
+      ],
+      "pass": true
+    },
+    "branding_scan": {
+      "frames_sampled_before_endcard": 92,
+      "logo_detections_before_endcard": 0,
+      "pass": true
+    },
+    "caption_readback": {
+      "match_rate_pct": 100.0,
+      "total_words": 95,
+      "pass": true,
+      "table_sample": [
+        {
+          "word": "Research",
+          "expected_time": 0.39,
+          "caption_time": 0.367,
+          "error_ms": 23.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "papers",
+          "expected_time": 0.95,
+          "caption_time": 0.933,
+          "error_ms": 16.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "LLM",
+          "expected_time": 1.33,
+          "caption_time": 1.3,
+          "error_ms": 30.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "tho",
+          "expected_time": 1.61,
+          "caption_time": 1.6,
+          "error_ms": 10.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "summarize",
+          "expected_time": 1.84,
+          "caption_time": 1.833,
+          "error_ms": 6.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "chesetappudu",
+          "expected_time": 2.4,
+          "caption_time": 2.4,
+          "error_ms": 0.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "column",
+          "expected_time": 3.27,
+          "caption_time": 3.267,
+          "error_ms": 3.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "text",
+          "expected_time": 3.53,
+          "caption_time": 3.5,
+          "error_ms": 30.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "mix",
+          "expected_time": 3.93,
+          "caption_time": 3.9,
+          "error_ms": 30.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "avthunda?",
+          "expected_time": 4.36,
+          "caption_time": 4.333,
+          "error_ms": 26.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "Idi",
+          "expected_time": 5.29,
+          "caption_time": 5.267,
+          "error_ms": 23.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "fix",
+          "expected_time": 5.82,
+          "caption_time": 5.8,
+          "error_ms": 20.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "cheyadaniki",
+          "expected_time": 6.68,
+          "caption_time": 6.667,
+          "error_ms": 13.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "best",
+          "expected_time": 7.02,
+          "caption_time": 7.0,
+          "error_ms": 20.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "open-source",
+          "expected_time": 7.35,
+          "caption_time": 7.333,
+          "error_ms": 16.7,
+          "status": "MATCH"
+        }
+      ]
+    },
+    "audio_mastering": {
+      "integrated_lufs": -14.5,
+      "true_peak_dbtp": -1.68,
+      "lra": 3.5,
+      "sample_rate_hz": 48000,
+      "pass": true
+    },
+    "teach_back": {
+      "pass": true,
+      "answers": "Here are the answers based solely on the provided transcript:\n\nQ1: The underlying engine that powers pypdfium2 is the Google PDFium C++ engine.\nQ2: Standard python parsers fail on multi-column papers (like research papers) because they mix left and right columns, thereby wasting tokens.\nQ3: The installation command for pypdfium2 is `pip install pypdfium2`. It requires zero external dependencies.",
+      "questions": [
+        {
+          "question": "What underlying engine powers pypdfium2 for fast and reliable PDF parsing?",
+          "expected_answer": "Google PDFium C++ engine (open-sourced by Google/Chromium).",
+          "source_ref": "Google PDFium Open Source Project & pypdfium2 documentation."
+        },
+        {
+          "question": "Why do standard naive PDF parsers fail on academic research papers?",
+          "expected_answer": "They interleave text from multi-column layouts into scrambled lines, wasting tokens and causing hallucinations.",
+          "source_ref": "pypdfium2 documentation & empirical PDF parsing benchmarks."
+        },
+        {
+          "question": "What is the installation command for pypdfium2 and what external dependencies does it require?",
+          "expected_answer": "pip install pypdfium2 with zero external runtime dependencies.",
+          "source_ref": "pypdfium2 PyPI package."
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "final_video": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\out\\reel_v7_tools_720p.mp4",
+    "words_json": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\cache\\v7\\v7_tools_words.json",
+    "master_audio": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\cache\\v7\\v7_tools_master_48k.mp3"
+  }
+}

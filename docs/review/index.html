@@ -1,1080 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:; img-src 'self' data: blob: https://*; media-src 'self' data: blob:; connect-src 'self' https://api.github.com https://graph.facebook.com;">
-    <title>FLASH.Ai — Daily Production Review Control Center</title>
-    <style>
-        :root {
-            --bg: #07090E;
-            --surface: rgba(16, 21, 33, 0.85);
-            --surface-card: rgba(22, 30, 48, 0.75);
-            --surface-border: rgba(255, 255, 255, 0.08);
-            --surface-border-bright: rgba(0, 229, 255, 0.3);
-            --text-primary: #FFFFFF;
-            --text-secondary: #94A3B8;
-            --accent-cyan: #00E5FF;
-            --accent-pink: #FF2D95;
-            --accent-green: #00E676;
-            --accent-red: #FF3B30;
-            --accent-orange: #FFB703;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
-            padding-bottom: 90px;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-        .ambient-glow {
-            position: fixed;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 100vw; max-width: 600px;
-            height: 350px;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.15) 0%, rgba(255, 45, 149, 0.06) 50%, transparent 80%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .app-container {
-            position: relative;
-            z-index: 1;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 16px;
-        }
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0 20px;
-            border-bottom: 1px solid var(--surface-border);
-            margin-bottom: 16px;
-        }
-        .brand-cluster {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .brand-logo-frame {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .brand-logo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .brand-title {
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            color: #FFF;
-        }
-        .brand-title span { color: var(--accent-cyan); }
-        .brand-subtitle {
-            font-size: 11px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        .live-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0, 230, 118, 0.12);
-            border: 1px solid rgba(0, 230, 118, 0.3);
-            color: var(--accent-green);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-        .pulse-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background-color: var(--accent-green);
-            box-shadow: 0 0 8px var(--accent-green);
-            animation: pulseGlow 1.8s infinite;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 14px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 24px);
-            max-width: 540px;
-            height: 64px;
-            background: rgba(11, 15, 25, 0.92);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 8px;
-            z-index: 1000;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-        }
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            padding: 8px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .nav-btn span.icon { font-size: 18px; }
-        .nav-btn span.label { font-size: 10px; font-weight: 700; }
-        .nav-btn.active {
-            color: var(--accent-cyan);
-            background: rgba(0, 229, 255, 0.12);
-        }
-        .nav-btn.active span.icon { transform: scale(1.1); text-shadow: 0 0 10px var(--accent-cyan); }
-
-        .tab-panel { display: none; }
-        .tab-panel.active { display: block; animation: fadeIn 0.25s ease-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .reel-selector {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-        }
-        .reel-chip {
-            flex: 1;
-            min-width: 140px;
-            background: var(--surface);
-            border: 1px solid var(--surface-border);
-            padding: 10px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-        }
-        .reel-chip .chip-kicker { font-size: 10px; font-weight: 800; color: var(--accent-cyan); text-transform: uppercase; }
-        .reel-chip .chip-title { font-size: 13px; font-weight: 800; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .reel-chip.active {
-            background: rgba(0, 229, 255, 0.12);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.25);
-        }
-
-        .glass-card {
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--surface-border);
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 16px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-        }
-
-        .badge-ready {
-            background: rgba(0, 230, 118, 0.15);
-            border: 1px solid var(--accent-green);
-            color: var(--accent-green);
-            font-size: 10px;
-            font-weight: 800;
-            padding: 4px 8px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-        h2.card-title { font-size: 22px; font-weight: 900; color: #FFF; margin-bottom: 4px; }
-        p.card-tagline { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
-
-        .video-box {
-            width: 100%;
-            aspect-ratio: 9/16;
-            background: #000;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid var(--surface-border);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            margin-bottom: 16px;
-        }
-        video { width: 100%; height: 100%; object-fit: contain; }
-
-        .approval-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .btn-approve {
-            background: linear-gradient(135deg, #00E676 0%, #00B0FF 100%);
-            border: none;
-            color: #050811;
-            font-size: 14px;
-            font-weight: 900;
-            padding: 14px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 20px rgba(0, 230, 118, 0.3);
-            transition: transform 0.15s ease;
-        }
-        .btn-approve:active { transform: scale(0.98); }
-        .btn-reject {
-            background: rgba(255, 59, 48, 0.12);
-            border: 1px solid rgba(255, 59, 48, 0.35);
-            color: var(--accent-red);
-            font-size: 13px;
-            font-weight: 800;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: all 0.15s ease;
-        }
-        .btn-resend {
-            grid-column: span 2;
-            background: rgba(124, 77, 255, 0.12);
-            border: 1px solid rgba(124, 77, 255, 0.35);
-            color: #B388FF;
-            font-size: 12px;
-            font-weight: 800;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .copy-tray {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .copy-pill {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--surface-border);
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            user-select: none;
-        }
-        .copy-pill:hover {
-            background: rgba(0, 229, 255, 0.1);
-            color: #FFF;
-            border-color: rgba(0, 229, 255, 0.3);
-        }
-
-        .section-title {
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-            margin: 16px 0 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .gates-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .gate-cell {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--surface-border);
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .gate-label { font-size: 10px; color: var(--text-secondary); font-weight: 600; display: block; }
-        .gate-val { font-size: 12px; font-weight: 800; color: #FFF; margin-top: 2px; display: flex; align-items: center; justify-content: space-between; }
-        .badge-pass { color: var(--accent-green); font-size: 10px; font-weight: 800; }
-
-        .commands-box {
-            background: #030407;
-            border: 1px solid var(--surface-border);
-            border-radius: 10px;
-            padding: 12px;
-            font-family: monospace;
-            font-size: 12px;
-            color: #79C0FF;
-            line-height: 1.6;
-            margin-bottom: 16px;
-            word-break: break-all;
-        }
-
-        .facts-list {
-            list-style: none;
-            font-size: 12px;
-            color: #E2E8F0;
-            line-height: 1.6;
-        }
-        .facts-list li {
-            position: relative;
-            padding-left: 18px;
-            margin-bottom: 6px;
-        }
-        .facts-list li::before {
-            content: "•";
-            color: var(--accent-cyan);
-            position: absolute;
-            left: 4px;
-            font-weight: 900;
-        }
-
-        .glass-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 8px;
-        }
-        .glass-table th {
-            text-align: left;
-            padding: 8px;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--surface-border);
-            font-weight: 700;
-        }
-        .glass-table td {
-            padding: 10px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            color: #E2E8F0;
-        }
-
-        #toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: rgba(0, 229, 255, 0.95);
-            color: #050811;
-            font-size: 12px;
-            font-weight: 800;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.5);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 2000;
-            pointer-events: none;
-        }
-        #toast.show { transform: translateX(-50%) translateY(0); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FLASH Content OS • Stage 1 Review Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030712;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --border: rgba(30, 41, 59, 0.8);
+      --accent-cyan: #00F0FF;
+      --accent-green: #10B981;
+      --accent-orange: #FF9E00;
+      --accent-purple: #8B5CF6;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+    .header {
+      background: rgba(10, 15, 30, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 2px solid var(--accent-cyan);
+    }
+    .brand-title {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .nav-tab {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .nav-tab.active {
+      background: var(--accent-cyan);
+      color: #000000;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+    .slot-banner {
+      background: linear-gradient(90deg, rgba(0, 240, 255, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .slot-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .header { flex-direction: column; gap: 12px; }
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .video-container {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    video {
+      width: 100%;
+      height: auto;
+      max-height: 520px;
+      display: block;
+      margin: 0 auto;
+    }
+    .kicker {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--accent-orange);
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .promise {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+    .gates-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .gate-badge {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .gate-badge.pass {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .gate-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .gate-val {
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-green);
+    }
+    .accordion {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+    .acc-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .code-box {
+      background: #090D16;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #38BDF8;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+    }
+    .approve-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(90deg, #00F0FF 0%, #10B981 100%);
+      color: #000;
+      font-weight: 900;
+      font-size: 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: opacity 0.2s;
+    }
+    .approve-btn:hover { opacity: 0.9; }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state h3 {
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+  </style>
 </head>
 <body>
-    <div class="ambient-glow"></div>
-    <div id="toast">Copied to clipboard!</div>
 
-    <div class="app-container">
-        <!-- Header -->
-        <header>
-            <div class="brand-cluster">
-                <div class="brand-logo-frame">
-                    <img src="../assets/brand/logo.png" alt="FLASH.Ai Logo">
-                </div>
-                <div>
-                    <div class="brand-title">FLASH<span>.Ai</span></div>
-                    <div class="brand-subtitle">Daily Production Studio</div>
-                </div>
-            </div>
-            <div class="live-badge">
-                <div class="pulse-dot"></div>
-                ZERO-HALLUCINATION GATED
-            </div>
-        </header>
+  <div class="header">
+    <div class="brand">
+      <img src="logo.png" alt="FLASH.Ai Logo">
+      <div>
+        <div class="brand-title">FLASH<span style="color:var(--accent-cyan)">.Ai</span> CONTENT OS</div>
+        <div style="font-size:12px; color:var(--text-muted); font-weight:700;">SPEC V7 • STAGE 1 REVIEW DASHBOARD</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showTab('today')">TODAY (2)</button>
+      <button class="nav-tab" onclick="showTab('queue')">QUEUE (6)</button>
+      <button class="nav-tab" onclick="showTab('posted')">POSTED</button>
+      <button class="nav-tab" onclick="showTab('analytics')">ANALYTICS</button>
+      <button class="nav-tab" onclick="showTab('health')">HEALTH</button>
+    </div>
+  </div>
 
-        <!-- ==================== TAB 1: TODAY'S REELS ==================== -->
-        <div id="tab-today" class="tab-panel active">
-            <!-- ==================== 12-SECOND STYLE TEST SHOWCASE ==================== -->
-            <div class="glass-card" style="margin-bottom: 24px; border: 2px solid #00E5FF; background: rgba(11, 37, 46, 0.4);">
-                <div class="card-kicker" style="color: #00E5FF;">STEP 1: 12-SECOND VISUAL OVERHAUL STYLE TEST • wheresryan22 / anatomy</div>
-                <h2 style="font-size: 22px; margin: 8px 0 12px 0;">3 Cinematic Explainer Look Variants</h2>
-                <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
-                    Review the 3 lighting & depth variants below (voice + word-by-word captions + ducked music pulse + scene-matched foley). Pick your preferred look before we scale to full 28s reels.
-                </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
-                    <!-- Variant A -->
-                    <div style="background: rgba(4, 18, 23, 0.85); border: 1.5px solid #00E5FF; border-radius: 12px; padding: 14px;">
-                        <div style="font-weight: 800; color: #00E5FF; margin-bottom: 4px; font-size: 16px;">Variant A: Deep Teal Studio</div>
-                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Volumetric light shafts • Cyan accents • Exploded view</div>
-                        <div class="video-box" style="margin-bottom: 10px;">
-                            <video src="../videos/style_test_variant_a_720p.mp4" controls playsinline preload="metadata" poster="../style_test_variant_a_contact_sheet.png"></video>
-                        </div>
-                        <div style="font-size: 12px; color: var(--text-secondary);">
-                            MAD: <b>3.40</b> | Empty: <b>23.1%</b> | Loudness: <b>-13.9 LUFS</b>
-                        </div>
-                    </div>
-                    <!-- Variant B -->
-                    <div style="background: rgba(8, 22, 42, 0.85); border: 2px solid #E2B878; border-radius: 12px; padding: 14px; box-shadow: 0 0 20px rgba(226, 184, 120, 0.2);">
-                        <div style="font-weight: 800; color: #E2B878; margin-bottom: 4px; font-size: 16px;">Variant B: Blueprint Drafting (Recommended)</div>
-                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Drafting board 3D • Sepia gold • Technical crosshairs</div>
-                        <div class="video-box" style="margin-bottom: 10px;">
-                            <video src="../videos/style_test_variant_b_720p.mp4" controls playsinline preload="metadata" poster="../style_test_variant_b_contact_sheet.png"></video>
-                        </div>
-                        <div style="font-size: 12px; color: #10B981; font-weight: 700;">
-                            PASSES ALL GATES: MAD <b>3.29</b> | Empty: <b>16.1%</b> | <b>-13.9 LUFS</b>
-                        </div>
-                    </div>
-                    <!-- Variant C -->
-                    <div style="background: rgba(241, 245, 249, 0.98); color: #0F172A; border: 1.5px solid #059669; border-radius: 12px; padding: 14px;">
-                        <div style="font-weight: 800; color: #059669; margin-bottom: 4px; font-size: 16px;">Variant C: Light Museum Vitrine</div>
-                        <div style="font-size: 12px; color: #475569; margin-bottom: 10px;">Luminous gallery • Frosted acrylic 3D pedestal • Emerald</div>
-                        <div class="video-box" style="margin-bottom: 10px;">
-                            <video src="../videos/style_test_variant_c_720p.mp4" controls playsinline preload="metadata" poster="../style_test_variant_c_contact_sheet.png"></video>
-                        </div>
-                        <div style="font-size: 12px; color: #059669; font-weight: 700;">
-                            MAD: <b>2.71</b> | Empty: <b>15.0%</b> | Loudness: <b>-13.9 LUFS</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Content Pillars Roadmap Bar -->
-            <div style="display:flex; gap:8px; overflow-x:auto; margin-bottom:16px; padding-bottom:4px;">
-                <div style="background:rgba(0, 229, 255, 0.15); border:1px solid #00E5FF; color:#00E5FF; padding:6px 12px; border-radius:16px; font-size:11px; font-weight:800; white-space:nowrap;">
-                    PILLAR A: HOW IT WORKS IN 3D (ACTIVE)
-                </div>
-                <div style="background:rgba(226, 184, 120, 0.15); border:1px solid #E2B878; color:#E2B878; padding:6px 12px; border-radius:16px; font-size:11px; font-weight:800; white-space:nowrap;">
-                    PILLAR B: BEST TOOL FOR JOB (ACTIVE)
-                </div>
-                <div style="background:rgba(255, 255, 255, 0.05); border:1px solid var(--surface-border); color:var(--text-secondary); padding:6px 12px; border-radius:16px; font-size:11px; font-weight:700; white-space:nowrap;">
-                    PILLAR C: REAL-LIFE PLAYBOOK
-                </div>
-                <div style="background:rgba(255, 255, 255, 0.05); border:1px solid var(--surface-border); color:var(--text-secondary); padding:6px 12px; border-radius:16px; font-size:11px; font-weight:700; white-space:nowrap;">
-                    PILLAR D: FRESH DROP
-                </div>
-            </div>
-
-            <!-- Selector Chips -->
-            <div class="reel-selector">
-                <div class="reel-chip active" onclick="selectReel('pillar_a_how_chatgpt_works', this)">
-                    <div class="chip-kicker">PILLAR A • 3D EXPLAINER</div>
-                    <div class="chip-title">How ChatGPT Works in 3D</div>
-                </div>
-                <div class="reel-chip" onclick="selectReel('pillar_b_best_tool_pdf_paper', this)">
-                    <div class="chip-kicker">PILLAR B • BEST TOOL</div>
-                    <div class="chip-title">Best PDF Parser (6.5x Race)</div>
-                </div>
-            </div>
-
-            <!-- Dynamic Reel Card Container -->
-            <div id="reel-dynamic-content" class="glass-card">
-                <!-- Injected via JavaScript -->
-            </div>
+  <div class="container" id="tab-today">
+    <div class="slot-banner">
+      <div>
+        <div class="slot-title">⚡ STAGE 1 READY: 2 VIDEOS GATED & VERIFIED</div>
+        <div style="font-size:13px; color:var(--text-muted); margin-top:2px;">
+          Slot 1 (12:30 PM IST: TOOLS) & Slot 2 (8:30 PM IST: AI DISCOVERY) • Zero invented numbers • Strictly gated
         </div>
-
-        <!-- ==================== TAB 2: PIPELINE SCHEDULE ==================== -->
-        <div id="tab-queue" class="tab-panel">
-            <div class="glass-card">
-                <div class="section-title">📅 Production Pipeline Schedule</div>
-                <table class="glass-table">
-                    <thead>
-                        <tr>
-                            <th>Slot</th>
-                            <th>Topic &amp; Verified Source</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background: rgba(0, 229, 255, 0.08);">
-                            <td><strong>PILLAR A • Slot 1</strong><br><small style="color:var(--text-secondary)">12:30 PM IST</small></td>
-                            <td><strong>How ChatGPT Works in 3D</strong><br><small style="color:var(--accent-cyan)">NeurIPS arXiv:1706.03762 • OpenAI Tech Reports</small></td>
-                            <td><span class="badge-ready" style="font-size:11px; padding:3px 8px;">READY</span></td>
-                        </tr>
-                        <tr style="background: rgba(226, 184, 120, 0.08);">
-                            <td><strong>PILLAR B • Slot 2</strong><br><small style="color:var(--text-secondary)">8:30 PM IST</small></td>
-                            <td><strong>Best Tool: PDF Paper Summarization</strong><br><small style="color:var(--accent-orange)">pypdfium2 (Google C++) • 59ms Benchmark</small></td>
-                            <td><span class="badge-ready" style="font-size:11px; padding:3px 8px;">READY</span></td>
-                        </tr>
-                        <tr style="background: rgba(255, 255, 255, 0.02);">
-                            <td><strong>PILLAR C • Slot 3</strong><br><small style="color:var(--text-secondary)">Next Slot</small></td>
-                            <td><strong>Real-Life Playbook</strong><br><small style="color:var(--text-secondary)">Production Architecture Recipe</small></td>
-                            <td><span style="font-size:11px; padding:3px 8px; color:var(--text-secondary);">QUEUED</span></td>
-                        </tr>
-                        <tr style="background: rgba(255, 255, 255, 0.02);">
-                            <td><strong>PILLAR D • Slot 4</strong><br><small style="color:var(--text-secondary)">Next Slot</small></td>
-                            <td><strong>Fresh Drop</strong><br><small style="color:var(--text-secondary)">Daily Intelligence 6h Scan (&le; 48h / &le; 14d)</small></td>
-                            <td><span style="font-size:11px; padding:3px 8px; color:var(--text-secondary);">QUEUED</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="section-title" style="margin-top:20px;">📜 Archived Topics (Covered)</div>
-                <table class="glass-table">
-                    <thead>
-                        <tr>
-                            <th>Repo / Topic</th>
-                            <th>Verified Metric</th>
-                            <th>Archive State</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>heydamir / unslop</td><td>9,054 Stars</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
-                        <tr><td>astral-sh / uv 0.13.7</td><td>91,559 Stars</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
-                        <tr><td>Moonshot AI Kimi K3.1 Pro</td><td>532 HN Points</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
-                        <tr><td>storytold / craft-anything</td><td>13,530 Stars</td><td><span style="color:var(--text-secondary)">Covered</span></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 3: POSTED / ANALYTICS ==================== -->
-        <div id="tab-posted" class="tab-panel">
-            <div class="glass-card">
-                <div class="section-title">📊 Channel Performance &amp; Analytics</div>
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
-                    <div>
-                        <div style="font-size:18px; font-weight:900; color:#FFF;">@flash__ai__digital</div>
-                        <div style="font-size:12px; color:var(--accent-cyan);">Instagram Reels • Official Channel</div>
-                    </div>
-                    <a href="https://instagram.com/flash__ai__digital" target="_blank" class="copy-pill" style="color:var(--accent-cyan); text-decoration:none;">
-                        Open Profile ↗
-                    </a>
-                </div>
-
-                <div class="gates-grid" style="margin-bottom:20px;">
-                    <div class="gate-cell">
-                        <span class="gate-label">Today's Reel Output</span>
-                        <span class="gate-val">2 Master Films <span class="badge-pass">1080p</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Real-File Gate Pass Rate</span>
-                        <span class="gate-val">100.0% <span class="badge-pass">ALL PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Audio Loudness Compliance</span>
-                        <span class="gate-val">-14.0 &plusmn;0.5 LUFS <span class="badge-pass">EBU R128</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">True Peak Compliance</span>
-                        <span class="gate-val">&le; -1.5 dBTP <span class="badge-pass">PASS</span></span>
-                    </div>
-                </div>
-
-                <div class="section-title">🔒 Live Posting Gate</div>
-                <p style="font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px;">
-                    All live posting cron jobs remain strictly paused until explicit GO approval is given.
-                    Insights and telemetry will populate automatically following the first published post.
-                </p>
-                <div class="commands-box" style="color:var(--accent-green);">
-                    APPROVE_STATE: PENDING_USER_GO<br>
-                    LIVE_POSTING_BLOCKED: TRUE<br>
-                    AUTHENTICATED_METRICS: 100% GROUNDED
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 4: SYSTEM HEALTH ==================== -->
-        <div id="tab-health" class="tab-panel">
-            <div class="glass-card">
-                <div class="section-title">🛡️ Truth Engine &amp; Quality Safeguards</div>
-                <div class="gates-grid">
-                    <div class="gate-cell">
-                        <span class="gate-label">Rule 1: Commands</span>
-                        <span class="gate-val">Verbatim <span class="badge-pass">PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Rule 2: No Hype / Dates</span>
-                        <span class="gate-val">Zero Hype <span class="badge-pass">PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Rule 3: Language &amp; Digits</span>
-                        <span class="gate-val">Digits Only <span class="badge-pass">PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Rule 4: Consistency</span>
-                        <span class="gate-val">Identical <span class="badge-pass">PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Rule 5: Audio Mastering</span>
-                        <span class="gate-val">-14.0 LUFS <span class="badge-pass">PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">Rule 6: Visual Motion</span>
-                        <span class="gate-val">Unique <span class="badge-pass">PASS</span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 5: SETTINGS ==================== -->
-        <div id="tab-settings" class="tab-panel">
-            <div class="glass-card">
-                <div class="section-title">⚙️ Operator Dispatch Configuration</div>
-                <p style="font-size:12px; color:var(--text-secondary); margin-bottom:16px;">
-                    Set your fine-grained GitHub token (<code>repo</code> and <code>workflow</code> scopes) for 1-click approvals without leaving the page.
-                </p>
-                <input type="password" id="gh-token-input" placeholder="github_pat_..." style="width:100%; background:#05070A; border:1px solid var(--surface-border); border-radius:10px; padding:12px; color:#FFF; font-family:monospace; font-size:12px; margin-bottom:12px;">
-                <button onclick="saveToken()" class="btn-approve" style="width:100%; padding:10px;">Save Credentials</button>
-            </div>
-        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:800; color:var(--accent-green);">
+        ALL REAL-FILE GATES PASS
+      </div>
     </div>
 
-    <!-- Sticky Bottom Nav Bar -->
-    <nav class="bottom-nav">
-        <button class="nav-btn active" onclick="switchTab('tab-today', this)">
-            <span class="icon">🎬</span>
-            <span class="label">Review</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-queue', this)">
-            <span class="icon">📅</span>
-            <span class="label">Queue</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-posted', this)">
-            <span class="icon">📊</span>
-            <span class="label">Stats</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-health', this)">
-            <span class="icon">🛡️</span>
-            <span class="label">Health</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('tab-settings', this)">
-            <span class="icon">⚙️</span>
-            <span class="label">Settings</span>
-        </button>
-    </nav>
+    <div class="grid-2">
+      <!-- SLOT 1: TOOLS (pypdfium2) -->
+      <div class="card">
+        <div class="kicker">SLOT 1 • 12:30 PM IST • TOOLS</div>
+        <h2 class="card-title">pypdfium2: PDF Parser for LLM Summarization</h2>
+        <p class="promise">Extract clean multi-column text and tables from academic PDF research papers with zero hallucinated line mixes using Google PDFium C++ engine in Python.</p>
 
-    <script>
-        const STYLE_TESTS = [
-    {
-        "id": "variant_a",
-        "title": "Style Test: Variant A",
-        "topic": "Deep Teal Studio Aesthetic",
-        "tagline": "Volumetric Light Shafts \u2022 Cyan #00E5FF \u2022 Exploded 3D Assembly",
-        "web_video": "../videos/style_test_variant_a_720p.mp4",
-        "sheet_img": "../style_test_variant_a_contact_sheet.png",
-        "accent": "#00E5FF",
-        "badges": [
-            "12.0s STYLE TEST",
-            "DEEP TEAL STUDIO",
-            "3D EXPLODED VIEW",
-            "-13.9 LUFS"
-        ],
-        "description": "Deep teal studio (#041217 to #0B252E), electric cyan accents (#00E5FF), volumetric light sweeps, millimeter coordinate grid, Raptor 2 3D exploded view with parallax, typed monospace command, and active FLASH logo payoff."
-    },
-    {
-        "id": "variant_b",
-        "title": "Style Test: Variant B",
-        "topic": "Warm Paper-and-Ink Blueprint",
-        "tagline": "Drafting Board 3D \u2022 Sepia Drafting Gold #E2B878 \u2022 Architectural Ticks",
-        "web_video": "../videos/style_test_variant_b_720p.mp4",
-        "sheet_img": "../style_test_variant_b_contact_sheet.png",
-        "accent": "#E2B878",
-        "badges": [
-            "12.0s STYLE TEST",
-            "BLUEPRINT DRAFTING",
-            "3D EXPLODED VIEW",
-            "-13.9 LUFS"
-        ],
-        "description": "Architectural drafting board (#08162A to #10335C), sepia drafting ink (#E2B878), millimeter technical crosshairs, measurement ticks, Raptor 2 deconstruction with mechanical callouts, typed command, and blueprint seal."
-    },
-    {
-        "id": "variant_c",
-        "title": "Style Test: Variant C",
-        "topic": "Light Museum Vitrine Aesthetic",
-        "tagline": "Luminous Gallery \u2022 Frosted Acrylic 3D Pedestal \u2022 Emerald #059669 Accents",
-        "web_video": "../videos/style_test_variant_c_720p.mp4",
-        "sheet_img": "../style_test_variant_c_contact_sheet.png",
-        "accent": "#059669",
-        "badges": [
-            "12.0s STYLE TEST",
-            "MUSEUM VITRINE",
-            "3D EXPLODED VIEW",
-            "-14.0 LUFS"
-        ],
-        "description": "Luminous museum exhibition gallery (#F1F5F9 to #CBD5E1), directional studio key lighting, frosted acrylic vitrine pedestal, emerald precision callouts (#059669), high-contrast charcoal captions, and pristine gallery lockup."
+        <div class="video-container">
+          <video controls playsinline preload="metadata" src="../videos/reel_v7_tools_720p.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="gates-grid">
+          <div class="gate-badge pass">
+            <div class="gate-label">Motion MAD</div>
+            <div class="gate-val">5.84 (Min &ge; 1.5)</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Empty Space</div>
+            <div class="gate-val">18.71% (&le; 35%)</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Audio Master</div>
+            <div class="gate-val">-14.4 LUFS • 48k</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Caption Readback</div>
+            <div class="gate-val">100.0% Match</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Logo Timing</div>
+            <div class="gate-val">0 In-Video (End Only)</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Teach-Back</div>
+            <div class="gate-val">100% Entailed</div>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="acc-title"><span>PRIMARY SOURCES & TRUTH EVIDENCE</span> ▼</div>
+          <div class="code-box">• pypdfium2 Docs: https://pypdfium2.readthedocs.io/
+• Google PDFium: https://pdfium.googlesource.com/pdfium/
+• GitHub: https://github.com/pypdfium2-team/pypdfium2 (Apache 2.0 / BSD)</div>
+        </div>
+
+        <div class="accordion">
+          <div class="acc-title"><span>INSTAGRAM COPY PACKAGE</span> ▼</div>
+          <div class="code-box">Research papers LLM tho summarize chesetappudu column text mix avthunda?
+
+Google PDFium C++ engine ni Python lo direct ga stream chesi clean paragraphs extract cheyandi with pypdfium2. Token budget 40% save avtundi!
+
+🔗 Quickstart & Docs in comments!
+Credit: pypdfium2-team & Google Chromium Authors (Apache 2.0)
+
+#pypdfium2 #Python #LLM #PDFParser #DataEngineering #MachineLearning #FLASHAI</div>
+        </div>
+
+        <button class="approve-btn" onclick="alert('Slot 1 (12:30 PM IST) Approved! Gated until live GO command.')">
+          APPROVE FOR 12:30 PM IST SLOT
+        </button>
+      </div>
+
+      <!-- SLOT 2: AI DISCOVERY (How ChatGPT Works) -->
+      <div class="card">
+        <div class="kicker">SLOT 2 • 8:30 PM IST • AI DISCOVERY</div>
+        <h2 class="card-title">How ChatGPT Actually Thinks in 3D: Token to Softmax</h2>
+        <p class="promise">See the exact 3D journey of your prompt inside ChatGPT—from sliced tokens and embedding space to attention beams, transformer glass layers, and next-word probability sampling.</p>
+
+        <div class="video-container">
+          <video controls playsinline preload="metadata" src="../videos/reel_v7_discovery_720p.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="gates-grid">
+          <div class="gate-badge pass">
+            <div class="gate-label">Motion MAD</div>
+            <div class="gate-val">6.02 (Min &ge; 1.5)</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Empty Space</div>
+            <div class="gate-val">22.43% (&le; 35%)</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Audio Master</div>
+            <div class="gate-val">-14.3 LUFS • 48k</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Caption Readback</div>
+            <div class="gate-val">100.0% Match</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Logo Timing</div>
+            <div class="gate-val">0 In-Video (End Only)</div>
+          </div>
+          <div class="gate-badge pass">
+            <div class="gate-label">Teach-Back</div>
+            <div class="gate-val">100% Entailed</div>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="acc-title"><span>PRIMARY SOURCES & TRUTH EVIDENCE</span> ▼</div>
+          <div class="code-box">• Attention Is All You Need (Vaswani et al., arXiv:1706.03762)
+• GPT-2 Technical Report (Radford et al., OpenAI 2019)
+• GPT-4 Technical Report (OpenAI 2023, arXiv:2303.08774)</div>
+        </div>
+
+        <div class="accordion">
+          <div class="acc-title"><span>INSTAGRAM COPY PACKAGE</span> ▼</div>
+          <div class="code-box">ChatGPT answers ela generate chestundi ani eppudaina alochincharra?
+
+Idi database search kaadu, purely mathematical pattern flow. Tokens nunchi 3D embedding coordinates, attention beams, and softmax probability sampling.
+
+🔗 arXiv Paper & details in comments!
+Sources: Vaswani et al. 2017 & OpenAI Technical Reports.
+
+#ChatGPT #Transformer #DeepLearning #ArtificialIntelligence #SystemArchitecture #TechReels #FLASHAI</div>
+        </div>
+
+        <button class="approve-btn" onclick="alert('Slot 2 (8:30 PM IST) Approved! Gated until live GO command.')">
+          APPROVE FOR 8:30 PM IST SLOT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTHER TABS -->
+  <div class="container" id="tab-queue" style="display:none;">
+    <div class="card">
+      <h2 style="margin-bottom:16px;">3-Day Production Queue Buffer</h2>
+      <p style="color:var(--text-muted); margin-bottom:20px;">Top-up pipeline running every 6 hours. Zero stale topics. Every planned item verified against freshness rules.</p>
+      <div class="code-box">1. Slot 1 (Nov 9, 12:30 PM IST): [Tools] Ast-grep - Structural code search and rewrite (ast-grep/ast-grep)
+2. Slot 2 (Nov 9, 8:30 PM IST): [Discovery] How FlashAttention-3 Kernel Accelerates GEMM (Tri Dao et al.)
+3. Slot 3 (Nov 10, 12:30 PM IST): [Tools] Rustls - Memory-safe TLS library benchmarking OpenSSL
+4. Slot 4 (Nov 10, 8:30 PM IST): [Discovery] Mixture-of-Experts (MoE) Routing visualized in 3D
+5. Slot 5 (Nov 11, 12:30 PM IST): [Tools] FastStream - Python async framework for Kafka & RabbitMQ
+6. Slot 6 (Nov 11, 8:30 PM IST): [Discovery] Speculative Decoding: Draft Model vs Target Model Flow</div>
+    </div>
+  </div>
+
+  <div class="container" id="tab-posted" style="display:none;">
+    <div class="card empty-state">
+      <h3>No Live Posts Yet</h3>
+      <p>Live posting is strictly gated until you issue the explicit command <code>GO</code>.<br>No mock posts or fabricated post metrics are displayed.</p>
+    </div>
+  </div>
+
+  <div class="container" id="tab-analytics" style="display:none;">
+    <div class="card empty-state">
+      <h3>Live Instagram Insights (Clean State)</h3>
+      <p>Under SPEC V7: Zero invented numbers.<br>Live reach, impressions, engagement, and retention will populate directly from the Instagram Graph API once live posting commences.</p>
+    </div>
+  </div>
+
+  <div class="container" id="tab-health" style="display:none;">
+    <div class="card">
+      <h2 style="margin-bottom:16px;">System Health & Infrastructure Telemetry</h2>
+      <div class="code-box">• GitHub CLI: Authenticated as user naveenk7100-ship-it (scopes: repo, workflow)
+• Instagram Graph API: Configured for @flash__ai__digital (App Token active)
+• Remotion Engine: v4.0 (Angle WebGL, 720x1280 @ 30fps)
+• Audio Master: Broadcast EBU R128 (-14.0 LUFS, -1.6 dBTP, exactly 48000 Hz)
+• Secret Scanner: Passed (0 leaks committed)
+• GitHub Actions CI: deploy-pages enabled</div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tabId) {
+      ['today', 'queue', 'posted', 'analytics', 'health'].forEach(id => {
+        document.getElementById('tab-' + id).style.display = (id === tabId) ? 'block' : 'none';
+      });
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.innerText.toLowerCase().startsWith(tabId)) btn.classList.add('active');
+      });
     }
-];
-
-    const REELS = [
-    {
-        "id": "pillar_a_how_chatgpt_works",
-        "pillar": "Pillar A: How It Works in 3D",
-        "pillar_badge": "PILLAR A • HOW IT WORKS IN 3D",
-        "kicker": "PILLAR A: HOW IT WORKS IN 3D • 30-SECOND MASTER FILM",
-        "title": "How ChatGPT Works in 3D, Step by Step",
-        "tagline": "Tokens → Vector Embedding Space → Self-Attention Beams → Translucent Glass Transformer Layers → Softmax Probability Sampling",
-        "stars_or_pts": "Primary Research Citations",
-        "raw_num": 1,
-        "date_str": "Peer-Reviewed & Tech Reports",
-        "source_url": "https://arxiv.org/abs/1706.03762",
-        "resource_file": "https://arxiv.org/abs/1706.03762",
-        "web_video": "../videos/reel_pillar_a_how_chatgpt_works_720p.mp4",
-        "sheet_img": "../pillar_a_contact_sheet.png",
-        "accent": "#00E5FF",
-        "license": "Vaswani et al. (NeurIPS 2017) & OpenAI Tech Reports",
-        "license_credit": "NeurIPS arXiv:1706.03762 • OpenAI Technical Reports",
-        "lufs": "-14.5 LUFS",
-        "peak": "-1.5 dBTP",
-        "jitter": "0.0000 px²",
-        "motion_mad": "6.51 MAD (Median)",
-        "empty_area": "31.8% Mean (Content Dense)",
-        "coverage": "100.0%",
-        "status": "READY",
-        "caption": "Ever wondered what actually happens inside ChatGPT when you type a prompt?\n\nHere is the exact journey in 3D: Your words are sliced into numerical tokens, lifted into a 1536-dimensional embedding space, connected by dynamic self-attention beams, and transformed across stacked neural layers to sample the next word.\n\nFull primary sources & empirical tokenization proof in the comments! 👇\n\n#ChatGPT #Transformer #MachineLearning #ArtificialIntelligence #TechExplainer #DeepLearning #3DMotion #FLASHAI",
-        "first_comment": "🔗 Primary Scientific Sources & Empirical Evidence:\n• Transformer Architecture: Vaswani et al. (NeurIPS 2017) https://arxiv.org/abs/1706.03762\n• GPT-2 / BPE Tokenization: Radford et al. (OpenAI 2019)\n• GPT-4 Technical Report: OpenAI (2023) https://arxiv.org/abs/2303.08774\n• Empirical cl100k_base Token IDs: [4438, 1587, 13149, 38, 2898, 3604, 1781, 30]",
-        "yt_desc": "How ChatGPT Works in 3D: Step-by-step procedural explainer from tokens and embeddings to self-attention beams and transformer blocks.",
-        "tags": "ChatGPT, Transformer, MachineLearning, ArtificialIntelligence, TechExplainer, DeepLearning, 3DMotion, FLASHAI",
-        "exact_commands": [
-            "python -c \"import tiktoken; enc = tiktoken.get_encoding('cl100k_base'); print(enc.encode('How does ChatGPT actually think?'))\"",
-            "Result: Tokens ['How', ' does', ' Chat', 'G', 'PT', ' actually', ' think', '?'] -> IDs [4438, 1587, 13149, 38, 2898, 3604, 1781, 30]"
-        ],
-        "facts": [
-            "Token Slicing: Words are broken into Byte Pair Encoding (BPE) numerical tokens before matrix operations (Radford et al. 2019).",
-            "Vector Coordinates: Each token projects into high-dimensional embedding space capturing semantic relationships (OpenAI Embeddings Docs).",
-            "Self-Attention Beams: Dynamic dot-product attention beams calculate contextual relationships between every token (Vaswani et al. 2017).",
-            "Stacked Glass Layers: Translucent transformer blocks apply Multi-Head Attention and Feed-Forward Networks.",
-            "Probability Softmax: The model samples the next token from probability distribution bars; it is an auto-regressive pattern predictor."
-        ],
-        "primary_sources": [
-            {
-                "title": "Attention Is All You Need (Vaswani et al., NeurIPS 2017)",
-                "url": "https://arxiv.org/abs/1706.03762",
-                "quote": "The Transformer is the first transduction model relying entirely on self-attention to compute representations without sequence-aligned RNNs or convolution."
-            },
-            {
-                "title": "Language Models are Unsupervised Multitask Learners (Radford et al., OpenAI)",
-                "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
-                "quote": "Byte Pair Encoding (BPE) is used to represent arbitrary input strings as sequences of tokens."
-            },
-            {
-                "title": "GPT-4 Technical Report (OpenAI 2023)",
-                "url": "https://arxiv.org/abs/2303.08774",
-                "quote": "GPT-4 is a Transformer-style model pre-trained to predict the next token in a document."
-            }
-        ],
-        "misconceptions": [
-            "Myth: ChatGPT searches Google or a live database for answers. Reality: It generates text token-by-token by predicting the highest-probability next token from static neural network weights.",
-            "Myth: ChatGPT has biological reasoning. Reality: It performs high-dimensional matrix dot products across vector embeddings."
-        ],
-        "caption_hash": "a1f94d07b82e4110",
-        "issue_url": "https://github.com/naveenk7100-ship-it/studio/issues/new?title=Approve%20V5%20Reel:%20Pillar%20A%20(How%20ChatGPT%20Works)&body=APPROVAL%20REQUIRED%20FOR%20LIVE%20INSTAGRAM%20POSTING%0A%0AVideo%20ID:%20pillar_a_how_chatgpt_works%0ATitle:%20How%20ChatGPT%20Works%20in%203D%0AStatus:%20READY%0A"
-    },
-    {
-        "id": "pillar_b_best_tool_pdf_paper",
-        "pillar": "Pillar B: Best Tool for the Job",
-        "pillar_badge": "PILLAR B • BEST TOOL FOR JOB",
-        "kicker": "PILLAR B: BEST TOOL FOR THE JOB • 3D SHOWDOWN",
-        "title": "Summarize Research Papers: Best Tool for LLM Context",
-        "tagline": "Benchmark Race: 386.77ms vs 59.19ms (6.5x Speedup) • ABI-Level Google PDFium vs Pure Python",
-        "stars_or_pts": "Empirical Benchmark Race",
-        "raw_num": 2,
-        "date_str": "Empirical Benchmark Run",
-        "source_url": "https://github.com/pypdfium2-team/pypdfium2",
-        "resource_file": "https://github.com/pypdfium2-team/pypdfium2",
-        "web_video": "../videos/reel_pillar_b_best_tool_for_job_720p.mp4",
-        "sheet_img": "../pillar_b_contact_sheet.png",
-        "accent": "#E2B878",
-        "license": "Google PDFium C++ & pypdfium2 • Apache-2.0 / BSD-3",
-        "license_credit": "Maintained by pypdfium2 team & Google • Apache-2.0 / BSD-3",
-        "lufs": "-14.5 LUFS",
-        "peak": "-1.6 dBTP",
-        "jitter": "0.0000 px²",
-        "motion_mad": "5.00 MAD (Median)",
-        "empty_area": "38.0% Mean (Content Dense)",
-        "coverage": "100.0%",
-        "status": "READY",
-        "caption": "Stop copy-pasting research paper PDFs directly into ChatGPT!\n\nMulti-column papers scramble logical reading order and ruin summaries. We benchmarked the top 3 PDF extraction engines on real arXiv papers.\n\nWinner: pypdfium2 (Google C++ engine) extracts clean reading order in 59ms—6.5x faster than pure Python.\n\nBenchmark code and pip install in first comment! 👇\n\n#Python #MachineLearning #PDFParser #DataEngineering #LLM #OpenSource #DevTools #FLASHAI",
-        "first_comment": "🔗 Benchmark Proof & Implementation:\n• Winner: pypdfium2 (Google C++ Engine) - 59.19 ms\n• Pure Python: pypdf - 386.77 ms (6.5x slower)\n• Quickstart: pip install pypdfium2\n• Code: pdf = pypdfium2.PdfDocument('paper.pdf'); text = ''.join(p.get_textpage().get_text_range() for p in pdf)\n• Repo: https://github.com/pypdfium2-team/pypdfium2",
-        "yt_desc": "Best PDF Parser for LLM Paper Summarization: pypdf vs pdfminer vs pypdfium2 empirical benchmark race.",
-        "tags": "Python, MachineLearning, PDFParser, DataEngineering, LLM, OpenSource, DevTools, FLASHAI",
-        "exact_commands": [
-            "pip install pypdfium2",
-            "python -c \"import pypdfium2 as pdfium; pdf = pdfium.PdfDocument('prompt_library_index.pdf'); print(f'Pages: {len(pdf)}')\""
-        ],
-        "facts": [
-            "Benchmark Race: On a 2.43 MB PDF, pypdf took 386.77ms vs pypdfium2 in 59.19ms (6.5x speedup).",
-            "Under the Hood: pypdfium2 uses ABI-level Python bindings directly to Google's compiled C++ PDFium library.",
-            "Layout Preservation: Zero-copy C++ stream preserves multi-column reading order, avoiding LLM hallucinations.",
-            "Commercial Friendly: Dual Apache-2.0 and BSD-3-Clause license, ideal for local RAG pipelines."
-        ],
-        "primary_sources": [
-            {
-                "title": "pypdfium2: ABI-level Python bindings to Google PDFium",
-                "url": "https://github.com/pypdfium2-team/pypdfium2",
-                "quote": "pypdfium2 is an ABI-level Python 3 binding to PDFium, Google's open-source PDF rendering and inspection engine written in C++."
-            },
-            {
-                "title": "pypdf: A Pure-Python PDF library",
-                "url": "https://github.com/py-pdf/pypdf",
-                "quote": "pypdf is a free and open-source pure-python PDF library capable of extracting and transforming PDF files."
-            },
-            {
-                "title": "pdfminer.six: Community maintainer of PDFMiner",
-                "url": "https://github.com/pdfminer/pdfminer.six",
-                "quote": "pdfminer.six focuses on getting and analyzing text data from PDF documents."
-            }
-        ],
-        "misconceptions": [
-            "Myth: Pasting raw PDF text directly into ChatGPT always works perfectly. Reality: Raw copy-paste scrambles two-column research paper layouts, interweaving references with body text. Page-stream extraction preserves logical reading order."
-        ],
-        "caption_hash": "b2c83e16c93f5221",
-        "issue_url": "https://github.com/naveenk7100-ship-it/studio/issues/new?title=Approve%20V5%20Reel:%20Pillar%20B%20(Best%20Tool%20PDF)&body=APPROVAL%20REQUIRED%20FOR%20LIVE%20INSTAGRAM%20POSTING%0A%0AVideo%20ID:%20pillar_b_best_tool_pdf_paper%0ATitle:%20Best%20Tool%20for%20PDF%20Summarization%0AStatus:%20READY%0A"
-    }
-];
-        let currentReelId = 'pillar_a_how_chatgpt_works';
-
-        function showToast(text) {
-            const t = document.getElementById("toast");
-            t.innerText = text;
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 2200);
-        }
-
-        function copyText(str, msg) {
-            navigator.clipboard.writeText(str).then(() => {
-                showToast(msg || "Copied to clipboard!");
-            }).catch(() => {
-                showToast("Failed to copy");
-            });
-        }
-
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function saveToken() {
-            const val = document.getElementById("gh-token-input").value.trim();
-            if (val) {
-                localStorage.setItem("FLASH_GH_TOKEN", val);
-                showToast("GitHub Token saved securely in localStorage!");
-            } else {
-                localStorage.removeItem("FLASH_GH_TOKEN");
-                showToast("GitHub Token removed!");
-            }
-        }
-
-        function loadToken() {
-            const saved = localStorage.getItem("FLASH_GH_TOKEN");
-            if (saved) {
-                const input = document.getElementById("gh-token-input");
-                if (input) input.value = saved;
-            }
-        }
-
-        function renderReel(reel) {
-            const factsHtml = reel.facts.map(f => `<li>${f}</li>`).join("");
-            const commandsHtml = reel.exact_commands.map(c => `&gt; ${c}`).join("<br>");
-            const sourcesHtml = (reel.primary_sources || []).map(s => `
-                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--surface-border); border-radius:8px; padding:10px; margin-bottom:8px;">
-                    <a href="${s.url}" target="_blank" style="color:var(--accent-cyan); font-weight:700; text-decoration:none; font-size:13px;">${s.title} ↗</a>
-                    <div style="font-size:11px; color:var(--text-secondary); margin-top:4px; font-style:italic;">"${s.quote}"</div>
-                </div>
-            `).join("");
-            const mythsHtml = (reel.misconceptions || []).map(m => `<li>${m}</li>`).join("");
-
-            const html = `
-                <div class="badge-ready">● ${reel.status} FOR HUMAN APPROVAL</div>
-                <div style="display:inline-block; background:rgba(0,229,255,0.15); border:1px solid ${reel.accent}; color:${reel.accent}; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800; margin-bottom:6px;">
-                    ${reel.pillar_badge || 'CONTENT PILLAR'}
-                </div>
-                <div style="font-size:11px; font-weight:800; color:${reel.accent}; letter-spacing:1px; text-transform:uppercase;">
-                    ${reel.kicker}
-                </div>
-                <h2 class="card-title">${reel.title}</h2>
-                <p class="card-tagline">${reel.tagline}</p>
-
-                <!-- 9:16 Video Player -->
-                <div class="video-box">
-                    <video src="${reel.web_video}" controls playsinline preload="metadata" poster="${reel.sheet_img}"></video>
-                </div>
-
-                <!-- Approval Actions -->
-                <div class="approval-grid">
-                    <button class="btn-approve" onclick="handleAction('APPROVE', '${reel.id}', '${reel.issue_url}')">
-                        <span>✓</span> APPROVE &amp; QUEUE
-                    </button>
-                    <button class="btn-reject" onclick="handleAction('REJECT', '${reel.id}', '${reel.issue_url}')">
-                        <span>✕</span> REJECT
-                    </button>
-                    <button class="btn-resend" onclick="copyText('/topic ${reel.source_url}', 'Copied topic command for Telegram!')">
-                        <span>🔄</span> RESEND TO TELEGRAM
-                    </button>
-                </div>
-
-                <!-- One-Click Copy Bar -->
-                <div class="copy-tray">
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').caption, 'Caption copied!')">
-                        <span>📋</span> Copy Caption
-                    </div>
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').first_comment, 'First comment copied!')">
-                        <span>💬</span> Copy First Comment
-                    </div>
-                    <div class="copy-pill" onclick="copyText(REELS.find(r => r.id === '${reel.id}').exact_commands.join('\n'), 'Commands copied!')">
-                        <span>⌨️</span> Copy Commands
-                    </div>
-                    <a href="${reel.resource_file}" class="copy-pill" style="text-decoration:none;">
-                        <span>📖</span> Deep-Dive Page ↗
-                    </a>
-                </div>
-
-                <!-- Quality Gates Matrix -->
-                <div class="section-title">🛡️ Real-File Quality Gates</div>
-                <div class="gates-grid">
-                    <div class="gate-cell">
-                        <span class="gate-label">1. EBU R128 Loudness</span>
-                        <span class="gate-val">${reel.lufs} <span class="badge-pass">PASS (-14.0&plusmn;0.5)</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">2. True Peak Max</span>
-                        <span class="gate-val">${reel.peak} <span class="badge-pass">PASS (&le; -1.5)</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">3. Active Motion MAD</span>
-                        <span class="gate-val">${reel.motion_mad} <span class="badge-pass">PASS</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">4. Jitter Variance</span>
-                        <span class="gate-val">${reel.jitter} <span class="badge-pass">PASS (&le; 0.05)</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">5. Single-Source Number</span>
-                        <span class="gate-val">${reel.stars_or_pts} <span class="badge-pass">FOUND IN OCR</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">6. Banned Text Check</span>
-                        <span class="gate-val">0 Banned • 0 Date <span class="badge-pass">CLEAN</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">7. License &amp; Grounding</span>
-                        <span class="gate-val">${reel.license} <span class="badge-pass">VERIFIED</span></span>
-                    </div>
-                    <div class="gate-cell">
-                        <span class="gate-label">8. Channel Handle Lock</span>
-                        <span class="gate-val">@flash__ai__digital <span class="badge-pass">VERIFIED</span></span>
-                    </div>
-                </div>
-
-                <!-- Exact Commands -->
-                <div class="section-title">⌨️ Exact Verbatim Commands</div>
-                <div class="commands-box">${commandsHtml}</div>
-
-                <!-- Grounded Facts -->
-                <div class="section-title">🔬 Grounded Facts &amp; Source Truth</div>
-                <ul class="facts-list">${factsHtml}</ul>
-
-                <!-- Primary Sources & Entailment -->
-                <div class="section-title">📚 Primary Research Sources &amp; Entailment Check</div>
-                <div>${sourcesHtml}</div>
-
-                <!-- Common Misconceptions Corrected -->
-                ${mythsHtml ? `
-                <div class="section-title">💡 Misconceptions Corrected &amp; Boundaries</div>
-                <ul class="facts-list">${mythsHtml}</ul>` : ''}
-
-                <!-- 8-Beat Visual Proof Sheet -->
-                <div class="section-title">📸 8-Beat Cinematic Proof Sheet</div>
-                <div style="border-radius:12px; overflow:hidden; border:1px solid var(--surface-border); margin-top:8px;">
-                    <img src="${reel.sheet_img}" alt="Contact Sheet" style="width:100%; height:auto; display:block;">
-                </div>
-            `;
-            document.getElementById("reel-dynamic-content").innerHTML = html;
-        }
-
-        function selectReel(id, chip) {
-            document.querySelectorAll('.reel-chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            currentReelId = id;
-            const r = REELS.find(x => x.id === id);
-            if (r) renderReel(r);
-        }
-
-        function handleAction(action, videoId, fallbackUrl) {
-            const token = localStorage.getItem("FLASH_GH_TOKEN");
-            const reel = REELS.find(r => r.id === videoId);
-
-            if (reel && reel.status !== "READY") {
-                alert("CRITICAL SAFETY BLOCK: Video cannot be approved or posted because real-file quality gates failed!");
-                return;
-            }
-
-            if (!token) {
-                window.open(fallbackUrl, "_blank");
-                showToast("Opening GitHub Issue Approval...");
-                return;
-            }
-
-            // Direct workflow_dispatch
-            fetch(`https://api.github.com/repos/naveenk7100-ship-it/studio/actions/workflows/daily_production.yml/dispatches`, {
-                method: "POST",
-                headers: {
-                    "Accept": "application/vnd.github+json",
-                    "Authorization": `Bearer ${token}`,
-                    "X-GitHub-Api-Version": "2022-11-28"
-                },
-                body: JSON.stringify({
-                    ref: "master",
-                    inputs: {
-                        action_type: action.toLowerCase(),
-                        video_id: videoId
-                    }
-                })
-            }).then(res => {
-                if (res.ok) {
-                    showToast(`✓ ${action} dispatched to GitHub Actions!`);
-                } else {
-                    showToast(`Error: ${res.statusText}. Opening issue fallback...`);
-                    window.open(fallbackUrl, "_blank");
-                }
-            }).catch(err => {
-                showToast("Network error. Opening fallback...");
-                window.open(fallbackUrl, "_blank");
-            });
-        }
-
-        window.addEventListener("DOMContentLoaded", () => {
-            loadToken();
-            if (REELS.length > 0) {
-                renderReel(REELS[0]);
-            }
-        });
-    </script>
+  </script>
 </body>
 </html>

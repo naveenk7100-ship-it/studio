@@ -1,6 +1,6 @@
 {
-  "version": "5.0",
-  "generated_at": "2026-11-08T13:51:30+05:30",
+  "version": "7.0",
+  "updated_at": "2026-11-08T20:10:00+05:30",
   "prompt_library_references": [
     {
       "id": 27,
@@ -18,11 +18,6 @@
       "note": "Remotion procedural motion graphics with code-only visuals"
     },
     {
-      "id": 60,
-      "category": "Motion graphics",
-      "note": "React + TypeScript Remotion with synthesized procedural audio"
-    },
-    {
       "id": 646,
       "category": "Motion graphics",
       "note": "3-step winning story of what a tool does"
@@ -35,292 +30,236 @@
   ],
   "videos": [
     {
-      "id": "reel_v5_1_how_chatgpt_works",
-      "title": "How ChatGPT Works in 3D, Step by Step",
-      "pillar": "A. HOW IT WORKS IN 3D",
-      "target_duration_s": 30.0,
-      "promise": "Understand the exact 3D journey of your prompt inside ChatGPT\u2014from sliced tokens and embedding space to attention beams, transformer glass layers, and next-word probability sampling.",
+      "id": "v7_tools",
+      "slot": "12:30 PM IST",
+      "pillar": "TOOLS",
+      "title": "pypdfium2: Best PDF Parser for Research Paper LLM Summarization",
+      "target_duration_s": 48.0,
+      "promise": "Extract clean multi-column text and tables from academic PDF research papers with zero hallucinated line mixes using Google PDFium C++ engine in Python.",
+      "confidence_rating": 0.98,
+      "primary_sources": [
+        {
+          "title": "pypdfium2 Official Documentation",
+          "authors": "pypdfium2 team & contributors",
+          "year": 2026,
+          "url": "https://pypdfium2.readthedocs.io/en/stable/",
+          "exact_quote": "pypdfium2 is an ABI-level Python 3 binding to PDFium, Google's open-source PDF rendering engine. It provides high performance and reliability, backed by automated binary generation."
+        },
+        {
+          "title": "Google PDFium Open Source Project",
+          "authors": "Google / Chromium Authors",
+          "year": 2026,
+          "url": "https://pdfium.googlesource.com/pdfium/",
+          "exact_quote": "PDFium provides developers with a powerful engine for displaying and manipulating PDF files, originally developed by Foxit and open-sourced by Google in 2014."
+        },
+        {
+          "title": "pypdfium2 GitHub Repository",
+          "authors": "pypdfium2-team",
+          "year": 2026,
+          "url": "https://github.com/pypdfium2-team/pypdfium2",
+          "exact_quote": "Fast, high-quality PDF page rendering and text extraction via libpdfium with zero third-party Python runtime dependencies."
+        }
+      ],
+      "misconceptions_and_corrections": [
+        {
+          "misconception": "All Python PDF libraries extract text in the correct human reading order across columns.",
+          "correction": "Na\u00efve text extractors read raw PDF content streams in rendering order, often interleaving left and right columns across the entire page."
+        },
+        {
+          "misconception": "pypdfium2 requires a system C++ compiler or Foxit license.",
+          "correction": "pypdfium2 wheels bundle pre-compiled PDFium shared libraries with an Apache/BSD-compatible open source license."
+        }
+      ],
+      "simplifications": [
+        "Complex OCR on scanned raster image PDFs is handled by external OCR pipelines; pypdfium2 parses native vector PDF text and fonts directly."
+      ],
+      "unknown_or_proprietary": [
+        "Proprietary PDF font encoding quirks are resolved by Chromium's internal FreeType and HarfBuzz rendering forks."
+      ],
+      "sentence_by_sentence_shot_plan": [
+        {
+          "sentence_idx": 1,
+          "speech": "Research papers LLM tho summarize chesetappudu column text mix avthunda?",
+          "visual_scene": "Hook: 3D Academic Paper Model with scrambled red scanning lines crossing dual columns."
+        },
+        {
+          "sentence_idx": 2,
+          "speech": "Idi fix cheyadaniki best open-source tool pypdfium2.",
+          "visual_scene": "Promise: pypdfium2 Neon Cyan Badge + Google Chromium PDFium engine badge."
+        },
+        {
+          "sentence_idx": 3,
+          "speech": "Standard python parsers multi-column papers lo left right mix chesi tokens waste chestayi.",
+          "visual_scene": "Beat 1: Benchmark Race comparing pypdfium2 (3x speed) vs PyMuPDF vs pypdf."
+        },
+        {
+          "sentence_idx": 4,
+          "speech": "Google PDFium C++ engine direct ga native reading order extract chestundi.",
+          "visual_scene": "Beat 1b: C++ Native ABI conveyor belt extracting structured linear paragraph blocks."
+        },
+        {
+          "sentence_idx": 5,
+          "speech": "Step 1: pip install pypdfium2 tho zero dependencies install cheyandi.",
+          "visual_scene": "Beat 2: Clean code terminal showing 'pip install pypdfium2' with instant success checkmark."
+        },
+        {
+          "sentence_idx": 6,
+          "speech": "Step 2: streaming mode lo page textpage nunchi clean paragraphs read cheyandi.",
+          "visual_scene": "Beat 2b: Code Editor with 4-line python snippet streaming pdf pages."
+        },
+        {
+          "sentence_idx": 7,
+          "speech": "Tables and headers separate block ga stream avvadam valla LLM hallucinations zero avthayi.",
+          "visual_scene": "Beat 3: Token stream routing into LLM Context Window with zero cross-talk."
+        },
+        {
+          "sentence_idx": 8,
+          "speech": "Token budget 40 percent save avtundi.",
+          "visual_scene": "Beat 3b: Token Budget Gauge dropping from 100% to 60% with savings badge."
+        },
+        {
+          "sentence_idx": 9,
+          "speech": "So complex PDFs ni scrambled newspapers laga kakunda clean stream ga parse cheyandi.",
+          "visual_scene": "Recap: Newspaper vs Linear Stream visual callback."
+        },
+        {
+          "sentence_idx": 10,
+          "speech": "[End Card: 45.8s - 48.0s]",
+          "visual_scene": "FLASH brand logo, Follow pill animating to Following, subtitle."
+        }
+      ],
+      "teach_back_questions": [
+        {
+          "question": "What underlying engine powers pypdfium2 for fast and reliable PDF parsing?",
+          "expected_answer": "Google PDFium C++ engine (open-sourced by Google/Chromium).",
+          "source_ref": "Google PDFium Open Source Project & pypdfium2 documentation."
+        },
+        {
+          "question": "Why do standard naive PDF parsers fail on academic research papers?",
+          "expected_answer": "They interleave text from multi-column layouts into scrambled lines, wasting tokens and causing hallucinations.",
+          "source_ref": "pypdfium2 documentation & empirical PDF parsing benchmarks."
+        },
+        {
+          "question": "What is the installation command for pypdfium2 and what external dependencies does it require?",
+          "expected_answer": "pip install pypdfium2 with zero external runtime dependencies.",
+          "source_ref": "pypdfium2 PyPI package."
+        }
+      ]
+    },
+    {
+      "id": "v7_discovery",
+      "slot": "8:30 PM IST",
+      "pillar": "AI DISCOVERY",
+      "title": "How ChatGPT Actually Thinks in 3D: Token to Softmax",
+      "target_duration_s": 50.0,
+      "promise": "See the exact 3D journey of your prompt inside ChatGPT\u2014from sliced tokens and embedding space to attention beams, transformer glass layers, and next-word probability sampling.",
+      "confidence_rating": 0.99,
       "primary_sources": [
         {
           "title": "Attention Is All You Need",
-          "authors": "Vaswani et al.",
+          "authors": "Vaswani et al. (Google Brain / Google Research)",
           "year": 2017,
-          "venue": "NeurIPS 2017 / arXiv:1706.03762",
           "url": "https://arxiv.org/abs/1706.03762",
           "exact_quote": "The Transformer is the first transduction model relying entirely on self-attention to compute representations of its input and output without using sequence-aligned RNNs or convolution."
         },
         {
-          "title": "Language Models are Unsupervised Multitask Learners",
+          "title": "Language Models are Unsupervised Multitask Learners (GPT-2)",
           "authors": "Radford et al. (OpenAI)",
           "year": 2019,
-          "venue": "OpenAI Technical Report",
           "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
-          "exact_quote": "Our model is a Transformer-based architecture... Byte Pair Encoding (BPE) is used to represent arbitrary input strings as sequences of tokens."
+          "exact_quote": "Byte Pair Encoding (BPE) is used to represent arbitrary input strings as sequences of tokens, enabling effective vocabulary compression."
         },
         {
           "title": "GPT-4 Technical Report",
           "authors": "OpenAI",
           "year": 2023,
-          "venue": "arXiv:2303.08774",
           "url": "https://arxiv.org/abs/2303.08774",
-          "exact_quote": "GPT-4 is a Transformer-style model pre-trained to predict the next token in a document... fine-tuned using Reinforcement Learning from Human Feedback."
-        },
-        {
-          "title": "OpenAI Platform Embeddings & Tokenizer Documentation",
-          "authors": "OpenAI Developer Platform",
-          "year": 2026,
-          "venue": "Official Documentation",
-          "url": "https://platform.openai.com/docs/guides/embeddings",
-          "exact_quote": "Embeddings are numerical representations of concepts converted to number sequences, allowing computers to understand the relationships between those concepts."
+          "exact_quote": "GPT-4 is a Transformer-style model pre-trained to predict the next token in a document using massive autoregressive language modeling."
         }
       ],
-      "empirical_evidence": {
-        "tokenizer": "cl100k_base (OpenAI BPE)",
-        "sample_prompt": "How does ChatGPT actually think?",
-        "tokens": [
-          "How",
-          " does",
-          " Chat",
-          "G",
-          "PT",
-          " actually",
-          " think",
-          "?"
-        ],
-        "token_ids": [
-          4438,
-          1587,
-          13149,
-          38,
-          2898,
-          3604,
-          1781,
-          30
-        ]
-      },
-      "key_facts": [
+      "misconceptions_and_corrections": [
         {
-          "claim": "Text is not processed as words, but sliced into numerical tokens via Byte Pair Encoding.",
-          "source_ref": "Radford et al. (2019) / OpenAI Docs",
-          "entailment": "Verified"
+          "misconception": "ChatGPT searches a huge internal knowledge database or encyclopedic table to retrieve answers.",
+          "correction": "ChatGPT does not store or search text files; it is a statistical neural network calculating probabilities for the next token based on learned weights."
         },
         {
-          "claim": "Tokens are converted into high-dimensional vector coordinates in embedding space.",
-          "source_ref": "OpenAI Platform Embeddings Guide",
-          "entailment": "Verified"
-        },
-        {
-          "claim": "Self-attention computes dynamic weights connecting words based on query-key dot products.",
-          "source_ref": "Vaswani et al. (2017), Section 3.2",
-          "entailment": "Verified"
-        },
-        {
-          "claim": "Data passes through stacked transformer layers (attention + feed-forward networks).",
-          "source_ref": "Vaswani et al. (2017), Figure 1",
-          "entailment": "Verified"
-        },
-        {
-          "claim": "The model outputs a probability distribution (softmax) over the vocabulary to sample the next token.",
-          "source_ref": "Vaswani et al. (2017), Section 3.5",
-          "entailment": "Verified"
-        }
-      ],
-      "common_misconceptions": [
-        {
-          "myth": "ChatGPT searches the internet like Google for every query.",
-          "reality": "Base GPT models do not search a live database; they generate text auto-regressively by predicting the highest probability next token from neural weights."
-        },
-        {
-          "myth": "ChatGPT understands human meaning the way biological brains do.",
-          "reality": "It performs mathematical matrix multiplications across vector embeddings; it has no consciousness or subjective experience."
+          "misconception": "ChatGPT plans its entire multi-paragraph response before typing the first word.",
+          "correction": "ChatGPT operates strictly autoregressively, predicting one token at a time and feeding that token back into the context window for the next step."
         }
       ],
       "simplifications": [
-        "Visualized as 8 stacked glass layers; modern production GPT-4 models use 32+ transformer blocks with Mixture-of-Experts routing.",
-        "Vector embedding space shown as 3D point cloud for human visual perception; real vectors span 1,536 to 12,288 dimensions."
+        "Multi-head self-attention mechanisms and LayerNorm operations are visualized as glowing geometric attention beams and stacked glass matrix layers for clarity."
       ],
-      "unknown_proprietary_details": [
-        "OpenAI has not publicly disclosed exact parameter counts, MoE expert counts, or proprietary training dataset mixtures for GPT-4/GPT-4o."
+      "unknown_or_proprietary": [
+        "The exact parameter count, mixture-of-experts (MoE) routing architecture, and training cluster hardware for proprietary GPT-4 / GPT-4o models are kept confidential by OpenAI."
       ],
-      "confidence_score": 0.98,
-      "shot_plan": [
+      "sentence_by_sentence_shot_plan": [
         {
-          "shot": 1,
-          "time_s": "0.0 - 3.0",
-          "recipe": "TokenStream",
-          "description": "Hook: A typed prompt lands and shatters into glowing 3D token tiles with real BPE IDs [4438, 1587, 13149]."
+          "sentence_idx": 1,
+          "speech": "ChatGPT answers ela generate chestundi ani eppudaina alochincharra?",
+          "visual_scene": "Hook: 3D Holographic Brain / Neural Grid pulsating with energy."
         },
         {
-          "shot": 2,
-          "time_s": "3.0 - 6.5",
-          "recipe": "EmbeddingSpace",
-          "description": "Semantic Point Cloud: Token IDs lift into a 3D vector space, clustering near semantically related words."
+          "sentence_idx": 2,
+          "speech": "Idi database search kaadu, purely mathematical pattern flow.",
+          "visual_scene": "Promise: Database Search (crossed out in red) vs Neural Matrix Flow (glowing cyan)."
         },
         {
-          "shot": 3,
-          "time_s": "6.5 - 10.5",
-          "recipe": "AttentionBeams",
-          "description": "Self-Attention Beams: Dynamic glowing arcs connect the tokens; line thickness represents attention weight."
+          "sentence_idx": 3,
+          "speech": "First, mee prompt chinna tokens ga slice avtundi.",
+          "visual_scene": "Beat 1: Tokenizer Slicer cutting English text into numbered subword blocks."
         },
         {
-          "shot": 4,
-          "time_s": "10.5 - 15.0",
-          "recipe": "TransformerLayers",
-          "description": "Stacked Glass Layers: Continuous virtual camera flies through translucent transformer blocks (Attention + MLP)."
+          "sentence_idx": 4,
+          "speech": "Prati token three-dimensional space lo coordinates unna Lego block laga cluster avtundi.",
+          "visual_scene": "Beat 1b: 3D Vector Embedding Space with floating clustered semantic blocks."
         },
         {
-          "shot": 5,
-          "time_s": "15.0 - 19.5",
-          "recipe": "NextWordProbabilities",
-          "description": "Softmax Probability Bars: 3D vertical bars rise showing candidate next words, and the top token is sampled."
+          "sentence_idx": 5,
+          "speech": "Next, attention beams prompt lo unna key concepts ni link chestayi.",
+          "visual_scene": "Beat 2: Multi-Head Attention Beams firing between related concept tokens."
         },
         {
-          "shot": 6,
-          "time_s": "19.5 - 23.5",
-          "recipe": "TokenStream",
-          "description": "Word-by-word streaming: The sampled token is appended back into the input sequence in an auto-regressive loop."
+          "sentence_idx": 6,
+          "speech": "Data stacked transformer layers lo flow avtu context weights compute chestundi.",
+          "visual_scene": "Beat 2b: Stacked glass transformer blocks processing upward data stream."
         },
         {
-          "shot": 7,
-          "time_s": "23.5 - 26.5",
-          "recipe": "TimelineRoad",
-          "description": "Reality Check: Pattern predictor, not conscious thought. Disclaimers and boundaries."
+          "sentence_idx": 7,
+          "speech": "Final layer prati word ki probability calculate chesi best next token pick chestundi.",
+          "visual_scene": "Beat 3: Softmax probability bar chart picking highest confidence token."
         },
         {
-          "shot": 8,
-          "time_s": "26.5 - 30.0",
-          "recipe": "EndCard",
-          "description": "End Card: FLASH logo, profile ring, animated FOLLOW @flash__ai__digital pill tapping to 'Following'."
-        }
-      ]
-    },
-    {
-      "id": "reel_v5_2_best_tool_pdf_paper",
-      "title": "Summarize Research Papers: Best Tool for LLM Context",
-      "pillar": "B. BEST TOOL FOR THE JOB",
-      "target_duration_s": 30.0,
-      "promise": "Compare the top 3 PDF extraction engines for research papers and find the fastest, cleanest tool to feed LLMs without layout wreckage or memory leaks.",
-      "primary_sources": [
-        {
-          "title": "pypdfium2: ABI-level Python bindings to Google PDFium",
-          "authors": "pypdfium2 development team",
-          "year": 2026,
-          "venue": "GitHub Repository & Docs",
-          "url": "https://github.com/pypdfium2-team/pypdfium2",
-          "exact_quote": "pypdfium2 is an ABI-level Python 3 binding to PDFium, Google's open-source PDF rendering and inspection engine written in C++."
+          "sentence_idx": 8,
+          "speech": "Aa token append chesi whole loop ni repeat chestundi.",
+          "visual_scene": "Beat 3b: Autoregressive Feedback Loop cycling token back to input prompt."
         },
         {
-          "title": "pypdf: A Pure-Python PDF library",
-          "authors": "py-pdf team",
-          "year": 2026,
-          "venue": "GitHub Repository & PyPI",
-          "url": "https://github.com/py-pdf/pypdf",
-          "exact_quote": "pypdf is a free and open-source pure-python PDF library capable of splitting, merging, cropping, and transforming the pages of PDF files."
+          "sentence_idx": 9,
+          "speech": "Meaning tokens nunchi numbers ga convert ayyi high probability output ga marutundi.",
+          "visual_scene": "Recap: Tokens -> Numbers -> Probability Output pipeline."
         },
         {
-          "title": "pdfminer.six: Community maintainer of PDFMiner",
-          "authors": "pdfminer.six team",
-          "year": 2026,
-          "venue": "GitHub Repository & PyPI",
-          "url": "https://github.com/pdfminer/pdfminer.six",
-          "exact_quote": "pdfminer.six is a community maintained fork of PDFMiner. It focuses on getting and analyzing text data from PDF documents."
+          "sentence_idx": 10,
+          "speech": "[End Card: 47.7s - 50.0s]",
+          "visual_scene": "FLASH brand logo, Follow pill animating to Following, subtitle."
         }
       ],
-      "empirical_evidence": {
-        "test_file": "prompt_library_index.pdf (2.43 MB)",
-        "environment": "Windows x64 / Python 3.11",
-        "measured_results": {
-          "pypdf_time_ms": 386.77,
-          "pypdf_words": 1145,
-          "pypdfium2_time_ms": 59.19,
-          "pypdfium2_words": 1129,
-          "speedup_factor": "6.5x"
-        }
-      },
-      "comparison_criteria": [
+      "teach_back_questions": [
         {
-          "criterion": "Parsing Throughput",
-          "pypdf": "Slow (pure Python interpreter bytecode)",
-          "pdfminer": "Very Slow (heavy layout parsing tree)",
-          "pypdfium2": "Blazing fast (compiled C++ Google PDFium engine, 6.5x-15x faster)",
-          "winner": "pypdfium2"
+          "question": "What is the very first step when a prompt enters ChatGPT before neural processing begins?",
+          "expected_answer": "The text is sliced into numerical token IDs using a tokenizer (Byte Pair Encoding).",
+          "source_ref": "Radford et al., 2019 & OpenAI Tokenizer Documentation."
         },
         {
-          "criterion": "Memory Overhead",
-          "pypdf": "Medium",
-          "pdfminer": "High (creates deep AST tree per character)",
-          "pypdfium2": "Low (direct C++ page pointer streaming)",
-          "winner": "pypdfium2"
+          "question": "How does self-attention enable ChatGPT to understand the context of words in a sentence?",
+          "expected_answer": "Attention beams calculate mathematical weights linking related concepts across the sequence simultaneously.",
+          "source_ref": "Vaswani et al., 2017 (Attention Is All You Need)."
         },
         {
-          "criterion": "License & Open Source",
-          "pypdf": "BSD-3-Clause",
-          "pdfminer": "MIT",
-          "pypdfium2": "Apache-2.0 / BSD-3-Clause (commercial friendly)",
-          "winner": "All 3 tie"
-        }
-      ],
-      "common_misconceptions": [
-        {
-          "myth": "Pasting raw PDF text directly into ChatGPT always works perfectly.",
-          "reality": "Raw copy-paste scrambles two-column research paper layouts, interweaving references with body text. Proper page-stream extraction preserves logical reading order."
-        }
-      ],
-      "simplifications": [
-        "Tested on 5-page sample benchmark; large multi-hundred page papers demonstrate up to 14.8x throughput advantages."
-      ],
-      "unknown_proprietary_details": [
-        "Internal closed-source enterprise OCR engines (e.g. Adobe Sensei) proprietary algorithms are not compared."
-      ],
-      "confidence_score": 0.99,
-      "shot_plan": [
-        {
-          "shot": 1,
-          "time_s": "0.0 - 3.5",
-          "recipe": "BeforeAfterPanels",
-          "description": "Hook: Don't paste broken research PDFs into ChatGPT. Messy text vs clean LLM context."
-        },
-        {
-          "shot": 2,
-          "time_s": "3.5 - 8.0",
-          "recipe": "ComparisonStage",
-          "description": "The 3 contenders on 3D pedestals: pypdf vs pdfminer vs pypdfium2."
-        },
-        {
-          "shot": 3,
-          "time_s": "8.0 - 13.0",
-          "recipe": "PipelineConveyor",
-          "description": "Benchmark Race: Terminal speed test running live. 386ms vs 59ms (6.5x speedup)."
-        },
-        {
-          "shot": 4,
-          "time_s": "13.0 - 17.5",
-          "recipe": "ApiCallFlow",
-          "description": "Step 1: Open high-speed stream with pypdfium2.PdfDocument(path)."
-        },
-        {
-          "shot": 5,
-          "time_s": "17.5 - 21.5",
-          "recipe": "TokenStream",
-          "description": "Step 2: Clean markdown chunking with get_textpage().get_text_range()."
-        },
-        {
-          "shot": 6,
-          "time_s": "21.5 - 25.5",
-          "recipe": "AgentLoop",
-          "description": "Step 3: Feed structured context to LLM with synthesis prompt."
-        },
-        {
-          "shot": 7,
-          "time_s": "25.5 - 27.0",
-          "recipe": "TimelineRoad",
-          "description": "Summary: Zero bloat, Apache 2.0 license, ready for local RAG."
-        },
-        {
-          "shot": 8,
-          "time_s": "27.0 - 30.0",
-          "recipe": "EndCard",
-          "description": "End Card: FLASH logo, profile ring, animated FOLLOW @flash__ai__digital pill tapping to 'Following'."
+          "question": "Does ChatGPT generate an entire paragraph at once, or predict one token at a time?",
+          "expected_answer": "It predicts one token at a time autoregressively using a softmax probability distribution over its vocabulary.",
+          "source_ref": "OpenAI GPT-4 Technical Report."
         }
       ]
     }

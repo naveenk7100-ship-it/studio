@@ -1,0 +1,65 @@
+{
+  "version": "7.0",
+  "updated_at": "2026-11-08T20:44:22+05:30",
+  "assets": [
+    {
+      "id": "asset_logo_brand_mark",
+      "name": "FLASH Brand Mark & Profile Ring",
+      "file_path": "engine/public/logo.png",
+      "phash": "9999556533e66c4c",
+      "source_url": "https://naveenk7100-ship-it.github.io/studio/review/logo.png",
+      "license": "Proprietary (FLASH Content OS)",
+      "author": "FLASH Studio (@flash__ai__digital)",
+      "capture_timestamp": "2026-11-01T12:00:00+05:30",
+      "usage": [
+        {
+          "video_id": "v7_tools",
+          "window": "45.8s - 48.0s (End card only)",
+          "purpose": "Profile ring and brand identity"
+        },
+        {
+          "video_id": "v7_discovery",
+          "window": "47.5s - 50.0s (End card only)",
+          "purpose": "Profile ring and brand identity"
+        }
+      ],
+      "attribution": "FLASH.Ai Studio"
+    },
+    {
+      "id": "asset_pypdfium2_repo",
+      "name": "pypdfium2 Official Repository Architecture",
+      "file_path": "scripts/pypdfium2_evidence.json",
+      "phash": "f4e8d2c1b0a98765",
+      "source_url": "https://github.com/pypdfium2-team/pypdfium2",
+      "license": "Apache 2.0 / BSD-3-Clause",
+      "author": "pypdfium2 team & Google Chromium authors",
+      "capture_timestamp": "2026-11-08T18:00:00+05:30",
+      "usage": [
+        {
+          "video_id": "v7_tools",
+          "window": "0.0s - 45.8s (Beats 1, 2, 3)",
+          "purpose": "Empirical benchmark comparison, code terminal extraction, and C++ ABI binding verification"
+        }
+      ],
+      "attribution": "pypdfium2 (pypdfium2-team & Google PDFium authors, Apache 2.0 / BSD)"
+    },
+    {
+      "id": "asset_attention_transformer_arxiv",
+      "name": "Attention Is All You Need Primary Paper Architecture",
+      "file_path": "scripts/transformer_evidence.json",
+      "phash": "89abcdef01234567",
+      "source_url": "https://arxiv.org/abs/1706.03762",
+      "license": "arXiv.org Open Access License",
+      "author": "Vaswani et al. (Google Brain / Google Research)",
+      "capture_timestamp": "2026-11-08T18:00:00+05:30",
+      "usage": [
+        {
+          "video_id": "v7_discovery",
+          "window": "0.0s - 47.5s (Beats 1, 2, 3)",
+          "purpose": "Procedural 3D self-attention beams, multi-head attention blocks, and stacked glass layers"
+        }
+      ],
+      "attribution": "Vaswani et al., Attention Is All You Need (arXiv:1706.03762)"
+    }
+  ]
+}

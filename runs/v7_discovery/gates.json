@@ -1,0 +1,275 @@
+{
+  "video_id": "v7_discovery",
+  "title": "How ChatGPT Actually Thinks in 3D: Token to Softmax",
+  "pillar": "AI DISCOVERY",
+  "slot": "8:30 PM IST",
+  "duration_s": 50.0,
+  "evaluated_at": "2026-11-08T21:19:34+05:30",
+  "overall_status": "APPROVED_STAGE_1",
+  "gates": {
+    "motion_mad": {
+      "median_mad": 6.02,
+      "min_sec_mad": 3.2,
+      "per_second_mad": [
+        8.34,
+        7.8,
+        9.67,
+        8.76,
+        7.6,
+        6.86,
+        9.08,
+        7.79,
+        3.79,
+        4.65,
+        5.36,
+        4.61,
+        3.2,
+        4.38,
+        6.52,
+        5.28,
+        4.81,
+        5.73,
+        5.27,
+        4.23,
+        5.74,
+        5.08,
+        7.87,
+        7.49,
+        7.82,
+        7.49,
+        7.78,
+        8.21,
+        7.3,
+        7.7,
+        5.89,
+        5.9,
+        4.46,
+        3.57,
+        5.63,
+        5.54,
+        5.58,
+        3.84,
+        5.56,
+        5.78,
+        4.48,
+        7.44,
+        7.45,
+        6.28,
+        7.61,
+        7.72,
+        6.29,
+        7.66,
+        8.39,
+        6.66
+      ],
+      "pass": true
+    },
+    "user_empty_area": {
+      "max_empty_pct": 22.43,
+      "avg_empty_pct": 9.38,
+      "per_second_empty": [
+        5.43,
+        10.58,
+        7.64,
+        11.21,
+        9.19,
+        11.71,
+        8.73,
+        5.25,
+        6.42,
+        6.6,
+        4.06,
+        5.44,
+        5.69,
+        5.6,
+        6.6,
+        5.61,
+        4.03,
+        4.16,
+        4.12,
+        4.64,
+        4.8,
+        4.11,
+        19.74,
+        22.07,
+        19.9,
+        18.94,
+        17.0,
+        16.15,
+        19.53,
+        22.43,
+        4.22,
+        3.61,
+        3.21,
+        5.58,
+        6.12,
+        4.44,
+        3.55,
+        13.28,
+        20.49,
+        15.05,
+        16.51,
+        14.16,
+        10.51,
+        11.25,
+        8.97,
+        10.67,
+        10.09,
+        3.82,
+        3.08,
+        2.82
+      ],
+      "pass": true
+    },
+    "branding_scan": {
+      "frames_sampled_before_endcard": 95,
+      "logo_detections_before_endcard": 0,
+      "pass": true
+    },
+    "caption_readback": {
+      "match_rate_pct": 100.0,
+      "total_words": 92,
+      "pass": true,
+      "table_sample": [
+        {
+          "word": "ChatGPT",
+          "expected_time": 0.31,
+          "caption_time": 0.3,
+          "error_ms": 10.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "answers",
+          "expected_time": 0.74,
+          "caption_time": 0.733,
+          "error_ms": 6.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "ela",
+          "expected_time": 0.93,
+          "caption_time": 0.9,
+          "error_ms": 30.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "generate",
+          "expected_time": 1.72,
+          "caption_time": 1.7,
+          "error_ms": 20.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "chestundi",
+          "expected_time": 2.35,
+          "caption_time": 2.333,
+          "error_ms": 16.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "ani",
+          "expected_time": 3.04,
+          "caption_time": 3.033,
+          "error_ms": 6.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "eppudaina",
+          "expected_time": 3.36,
+          "caption_time": 3.333,
+          "error_ms": 26.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "alochincharra?",
+          "expected_time": 4.07,
+          "caption_time": 4.067,
+          "error_ms": 3.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "Idi",
+          "expected_time": 4.29,
+          "caption_time": 4.267,
+          "error_ms": 23.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "database",
+          "expected_time": 5.21,
+          "caption_time": 5.2,
+          "error_ms": 10.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "search",
+          "expected_time": 5.65,
+          "caption_time": 5.633,
+          "error_ms": 16.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "kaadu,",
+          "expected_time": 6.96,
+          "caption_time": 6.933,
+          "error_ms": 26.7,
+          "status": "MATCH"
+        },
+        {
+          "word": "purely",
+          "expected_time": 7.42,
+          "caption_time": 7.4,
+          "error_ms": 20.0,
+          "status": "MATCH"
+        },
+        {
+          "word": "mathematical",
+          "expected_time": 8.07,
+          "caption_time": 8.067,
+          "error_ms": 3.3,
+          "status": "MATCH"
+        },
+        {
+          "word": "pattern",
+          "expected_time": 8.36,
+          "caption_time": 8.333,
+          "error_ms": 26.7,
+          "status": "MATCH"
+        }
+      ]
+    },
+    "audio_mastering": {
+      "integrated_lufs": -14.28,
+      "true_peak_dbtp": -3.06,
+      "lra": 3.2,
+      "sample_rate_hz": 48000,
+      "pass": true
+    },
+    "teach_back": {
+      "pass": true,
+      "answers": "Q1: The very first step when a prompt enters ChatGPT is that the prompt is sliced into small tokens.\n\nQ2: Self-attention (referred to as \"attention beams\") enables ChatGPT to understand the context of words by linking the key concepts present in the prompt. Subsequently, data flows through stacked transformer layers, computing context weights.\n\nQ3: ChatGPT predicts one token at a time. It calculates the probability for each word, picks the best next token, appends that token, and then repeats the entire loop.",
+      "questions": [
+        {
+          "question": "What is the very first step when a prompt enters ChatGPT before neural processing begins?",
+          "expected_answer": "The text is sliced into numerical token IDs using a tokenizer (Byte Pair Encoding).",
+          "source_ref": "Radford et al., 2019 & OpenAI Tokenizer Documentation."
+        },
+        {
+          "question": "How does self-attention enable ChatGPT to understand the context of words in a sentence?",
+          "expected_answer": "Attention beams calculate mathematical weights linking related concepts across the sequence simultaneously.",
+          "source_ref": "Vaswani et al., 2017 (Attention Is All You Need)."
+        },
+        {
+          "question": "Does ChatGPT generate an entire paragraph at once, or predict one token at a time?",
+          "expected_answer": "It predicts one token at a time autoregressively using a softmax probability distribution over its vocabulary.",
+          "source_ref": "OpenAI GPT-4 Technical Report."
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "final_video": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\out\\reel_v7_discovery_720p.mp4",
+    "words_json": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\cache\\v7\\v7_discovery_words.json",
+    "master_audio": "C:\\Users\\navee\\OneDrive\\Desktop\\studio\\cache\\v7\\v7_discovery_master_48k.mp3"
+  }
+}

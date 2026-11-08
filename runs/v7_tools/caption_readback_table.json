@@ -1,0 +1,667 @@
+[
+  {
+    "word": "Research",
+    "expected_time": 0.39,
+    "caption_time": 0.367,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "papers",
+    "expected_time": 0.95,
+    "caption_time": 0.933,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "LLM",
+    "expected_time": 1.33,
+    "caption_time": 1.3,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "tho",
+    "expected_time": 1.61,
+    "caption_time": 1.6,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "summarize",
+    "expected_time": 1.84,
+    "caption_time": 1.833,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "chesetappudu",
+    "expected_time": 2.4,
+    "caption_time": 2.4,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "column",
+    "expected_time": 3.27,
+    "caption_time": 3.267,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "text",
+    "expected_time": 3.53,
+    "caption_time": 3.5,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "mix",
+    "expected_time": 3.93,
+    "caption_time": 3.9,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "avthunda?",
+    "expected_time": 4.36,
+    "caption_time": 4.333,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "Idi",
+    "expected_time": 5.29,
+    "caption_time": 5.267,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "fix",
+    "expected_time": 5.82,
+    "caption_time": 5.8,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "cheyadaniki",
+    "expected_time": 6.68,
+    "caption_time": 6.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "best",
+    "expected_time": 7.02,
+    "caption_time": 7.0,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "open-source",
+    "expected_time": 7.35,
+    "caption_time": 7.333,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "tool",
+    "expected_time": 7.68,
+    "caption_time": 7.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "pypdfium2.",
+    "expected_time": 8.31,
+    "caption_time": 8.3,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "Standard",
+    "expected_time": 8.96,
+    "caption_time": 8.933,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "python",
+    "expected_time": 10.38,
+    "caption_time": 10.367,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "parsers",
+    "expected_time": 10.71,
+    "caption_time": 10.7,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "multi-column",
+    "expected_time": 11.22,
+    "caption_time": 11.2,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "papers",
+    "expected_time": 11.92,
+    "caption_time": 11.9,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "lo",
+    "expected_time": 12.23,
+    "caption_time": 12.2,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "left",
+    "expected_time": 12.54,
+    "caption_time": 12.533,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "right",
+    "expected_time": 12.81,
+    "caption_time": 12.8,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "mix",
+    "expected_time": 13.07,
+    "caption_time": 13.067,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "chesi",
+    "expected_time": 13.34,
+    "caption_time": 13.333,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "tokens",
+    "expected_time": 13.82,
+    "caption_time": 13.8,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "waste",
+    "expected_time": 14.35,
+    "caption_time": 14.333,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestayi.",
+    "expected_time": 14.7,
+    "caption_time": 14.7,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "Google",
+    "expected_time": 15.16,
+    "caption_time": 15.133,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "PDFium",
+    "expected_time": 16.22,
+    "caption_time": 16.2,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "C++",
+    "expected_time": 16.67,
+    "caption_time": 16.667,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "engine",
+    "expected_time": 17.33,
+    "caption_time": 17.3,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "direct",
+    "expected_time": 17.87,
+    "caption_time": 17.867,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ga",
+    "expected_time": 18.45,
+    "caption_time": 18.433,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "native",
+    "expected_time": 18.93,
+    "caption_time": 18.9,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "reading",
+    "expected_time": 19.24,
+    "caption_time": 19.233,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "order",
+    "expected_time": 19.53,
+    "caption_time": 19.5,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "extract",
+    "expected_time": 19.82,
+    "caption_time": 19.8,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestundi.",
+    "expected_time": 20.18,
+    "caption_time": 20.167,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "Step",
+    "expected_time": 20.74,
+    "caption_time": 20.733,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "1:",
+    "expected_time": 21.68,
+    "caption_time": 21.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "pip",
+    "expected_time": 22.0,
+    "caption_time": 22.0,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "install",
+    "expected_time": 22.55,
+    "caption_time": 22.533,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "pypdfium2",
+    "expected_time": 22.86,
+    "caption_time": 22.833,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "tho",
+    "expected_time": 23.26,
+    "caption_time": 23.233,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "zero",
+    "expected_time": 23.86,
+    "caption_time": 23.833,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "dependencies",
+    "expected_time": 24.66,
+    "caption_time": 24.633,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "install",
+    "expected_time": 25.04,
+    "caption_time": 25.033,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "cheyandi.",
+    "expected_time": 25.55,
+    "caption_time": 25.533,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "Step",
+    "expected_time": 26.07,
+    "caption_time": 26.067,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "2:",
+    "expected_time": 27.02,
+    "caption_time": 27.0,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "streaming",
+    "expected_time": 27.33,
+    "caption_time": 27.3,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "mode",
+    "expected_time": 27.82,
+    "caption_time": 27.8,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "lo",
+    "expected_time": 28.27,
+    "caption_time": 28.267,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "page",
+    "expected_time": 28.64,
+    "caption_time": 28.633,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "textpage",
+    "expected_time": 29.15,
+    "caption_time": 29.133,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "nunchi",
+    "expected_time": 29.43,
+    "caption_time": 29.4,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "clean",
+    "expected_time": 29.72,
+    "caption_time": 29.7,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "paragraphs",
+    "expected_time": 30.01,
+    "caption_time": 30.0,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "read",
+    "expected_time": 30.35,
+    "caption_time": 30.333,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "cheyandi.",
+    "expected_time": 30.75,
+    "caption_time": 30.733,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "Tables",
+    "expected_time": 31.16,
+    "caption_time": 31.133,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "and",
+    "expected_time": 31.51,
+    "caption_time": 31.5,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "headers",
+    "expected_time": 32.53,
+    "caption_time": 32.5,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "separate",
+    "expected_time": 32.84,
+    "caption_time": 32.833,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "block",
+    "expected_time": 33.2,
+    "caption_time": 33.2,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "ga",
+    "expected_time": 33.68,
+    "caption_time": 33.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "stream",
+    "expected_time": 34.2,
+    "caption_time": 34.2,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "avvadam",
+    "expected_time": 34.65,
+    "caption_time": 34.633,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "valla",
+    "expected_time": 34.91,
+    "caption_time": 34.9,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "LLM",
+    "expected_time": 35.27,
+    "caption_time": 35.267,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "hallucinations",
+    "expected_time": 35.76,
+    "caption_time": 35.733,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "zero",
+    "expected_time": 36.27,
+    "caption_time": 36.267,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "avthayi.",
+    "expected_time": 36.76,
+    "caption_time": 36.733,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "Token",
+    "expected_time": 37.22,
+    "caption_time": 37.2,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "budget",
+    "expected_time": 38.09,
+    "caption_time": 38.067,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "40",
+    "expected_time": 38.3,
+    "caption_time": 38.3,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "percent",
+    "expected_time": 38.69,
+    "caption_time": 38.667,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "save",
+    "expected_time": 39.08,
+    "caption_time": 39.067,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "avtundi.",
+    "expected_time": 39.35,
+    "caption_time": 39.333,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "So",
+    "expected_time": 39.77,
+    "caption_time": 39.767,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "complex",
+    "expected_time": 40.64,
+    "caption_time": 40.633,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "PDFs",
+    "expected_time": 40.99,
+    "caption_time": 40.967,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ni",
+    "expected_time": 41.42,
+    "caption_time": 41.4,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "scrambled",
+    "expected_time": 41.83,
+    "caption_time": 41.8,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "newspapers",
+    "expected_time": 42.23,
+    "caption_time": 42.2,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "laga",
+    "expected_time": 42.73,
+    "caption_time": 42.7,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "kakunda",
+    "expected_time": 43.18,
+    "caption_time": 43.167,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "clean",
+    "expected_time": 43.56,
+    "caption_time": 43.533,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "stream",
+    "expected_time": 44.07,
+    "caption_time": 44.067,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ga",
+    "expected_time": 44.57,
+    "caption_time": 44.567,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "parse",
+    "expected_time": 44.83,
+    "caption_time": 44.8,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "cheyandi.",
+    "expected_time": 45.07,
+    "caption_time": 45.067,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  }
+]

@@ -1,0 +1,646 @@
+[
+  {
+    "word": "ChatGPT",
+    "expected_time": 0.31,
+    "caption_time": 0.3,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "answers",
+    "expected_time": 0.74,
+    "caption_time": 0.733,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "ela",
+    "expected_time": 0.93,
+    "caption_time": 0.9,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "generate",
+    "expected_time": 1.72,
+    "caption_time": 1.7,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestundi",
+    "expected_time": 2.35,
+    "caption_time": 2.333,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "ani",
+    "expected_time": 3.04,
+    "caption_time": 3.033,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "eppudaina",
+    "expected_time": 3.36,
+    "caption_time": 3.333,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "alochincharra?",
+    "expected_time": 4.07,
+    "caption_time": 4.067,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "Idi",
+    "expected_time": 4.29,
+    "caption_time": 4.267,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "database",
+    "expected_time": 5.21,
+    "caption_time": 5.2,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "search",
+    "expected_time": 5.65,
+    "caption_time": 5.633,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "kaadu,",
+    "expected_time": 6.96,
+    "caption_time": 6.933,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "purely",
+    "expected_time": 7.42,
+    "caption_time": 7.4,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "mathematical",
+    "expected_time": 8.07,
+    "caption_time": 8.067,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "pattern",
+    "expected_time": 8.36,
+    "caption_time": 8.333,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "flow.",
+    "expected_time": 9.44,
+    "caption_time": 9.433,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "First,",
+    "expected_time": 9.76,
+    "caption_time": 9.733,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "mee",
+    "expected_time": 9.95,
+    "caption_time": 9.933,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "prompt",
+    "expected_time": 11.15,
+    "caption_time": 11.133,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "chinna",
+    "expected_time": 11.68,
+    "caption_time": 11.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "tokens",
+    "expected_time": 12.51,
+    "caption_time": 12.5,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "ga",
+    "expected_time": 12.8,
+    "caption_time": 12.8,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "slice",
+    "expected_time": 14.03,
+    "caption_time": 14.0,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "avtundi.",
+    "expected_time": 14.34,
+    "caption_time": 14.333,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "Prati",
+    "expected_time": 15.05,
+    "caption_time": 15.033,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "token",
+    "expected_time": 15.36,
+    "caption_time": 15.333,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "three-dimensional",
+    "expected_time": 15.57,
+    "caption_time": 15.567,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "space",
+    "expected_time": 15.83,
+    "caption_time": 15.8,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "lo",
+    "expected_time": 17.01,
+    "caption_time": 17.0,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "coordinates",
+    "expected_time": 17.33,
+    "caption_time": 17.3,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "unna",
+    "expected_time": 18.03,
+    "caption_time": 18.0,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "Lego",
+    "expected_time": 18.62,
+    "caption_time": 18.6,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "block",
+    "expected_time": 19.02,
+    "caption_time": 19.0,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "laga",
+    "expected_time": 19.86,
+    "caption_time": 19.833,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "cluster",
+    "expected_time": 20.66,
+    "caption_time": 20.633,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "avtundi.",
+    "expected_time": 21.2,
+    "caption_time": 21.2,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "Next,",
+    "expected_time": 21.72,
+    "caption_time": 21.7,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "attention",
+    "expected_time": 22.43,
+    "caption_time": 22.4,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "beams",
+    "expected_time": 22.64,
+    "caption_time": 22.633,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "prompt",
+    "expected_time": 23.52,
+    "caption_time": 23.5,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "lo",
+    "expected_time": 23.96,
+    "caption_time": 23.933,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "unna",
+    "expected_time": 24.62,
+    "caption_time": 24.6,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "key",
+    "expected_time": 25.19,
+    "caption_time": 25.167,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "concepts",
+    "expected_time": 25.78,
+    "caption_time": 25.767,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ni",
+    "expected_time": 26.03,
+    "caption_time": 26.0,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "link",
+    "expected_time": 26.44,
+    "caption_time": 26.433,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestayi.",
+    "expected_time": 26.68,
+    "caption_time": 26.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "Data",
+    "expected_time": 26.82,
+    "caption_time": 26.8,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "stacked",
+    "expected_time": 27.21,
+    "caption_time": 27.2,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "transformer",
+    "expected_time": 27.41,
+    "caption_time": 27.4,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "layers",
+    "expected_time": 28.74,
+    "caption_time": 28.733,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "lo",
+    "expected_time": 28.98,
+    "caption_time": 28.967,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "flow",
+    "expected_time": 29.57,
+    "caption_time": 29.567,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "avtu",
+    "expected_time": 29.78,
+    "caption_time": 29.767,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "context",
+    "expected_time": 30.21,
+    "caption_time": 30.2,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "weights",
+    "expected_time": 30.71,
+    "caption_time": 30.7,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "compute",
+    "expected_time": 30.98,
+    "caption_time": 30.967,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestundi.",
+    "expected_time": 31.58,
+    "caption_time": 31.567,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "Final",
+    "expected_time": 32.43,
+    "caption_time": 32.4,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "layer",
+    "expected_time": 32.85,
+    "caption_time": 32.833,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "prati",
+    "expected_time": 33.2,
+    "caption_time": 33.2,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "word",
+    "expected_time": 33.37,
+    "caption_time": 33.367,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ki",
+    "expected_time": 33.69,
+    "caption_time": 33.667,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "probability",
+    "expected_time": 34.41,
+    "caption_time": 34.4,
+    "error_ms": 10.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "calculate",
+    "expected_time": 34.73,
+    "caption_time": 34.7,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "chesi",
+    "expected_time": 35.23,
+    "caption_time": 35.2,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "best",
+    "expected_time": 35.97,
+    "caption_time": 35.967,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "next",
+    "expected_time": 36.49,
+    "caption_time": 36.467,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "token",
+    "expected_time": 36.68,
+    "caption_time": 36.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "pick",
+    "expected_time": 37.17,
+    "caption_time": 37.167,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestundi.",
+    "expected_time": 37.68,
+    "caption_time": 37.667,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "Aa",
+    "expected_time": 38.63,
+    "caption_time": 38.6,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "token",
+    "expected_time": 38.93,
+    "caption_time": 38.9,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "append",
+    "expected_time": 39.44,
+    "caption_time": 39.433,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "chesi",
+    "expected_time": 39.64,
+    "caption_time": 39.633,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "whole",
+    "expected_time": 40.59,
+    "caption_time": 40.567,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "loop",
+    "expected_time": 40.78,
+    "caption_time": 40.767,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ni",
+    "expected_time": 40.94,
+    "caption_time": 40.933,
+    "error_ms": 6.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "repeat",
+    "expected_time": 41.72,
+    "caption_time": 41.7,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "chestundi.",
+    "expected_time": 41.88,
+    "caption_time": 41.867,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "Meaning",
+    "expected_time": 42.3,
+    "caption_time": 42.3,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "tokens",
+    "expected_time": 42.53,
+    "caption_time": 42.5,
+    "error_ms": 30.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "nunchi",
+    "expected_time": 43.16,
+    "caption_time": 43.133,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "numbers",
+    "expected_time": 43.45,
+    "caption_time": 43.433,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "ga",
+    "expected_time": 44.0,
+    "caption_time": 44.0,
+    "error_ms": 0.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "convert",
+    "expected_time": 44.26,
+    "caption_time": 44.233,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "ayyi",
+    "expected_time": 44.76,
+    "caption_time": 44.733,
+    "error_ms": 26.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "high",
+    "expected_time": 45.17,
+    "caption_time": 45.167,
+    "error_ms": 3.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "probability",
+    "expected_time": 45.95,
+    "caption_time": 45.933,
+    "error_ms": 16.7,
+    "status": "MATCH"
+  },
+  {
+    "word": "output",
+    "expected_time": 46.38,
+    "caption_time": 46.367,
+    "error_ms": 13.3,
+    "status": "MATCH"
+  },
+  {
+    "word": "ga",
+    "expected_time": 46.82,
+    "caption_time": 46.8,
+    "error_ms": 20.0,
+    "status": "MATCH"
+  },
+  {
+    "word": "marutundi.",
+    "expected_time": 46.99,
+    "caption_time": 46.967,
+    "error_ms": 23.3,
+    "status": "MATCH"
+  }
+]
