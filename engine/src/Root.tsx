@@ -14,15 +14,24 @@ import { CinematicEssay_Kimi } from "./compositions/CinematicEssay_Kimi";
 import { CinematicEssay_Craft } from "./compositions/CinematicEssay_Craft";
 import { TodayReel_Anatomy } from "./compositions/TodayReel_Anatomy";
 import { TodayReel_BrowserUse } from "./compositions/TodayReel_BrowserUse";
+import { VisualIntelligence_Preview } from "./compositions/VisualIntelligence_Preview";
 
 export const Root: React.FC = () => {
   return (
     <>
       {/* FLASH SPEC V7 STAGE 1 PRODUCTIONS */}
       <Composition
+        id="VisualIntelligence-Preview"
+        component={VisualIntelligence_Preview}
+        durationInFrames={360}
+        fps={30}
+        width={720}
+        height={1280}
+      />
+      <Composition
         id="V7-Tools-PyPdfium2"
         component={V7_Tools_PyPdfium2}
-        durationInFrames={1440}
+        durationInFrames={1260}
         fps={30}
         width={720}
         height={1280}
@@ -30,7 +39,7 @@ export const Root: React.FC = () => {
       <Composition
         id="V7-Discovery-HowChatGPTWorks"
         component={V7_Discovery_HowChatGPTWorks}
-        durationInFrames={1500}
+        durationInFrames={1320}
         fps={30}
         width={720}
         height={1280}

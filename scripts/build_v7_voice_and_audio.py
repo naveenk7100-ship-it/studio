@@ -22,7 +22,7 @@ import soundfile as sf
 import imageio_ffmpeg
 from dotenv import load_dotenv
 
-sys.stdout.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8', line_buffering=True)
 ROOT = r"C:\Users\navee\OneDrive\Desktop\studio"
 load_dotenv(os.path.join(ROOT, ".env"))
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
@@ -34,39 +34,38 @@ os.makedirs(RUNS_DIR, exist_ok=True)
 
 SCRIPTS = {
     "v7_tools": {
-        "title": "pypdfium2: Best PDF Parser for Research Paper LLM Summarization",
+        "title": "pypdfium2: High-Speed PDF Text Extraction Benchmark",
         "pillar": "TOOLS",
         "slot": "12:30 PM IST",
-        "total_duration": 48.0,
-        "speech_end": 45.6, # end card starts at 45.8s
+        "total_duration": 42.0,
+        "speech_end": 39.5, # end card starts at 39.8s
         "sentences": [
-            "Research papers LLM tho summarize chesetappudu column text mix avthunda?",
-            "Idi fix cheyadaniki best open-source tool pypdfium2.",
-            "Standard python parsers multi-column papers lo left right mix chesi tokens waste chestayi.",
-            "Google PDFium C++ engine direct ga native reading order extract chestundi.",
-            "Step 1: pip install pypdfium2 tho zero dependencies install cheyandi.",
-            "Step 2: streaming mode lo page textpage nunchi clean paragraphs read cheyandi.",
-            "Tables and headers separate block ga stream avvadam valla LLM hallucinations zero avthayi.",
-            "Token budget 40 percent save avtundi.",
-            "So complex PDFs ni scrambled newspapers laga kakunda clean stream ga parse cheyandi."
+            "Python lo PDF text extract cheyadaniki best tool edi?",
+            "Memu 15 pages paper paina 10 runs benchmark chesam.",
+            "pypdfium2 median 239 milliseconds lo text extract chesindi.",
+            "pypdf 1400 milliseconds tho 6 retlu slow ga vachindi.",
+            "pdfminer 4065 milliseconds tho 17 retlu slow aindi.",
+            "tiktoken tho 10187 tokens count chesam.",
+            "idi single-column paper, two-column lo order maarochu, nenu test cheyyaledu.",
+            "Fastest extraction kosam pypdfium2 try cheyandi."
         ]
     },
     "v7_discovery": {
-        "title": "How ChatGPT Actually Thinks in 3D: Token to Softmax",
+        "title": "GPT-2 Small: Next-Word Prediction & Attention Architecture",
         "pillar": "AI DISCOVERY",
         "slot": "8:30 PM IST",
-        "total_duration": 50.0,
-        "speech_end": 47.5, # end card starts at 47.7s
+        "total_duration": 44.0,
+        "speech_end": 41.5, # end card starts at 41.8s
         "sentences": [
-            "ChatGPT answers ela generate chestundi ani eppudaina alochincharra?",
-            "Idi database search kaadu, purely mathematical pattern flow.",
-            "First, mee prompt chinna tokens ga slice avtundi.",
-            "Prati token three-dimensional space lo coordinates unna Lego block laga cluster avtundi.",
-            "Next, attention beams prompt lo unna key concepts ni link chestayi.",
-            "Data stacked transformer layers lo flow avtu context weights compute chestundi.",
-            "Final layer prati word ki probability calculate chesi best next token pick chestundi.",
-            "Aa token append chesi whole loop ni repeat chestundi.",
-            "Meaning tokens nunchi numbers ga convert ayyi high probability output ga marutundi."
+            "Language models next word ni ela predict chestayi?",
+            "Manam open model GPT-2 small example run chudam.",
+            "Prompt lo unna prathi word oka token number avtundi.",
+            "Layer 11 head 0 self-attention weights chustundi.",
+            "Final token nunchi venaka unna tokens ki connection untundi.",
+            "Softmax tarvatha top 5 probabilities 26 percent vachayi.",
+            "Model confident ga ledu, entropy ekkuvaga undi.",
+            "Highest probability unna uncertain token pick avtundi.",
+            "Idhi open GPT-2 model output mathrame."
         ]
     }
 }
@@ -95,7 +94,7 @@ def synthesize_gemini_voice(text: str, voice_name: str, out_pcm: str) -> bool:
             }
         }
         try:
-            r = requests.post(url, json=payload, timeout=40)
+            r = requests.post(url, json=payload, timeout=4)
             if r.status_code == 200:
                 data = r.json()
                 for cand in data.get("candidates", []):
@@ -303,14 +302,14 @@ def master_audio(voice_wav: str, music_wav: str, out_master_mp3: str, total_dur:
     Two-pass broadcast EBU R128 master with loudnorm.
     Strictly 48000 Hz, integrated loudness -14.0 +/- 0.5 LUFS, True Peak <= -1.5 dBTP.
     """
-    # Mix voice + music
+    # Mix voice + music with natural acoustic release tail on voice
     mix_temp = out_master_mp3.replace(".mp3", "_unmastered.wav")
     cmd_mix = [
         FFMPEG, "-y",
         "-i", voice_wav,
         "-i", music_wav,
         "-filter_complex",
-        f"[0:a][1:a]amix=inputs=2:duration=first:dropout_transition=2[mix];[mix]apad=pad_dur=3.0,atrim=0:{total_dur}[out]",
+        f"[0:a]aecho=0.8:0.4:18:0.15[v_smooth];[v_smooth][1:a]amix=inputs=2:duration=first:dropout_transition=2[mix];[mix]apad=pad_dur=3.0,atrim=0:{total_dur}[out]",
         "-map", "[out]",
         "-ar", "48000",
         mix_temp
@@ -333,7 +332,7 @@ def master_audio(voice_wav: str, music_wav: str, out_master_mp3: str, total_dur:
     cmd_p2 = [
         FFMPEG, "-y", "-i", mix_temp,
         "-af", (
-            f"loudnorm=I=-14.0:TP=-1.5:LRA=7:"
+            f"loudnorm=I=-13.8:TP=-1.5:LRA=7:"
             f"measured_I={stats['input_i']}:"
             f"measured_TP={stats['input_tp']}:"
             f"measured_LRA={stats['input_lra']}:"
@@ -400,9 +399,16 @@ def process_reel(reel_id: str):
         success = synthesize_gemini_voice(full_text, "Sadachbia", raw_pcm)
         
     if not success:
-        raise RuntimeError("Failed to synthesize Gemini TTS voice.")
-        
-    pcm_to_wav(raw_pcm, raw_wav)
+        print("Falling back to Edge-TTS (te-IN-MohanNeural)...")
+        import asyncio, edge_tts
+        async def _edge():
+            c = edge_tts.Communicate(full_text, "te-IN-MohanNeural", rate="+6%")
+            await c.save(raw_wav)
+        asyncio.run(_edge())
+        if not os.path.exists(raw_wav) or os.path.getsize(raw_wav) < 1000:
+            raise RuntimeError("Failed to synthesize voice with Gemini and Edge-TTS.")
+    else:
+        pcm_to_wav(raw_pcm, raw_wav)
     
     # Check raw duration and scale tempo to fit target_speech_end
     raw_dur = float(len(sf.read(raw_wav)[0]) / 24000)
@@ -418,7 +424,7 @@ def process_reel(reel_id: str):
         FFMPEG, "-y",
         "-i", raw_wav,
         "-filter_complex",
-        f"[0:a]atempo={speed:.4f},adelay=150|150,apad=pad_dur=4.0,atrim=0:{total_dur}[a]",
+        f"[0:a]atempo={speed:.4f},adelay=150|150,alimiter=limit=0.95:release=30,apad=pad_dur=4.0,atrim=0:{total_dur}[a]",
         "-map", "[a]",
         "-ar", "24000",
         calibrated_voice_wav
@@ -454,6 +460,16 @@ def process_reel(reel_id: str):
     print(f"  Integrated Loudness: {master_stats['integrated_lufs']} LUFS (Gate: -14.0 +/- 0.5)")
     print(f"  True Peak: {master_stats['true_peak_dbtp']} dBTP (Gate: <= -1.5 dBTP)")
     print(f"  Sample Rate: {master_stats['sample_rate']} Hz (Gate: == 48000 Hz)")
+    
+    # 6. Copy assets for Remotion engine
+    import shutil
+    engine_assets = os.path.join(ROOT, "engine", "src", "assets")
+    engine_audio = os.path.join(ROOT, "engine", "public", "audio")
+    os.makedirs(engine_assets, exist_ok=True)
+    os.makedirs(engine_audio, exist_ok=True)
+    shutil.copy2(words_json_path, os.path.join(engine_assets, f"{reel_id}_words.json"))
+    shutil.copy2(master_mp3, os.path.join(engine_audio, f"{reel_id}_master_48k.mp3"))
+    print(f"Copied {reel_id} words and audio into engine assets and public.")
     
     return {
         "acoustics": acoustics,

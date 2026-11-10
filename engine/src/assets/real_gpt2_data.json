@@ -1,0 +1,139 @@
+{
+  "topic": "Topic B: GPT-2 Small Next Word Prediction",
+  "model_label": "GPT-2 (open model), example run",
+  "model_name": "gpt2 (124M parameters, 12 layers, 12 attention heads, 768 hidden dimension)",
+  "prompt": "The future of artificial intelligence is",
+  "tokens": [
+    {
+      "idx": 0,
+      "token": "The",
+      "id": 464
+    },
+    {
+      "idx": 1,
+      "token": " future",
+      "id": 2003
+    },
+    {
+      "idx": 2,
+      "token": " of",
+      "id": 286
+    },
+    {
+      "idx": 3,
+      "token": " artificial",
+      "id": 11666
+    },
+    {
+      "idx": 4,
+      "token": " intelligence",
+      "id": 4430
+    },
+    {
+      "idx": 5,
+      "token": " is",
+      "id": 318
+    }
+  ],
+  "top5_predictions": [
+    {
+      "token_id": 8627,
+      "token_text": " uncertain",
+      "prob_raw": 0.07656,
+      "prob_pct": 7.66
+    },
+    {
+      "token_id": 287,
+      "token_text": " in",
+      "prob_raw": 0.06942,
+      "prob_pct": 6.94
+    },
+    {
+      "token_id": 407,
+      "token_text": " not",
+      "prob_raw": 0.04409,
+      "prob_pct": 4.41
+    },
+    {
+      "token_id": 257,
+      "token_text": " a",
+      "prob_raw": 0.04067,
+      "prob_pct": 4.07
+    },
+    {
+      "token_id": 991,
+      "token_text": " still",
+      "prob_raw": 0.03449,
+      "prob_pct": 3.45
+    }
+  ],
+  "attention_sample": {
+    "layer": 11,
+    "head": 0,
+    "tokens": [
+      "The",
+      " future",
+      " of",
+      " artificial",
+      " intelligence",
+      " is"
+    ],
+    "weights": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.6478,
+        0.3522,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.5423,
+        0.2042,
+        0.2535,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.8175,
+        0.0488,
+        0.0579,
+        0.0758,
+        0.0,
+        0.0
+      ],
+      [
+        0.2302,
+        0.1574,
+        0.28,
+        0.0569,
+        0.2755,
+        0.0
+      ],
+      [
+        0.3482,
+        0.1408,
+        0.1658,
+        0.0522,
+        0.0911,
+        0.2018
+      ]
+    ]
+  },
+  "temperature_applied": 1.0,
+  "top_p_applied": 1.0,
+  "claims_boundary": "Demonstrates open GPT-2 small architecture only. Zero claims about proprietary frontier models.",
+  "layer_description": "Layer 11 (last of 12 layers, index 11) \u2022 Head 0",
+  "top5_sum_pct": 26.53,
+  "lesson_note": "Top-5 probabilities sum to about 26 percent (26.53%). The model is not confident, illustrating high entropy across 50,257 tokens.",
+  "description_requirement": "ChatGPT internals are not public. GPT-2 is an older open model used as an architectural example. Zero claims about proprietary frontier models."
+}

@@ -1,0 +1,596 @@
+{
+  "topic": "Topic A: pypdfium2 Real Run (10 Runs)",
+  "pdf_source": {
+    "title": "Attention Is All You Need",
+    "arxiv_id": "1706.03762",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "page_count": 15,
+    "file_size_bytes": 2215244,
+    "layout": "single-column (arXiv primary format)"
+  },
+  "environment": {
+    "os": "Windows 10 (AMD64)",
+    "python": "3.11.0",
+    "processor": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+    "libraries": {
+      "pypdfium2": "5.6.0",
+      "pypdf": "6.9.2",
+      "pdfminer_six": "20251230",
+      "tiktoken": "0.14.0"
+    }
+  },
+  "operation": "full-text extraction of all 15 pages",
+  "token_metrics": {
+    "tokenizer": "cl100k_base",
+    "tokens_count": 10187,
+    "words_count": 6103,
+    "characters_count": 40407
+  },
+  "page1_render": {
+    "path": "engine/public/real_assets/arxiv_1706_03762_p1.png",
+    "width_px": 1224,
+    "height_px": 1584,
+    "render_scale": 2.0,
+    "num_chars": 2910,
+    "num_rect_blocks": 67
+  },
+  "block_boxes_sample": [
+    {
+      "block_idx": 0,
+      "text": "Provided proper attribution is provided, Google hereby grants permission to",
+      "pdf_coords": [
+        124.9,
+        707.4,
+        487.0,
+        718.2
+      ],
+      "px_box": [
+        249.7,
+        147.6,
+        974.0,
+        169.1
+      ]
+    },
+    {
+      "block_idx": 1,
+      "text": "reproduce the tables and figures in this paper solely for use in journalistic or",
+      "pdf_coords": [
+        124.4,
+        693.5,
+        487.9,
+        704.3
+      ],
+      "px_box": [
+        248.7,
+        175.5,
+        975.8,
+        197.0
+      ]
+    },
+    {
+      "block_idx": 2,
+      "text": "scholarly works.",
+      "pdf_coords": [
+        268.2,
+        679.5,
+        345.7,
+        690.3
+      ],
+      "px_box": [
+        536.4,
+        203.4,
+        691.3,
+        224.9
+      ]
+    },
+    {
+      "block_idx": 3,
+      "text": "Attention Is All You Need",
+      "pdf_coords": [
+        211.6,
+        629.7,
+        399.5,
+        641.9
+      ],
+      "px_box": [
+        423.3,
+        300.3,
+        799.0,
+        324.7
+      ]
+    },
+    {
+      "block_idx": 4,
+      "text": "Ashish Vaswani",
+      "pdf_coords": [
+        133.0,
+        549.1,
+        199.6,
+        556.2
+      ],
+      "px_box": [
+        266.0,
+        471.6,
+        399.2,
+        485.7
+      ]
+    },
+    {
+      "block_idx": 5,
+      "text": "\u2217",
+      "pdf_coords": [
+        200.4,
+        553.2,
+        203.3,
+        556.2
+      ],
+      "px_box": [
+        400.9,
+        471.7,
+        406.5,
+        477.7
+      ]
+    },
+    {
+      "block_idx": 6,
+      "text": "Google Brain",
+      "pdf_coords": [
+        139.7,
+        536.2,
+        193.2,
+        545.2
+      ],
+      "px_box": [
+        279.4,
+        493.6,
+        386.4,
+        511.5
+      ]
+    },
+    {
+      "block_idx": 7,
+      "text": "avaswani@google.com",
+      "pdf_coords": [
+        117.2,
+        525.2,
+        215.9,
+        533.6
+      ],
+      "px_box": [
+        234.5,
+        516.7,
+        431.8,
+        533.5
+      ]
+    },
+    {
+      "block_idx": 8,
+      "text": "Noam Shazeer",
+      "pdf_coords": [
+        239.2,
+        549.1,
+        300.7,
+        556.2
+      ],
+      "px_box": [
+        478.4,
+        471.6,
+        601.3,
+        485.7
+      ]
+    },
+    {
+      "block_idx": 9,
+      "text": "\u2217",
+      "pdf_coords": [
+        301.4,
+        553.2,
+        304.2,
+        556.2
+      ],
+      "px_box": [
+        602.8,
+        471.7,
+        608.4,
+        477.7
+      ]
+    },
+    {
+      "block_idx": 10,
+      "text": "Google Brain",
+      "pdf_coords": [
+        243.3,
+        536.2,
+        296.7,
+        545.2
+      ],
+      "px_box": [
+        486.5,
+        493.6,
+        593.5,
+        511.5
+      ]
+    },
+    {
+      "block_idx": 11,
+      "text": "noam@google.com",
+      "pdf_coords": [
+        230.8,
+        525.2,
+        309.0,
+        533.6
+      ],
+      "px_box": [
+        461.6,
+        516.7,
+        618.1,
+        533.5
+      ]
+    },
+    {
+      "block_idx": 12,
+      "text": "Niki Parmar",
+      "pdf_coords": [
+        338.9,
+        549.1,
+        392.5,
+        556.2
+      ],
+      "px_box": [
+        677.7,
+        471.6,
+        784.9,
+        485.7
+      ]
+    },
+    {
+      "block_idx": 13,
+      "text": "\u2217",
+      "pdf_coords": [
+        393.2,
+        553.2,
+        396.0,
+        556.2
+      ],
+      "px_box": [
+        786.3,
+        471.7,
+        792.0,
+        477.7
+      ]
+    },
+    {
+      "block_idx": 14,
+      "text": "Google Research",
+      "pdf_coords": [
+        331.8,
+        536.2,
+        399.7,
+        545.2
+      ],
+      "px_box": [
+        663.5,
+        493.6,
+        799.3,
+        511.5
+      ]
+    },
+    {
+      "block_idx": 15,
+      "text": "nikip@google.com",
+      "pdf_coords": [
+        323.9,
+        525.2,
+        407.4,
+        533.6
+      ],
+      "px_box": [
+        647.8,
+        516.7,
+        814.7,
+        533.5
+      ]
+    },
+    {
+      "block_idx": 16,
+      "text": "Jakob Uszkoreit",
+      "pdf_coords": [
+        424.3,
+        548.4,
+        493.1,
+        556.2
+      ],
+      "px_box": [
+        848.7,
+        471.6,
+        986.2,
+        487.3
+      ]
+    },
+    {
+      "block_idx": 17,
+      "text": "\u2217",
+      "pdf_coords": [
+        493.8,
+        553.2,
+        496.6,
+        556.2
+      ],
+      "px_box": [
+        987.5,
+        471.7,
+        993.2,
+        477.7
+      ]
+    },
+    {
+      "block_idx": 18,
+      "text": "Google Research",
+      "pdf_coords": [
+        424.9,
+        536.2,
+        492.8,
+        545.2
+      ],
+      "px_box": [
+        849.7,
+        493.6,
+        985.5,
+        511.5
+      ]
+    },
+    {
+      "block_idx": 19,
+      "text": "usz@google.com",
+      "pdf_coords": [
+        422.2,
+        525.2,
+        495.2,
+        533.6
+      ],
+      "px_box": [
+        844.4,
+        516.7,
+        990.5,
+        533.5
+      ]
+    },
+    {
+      "block_idx": 20,
+      "text": "Llion Jones",
+      "pdf_coords": [
+        144.5,
+        498.4,
+        192.9,
+        506.2
+      ],
+      "px_box": [
+        289.0,
+        571.6,
+        385.7,
+        587.3
+      ]
+    },
+    {
+      "block_idx": 21,
+      "text": "\u2217",
+      "pdf_coords": [
+        193.8,
+        503.2,
+        196.6,
+        506.2
+      ],
+      "px_box": [
+        387.5,
+        571.7,
+        393.2,
+        577.7
+      ]
+    },
+    {
+      "block_idx": 22,
+      "text": "Google Research",
+      "pdf_coords": [
+        134.9,
+        486.2,
+        202.8,
+        495.2
+      ],
+      "px_box": [
+        269.7,
+        593.6,
+        405.5,
+        611.5
+      ]
+    },
+    {
+      "block_idx": 23,
+      "text": "llion@google.com",
+      "pdf_coords": [
+        127.4,
+        475.2,
+        210.5,
+        483.6
+      ],
+      "px_box": [
+        254.9,
+        616.7,
+        420.9,
+        633.5
+      ]
+    },
+    {
+      "block_idx": 24,
+      "text": "Aidan N. Gomez",
+      "pdf_coords": [
+        248.9,
+        499.1,
+        319.1,
+        506.2
+      ],
+      "px_box": [
+        497.7,
+        571.6,
+        638.2,
+        585.7
+      ]
+    },
+    {
+      "block_idx": 25,
+      "text": "\u2217 \u2020",
+      "pdf_coords": [
+        319.9,
+        501.4,
+        329.8,
+        507.8
+      ],
+      "px_box": [
+        639.9,
+        568.3,
+        659.5,
+        581.1
+      ]
+    },
+    {
+      "block_idx": 26,
+      "text": "University of Toronto",
+      "pdf_coords": [
+        244.7,
+        486.2,
+        330.5,
+        495.2
+      ],
+      "px_box": [
+        489.4,
+        593.6,
+        661.0,
+        611.5
+      ]
+    },
+    {
+      "block_idx": 27,
+      "text": "aidan@cs.toronto.edu",
+      "pdf_coords": [
+        236.0,
+        477.4,
+        339.7,
+        483.6
+      ],
+      "px_box": [
+        471.9,
+        616.7,
+        679.4,
+        629.1
+      ]
+    },
+    {
+      "block_idx": 28,
+      "text": "\u0141ukasz Kaiser",
+      "pdf_coords": [
+        394.3,
+        499.2,
+        455.7,
+        506.2
+      ],
+      "px_box": [
+        788.6,
+        571.6,
+        911.5,
+        585.6
+      ]
+    },
+    {
+      "block_idx": 29,
+      "text": "\u2217",
+      "pdf_coords": [
+        456.5,
+        503.2,
+        459.3,
+        506.2
+      ],
+      "px_box": [
+        912.9,
+        571.7,
+        918.6,
+        577.7
+      ]
+    }
+  ],
+  "first_10_lines": [
+    "Provided proper attribution is provided, Google hereby grants permission to",
+    "reproduce the tables and figures in this paper solely for use in journalistic or",
+    "scholarly works.",
+    "Attention Is All You Need",
+    "Ashish Vaswani\u2217",
+    "Google Brain",
+    "avaswani@google.com",
+    "Noam Shazeer\u2217",
+    "Google Brain",
+    "noam@google.com"
+  ],
+  "benchmarks": {
+    "pypdfium2": {
+      "runs": 10,
+      "median_ms": 239.07,
+      "mean_ms": 250.21,
+      "min_ms": 207.27,
+      "max_ms": 344.29,
+      "stdev_ms": 40.15,
+      "all_ms": [
+        263.14,
+        228.85,
+        288.57,
+        243.54,
+        228.46,
+        219.82,
+        242.82,
+        344.29,
+        235.32,
+        207.27
+      ]
+    },
+    "pypdf": {
+      "runs": 10,
+      "median_ms": 1399.62,
+      "mean_ms": 1423.13,
+      "min_ms": 1317.04,
+      "max_ms": 1646.44,
+      "stdev_ms": 92.3,
+      "all_ms": [
+        1455.48,
+        1420.33,
+        1486.53,
+        1317.04,
+        1351.56,
+        1373.7,
+        1380.93,
+        1395.79,
+        1646.44,
+        1403.46
+      ],
+      "median_ratio": 5.85
+    },
+    "pdfminer_six": {
+      "runs": 10,
+      "median_ms": 4065.08,
+      "mean_ms": 4077.89,
+      "min_ms": 3970.21,
+      "max_ms": 4205.63,
+      "stdev_ms": 80.24,
+      "all_ms": [
+        4044.93,
+        4193.64,
+        4141.36,
+        4072.91,
+        3970.21,
+        4081.62,
+        4205.63,
+        3987.93,
+        4023.44,
+        4057.26
+      ],
+      "median_ratio": 17.0
+    }
+  },
+  "limitation_statement": "idi single-column paper, two-column lo order maarochu, nenu test cheyyaledu"
+}

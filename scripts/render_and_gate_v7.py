@@ -31,13 +31,13 @@ GEMINI_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 REELS = {
     "v7_tools": {
         "comp_id": "V7-Tools-PyPdfium2",
-        "title": "pypdfium2: Best PDF Parser for Research Paper LLM Summarization",
+        "title": "pypdfium2: High-Speed PDF Text Extraction Benchmark",
         "pillar": "TOOLS",
         "slot": "12:30 PM IST",
-        "duration_s": 48.0,
-        "total_frames": 1440,
-        "speech_end_s": 45.8,
-        "end_card_frame": 1374,
+        "duration_s": 42.0,
+        "total_frames": 1260,
+        "speech_end_s": 39.5,
+        "end_card_frame": 1194,
         "master_audio": os.path.join(ROOT, "cache", "v7", "v7_tools_master_48k.mp3"),
         "words_json": os.path.join(ROOT, "cache", "v7", "v7_tools_words.json"),
         "raw_out": os.path.join(ROOT, "out", "reel_v7_tools_raw.mp4"),
@@ -46,13 +46,13 @@ REELS = {
     },
     "v7_discovery": {
         "comp_id": "V7-Discovery-HowChatGPTWorks",
-        "title": "How ChatGPT Actually Thinks in 3D: Token to Softmax",
+        "title": "GPT-2 Small: Next-Word Prediction & Attention Architecture",
         "pillar": "AI DISCOVERY",
         "slot": "8:30 PM IST",
-        "duration_s": 50.0,
-        "total_frames": 1500,
-        "speech_end_s": 47.5,
-        "end_card_frame": 1425,
+        "duration_s": 44.0,
+        "total_frames": 1320,
+        "speech_end_s": 41.5,
+        "end_card_frame": 1254,
         "master_audio": os.path.join(ROOT, "cache", "v7", "v7_discovery_master_48k.mp3"),
         "words_json": os.path.join(ROOT, "cache", "v7", "v7_discovery_words.json"),
         "raw_out": os.path.join(ROOT, "out", "reel_v7_discovery_raw.mp4"),
@@ -66,7 +66,7 @@ os.makedirs(os.path.join(ROOT, "out"), exist_ok=True)
 def render_composition(comp_id: str, out_path: str):
     print(f"Rendering Remotion composition {comp_id} -> {out_path}...")
     cmd = [
-        "npx.cmd", "remotion", "render",
+        "cmd.exe", "/c", "npx", "remotion", "render",
         comp_id,
         out_path,
         "--concurrency=4",
@@ -180,7 +180,7 @@ def evaluate_user_empty_area(video_path: str, dur_s: int):
     cap.release()
     max_empty = max(per_sec_empty) if per_sec_empty else 0.0
     avg_empty = round(float(np.mean(per_sec_empty)), 2)
-    pass_gate = max_empty <= 35.0
+    pass_gate = (max_empty <= 35.0) and (avg_empty <= 25.0)
     
     return {
         "max_empty_pct": max_empty,
@@ -365,6 +365,14 @@ def process_and_gate_reel(reel_id: str, dossier_video_item: dict):
         teach_back["pass"] and
         audio_gates["pass"]
     )
+    
+    # 4. Run Independent Audit
+    print(f"\n--- Running Independent Audit (audit_like_claude.py) on {info['final_out']} ---")
+    audit_cmd = [sys.executable, os.path.join(ROOT, "audit_like_claude.py"), info["final_out"]]
+    res_audit = subprocess.run(audit_cmd, capture_output=True, text=True)
+    print(res_audit.stdout)
+    if res_audit.stderr:
+        print(res_audit.stderr)
     
     gates_data = {
         "video_id": reel_id,
