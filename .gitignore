@@ -15,6 +15,7 @@ runs/
 scratch/
 queue/
 cache/
+backup/
 *.mp4
 !docs/videos/*.mp4
 *.mp3

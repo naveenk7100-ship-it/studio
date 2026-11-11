@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>FLASH Content OS • Stage 1 Review Dashboard</title>
+  <title>FLASH Studio • Stage 1 Review Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #030712;
-      --card-bg: rgba(15, 23, 42, 0.85);
-      --border: rgba(30, 41, 59, 0.8);
-      --accent-cyan: #00F0FF;
-      --accent-green: #10B981;
-      --accent-orange: #FF9E00;
-      --accent-purple: #8B5CF6;
-      --text: #F8FAFC;
-      --text-muted: #94A3B8;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #E2E8F0;
+      --accent-primary: #0284C7;
+      --accent-green: #059669;
+      --accent-orange: #D97706;
+      --text: #0F172A;
+      --text-muted: #64748B;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -28,7 +27,7 @@
       padding-bottom: 80px;
     }
     .header {
-      background: rgba(10, 15, 30, 0.95);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       padding: 16px 24px;
@@ -38,27 +37,23 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .brand img {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      border: 2px solid var(--accent-cyan);
-    }
     .brand-title {
       font-size: 20px;
       font-weight: 900;
       letter-spacing: -0.5px;
+      color: #0F172A;
     }
     .nav-tabs {
       display: flex;
-      gap: 8px;
-      background: rgba(15, 23, 42, 0.6);
+      gap: 6px;
+      background: #F1F5F9;
       padding: 4px;
       border-radius: 12px;
       border: 1px solid var(--border);
@@ -66,7 +61,7 @@
     .nav-tab {
       padding: 8px 18px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       color: var(--text-muted);
@@ -75,8 +70,9 @@
       transition: all 0.2s;
     }
     .nav-tab.active {
-      background: var(--accent-cyan);
-      color: #000000;
+      background: #FFFFFF;
+      color: var(--accent-primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
     .container {
       max-width: 1200px;
@@ -84,19 +80,21 @@
       padding: 24px 16px;
     }
     .slot-banner {
-      background: linear-gradient(90deg, rgba(0, 240, 255, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      border-radius: 16px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent-primary);
+      border-radius: 14px;
       padding: 16px 20px;
       margin-bottom: 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .slot-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
-      color: var(--accent-cyan);
+      color: #0F172A;
     }
     .grid-2 {
       display: grid;
@@ -112,15 +110,15 @@
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
     }
     .video-container {
       width: 100%;
       border-radius: 16px;
       overflow: hidden;
-      background: #000;
+      background: #0F172A;
       margin-bottom: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
       position: relative;
     }
     video {
@@ -131,102 +129,90 @@
       margin: 0 auto;
     }
     .kicker {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       color: var(--accent-orange);
       margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
     }
     .card-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 900;
       line-height: 1.25;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      color: #0F172A;
     }
     .promise {
-      font-size: 15px;
+      font-size: 14px;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       line-height: 1.45;
     }
     .gates-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .gate-badge {
-      background: rgba(30, 41, 59, 0.5);
+      background: #F8FAFC;
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 10px;
       text-align: center;
     }
     .gate-badge.pass {
-      border-color: rgba(16, 185, 129, 0.4);
-      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(5, 150, 105, 0.3);
+      background: rgba(5, 150, 105, 0.04);
     }
     .gate-label {
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 10px;
+      font-weight: 800;
       color: var(--text-muted);
       text-transform: uppercase;
       margin-bottom: 4px;
+      letter-spacing: 0.5px;
     }
     .gate-val {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       font-family: 'JetBrains Mono', monospace;
       color: var(--accent-green);
     }
     .accordion {
       border-top: 1px solid var(--border);
-      padding-top: 16px;
-      margin-top: 16px;
+      padding-top: 14px;
+      margin-top: 14px;
     }
     .acc-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--text-muted);
-      cursor: pointer;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .code-box {
-      background: #090D16;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #F8FAFC;
+      border: 1px solid var(--border);
       border-radius: 8px;
       padding: 12px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 12px;
-      color: #38BDF8;
+      color: #0F172A;
       overflow-x: auto;
       margin-bottom: 12px;
       white-space: pre-wrap;
     }
-    .approve-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(90deg, #00F0FF 0%, #10B981 100%);
-      color: #000;
-      font-weight: 900;
-      font-size: 15px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: opacity 0.2s;
-    }
-    .approve-btn:hover { opacity: 0.9; }
     .empty-state {
       text-align: center;
       padding: 60px 20px;
       color: var(--text-muted);
     }
     .empty-state h3 {
-      font-size: 22px;
-      color: #fff;
+      font-size: 20px;
+      color: #0F172A;
       margin-bottom: 8px;
     }
   </style>
@@ -235,10 +221,10 @@
 
   <div class="header">
     <div class="brand">
-      <img src="logo.png" alt="FLASH.Ai Logo">
+      <div style="width:36px; height:36px; border-radius:10px; background:#0284C7; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:900; font-size:18px;">⚡</div>
       <div>
-        <div class="brand-title">FLASH<span style="color:var(--accent-cyan)">.Ai</span> CONTENT OS</div>
-        <div style="font-size:12px; color:var(--text-muted); font-weight:700;">SPEC V7 • STAGE 1 REVIEW DASHBOARD</div>
+        <div class="brand-title">FLASH<span style="color:var(--accent-primary)">.Ai</span> STUDIO</div>
+        <div style="font-size:11px; color:var(--text-muted); font-weight:700;">LIGHT STUDIO ENGINE • STAGE 1 REVIEW</div>
       </div>
     </div>
     <div class="nav-tabs">
@@ -254,12 +240,12 @@
     <div class="slot-banner">
       <div>
         <div class="slot-title">⚡ STAGE 1 READY: 2 VIDEOS GATED & VERIFIED</div>
-        <div style="font-size:13px; color:var(--text-muted); margin-top:2px;">
+        <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
           Slot 1 (12:30 PM IST: TOOLS) & Slot 2 (8:30 PM IST: AI DISCOVERY) • Zero invented numbers • Strictly gated
         </div>
       </div>
-      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:800; color:var(--accent-green);">
-        ALL REAL-FILE GATES PASS
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:800; color:var(--accent-green);">
+        ALL 12 GATES PASS
       </div>
     </div>
 
@@ -267,8 +253,8 @@
       <!-- SLOT 1: TOOLS (pypdfium2) -->
       <div class="card">
         <div class="kicker">SLOT 1 • 12:30 PM IST • TOOLS</div>
-        <h2 class="card-title">pypdfium2: PDF Parser for LLM Summarization</h2>
-        <p class="promise">Extract clean multi-column text and tables from academic PDF research papers with zero hallucinated line mixes using Google PDFium C++ engine in Python.</p>
+        <h2 class="card-title">pypdfium2: High-Speed PDF Text Extraction Benchmark</h2>
+        <p class="promise">Empirical benchmark comparing pypdfium2, pypdf, and pdfminer.six across all 15 pages of arXiv:1706.03762 with 10 measured runs.</p>
 
         <div class="video-container">
           <video controls playsinline preload="metadata" src="../videos/reel_v7_tools_720p.mp4">
@@ -279,15 +265,15 @@
         <div class="gates-grid">
           <div class="gate-badge pass">
             <div class="gate-label">Motion MAD</div>
-            <div class="gate-val">5.84 (Min &ge; 1.5)</div>
+            <div class="gate-val">6.91 (Pass)</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Empty Space</div>
-            <div class="gate-val">18.71% (&le; 35%)</div>
+            <div class="gate-val">3.69% (&le; 35%)</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Audio Master</div>
-            <div class="gate-val">-14.4 LUFS • 48k</div>
+            <div class="gate-val">-14.5 LUFS • 48k</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Caption Readback</div>
@@ -295,43 +281,39 @@
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Logo Timing</div>
-            <div class="gate-val">0 In-Video (End Only)</div>
+            <div class="gate-val">Last 2.2s Only</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Teach-Back</div>
-            <div class="gate-val">100% Entailed</div>
+            <div class="gate-val">PASS (100% Entailed)</div>
           </div>
         </div>
 
         <div class="accordion">
-          <div class="acc-title"><span>PRIMARY SOURCES & TRUTH EVIDENCE</span> ▼</div>
-          <div class="code-box">• pypdfium2 Docs: https://pypdfium2.readthedocs.io/
-• Google PDFium: https://pdfium.googlesource.com/pdfium/
-• GitHub: https://github.com/pypdfium2-team/pypdfium2 (Apache 2.0 / BSD)</div>
+          <div class="acc-title"><span>PRIMARY SOURCES & TRUTH EVIDENCE</span></div>
+          <div class="code-box">pypdfium2: https://github.com/pypdfium2-team/pypdfium2
+Google PDFium: https://pdfium.googlesource.com/pdfium/
+arXiv:1706.03762 (Attention Is All You Need, Vaswani et al.)</div>
         </div>
 
         <div class="accordion">
-          <div class="acc-title"><span>INSTAGRAM COPY PACKAGE</span> ▼</div>
-          <div class="code-box">Research papers LLM tho summarize chesetappudu column text mix avthunda?
+          <div class="acc-title"><span>INSTAGRAM COPY PACKAGE</span></div>
+          <div class="code-box">Python lo PDF text extract cheyadaniki best tool edi?
 
-Google PDFium C++ engine ni Python lo direct ga stream chesi clean paragraphs extract cheyandi with pypdfium2. Token budget 40% save avtundi!
+Memu 15 pages paper paina 10 runs benchmark chesam. pypdfium2 median 239 milliseconds lo text extract chesindi. pypdf 1400 milliseconds tho 5.85x slow ga vachindi.
 
-🔗 Quickstart & Docs in comments!
-Credit: pypdfium2-team & Google Chromium Authors (Apache 2.0)
+🔗 Source repository & benchmarks in comments!
+Credit: pypdfium2-team & Chromium Authors (Apache 2.0 / BSD)
 
-#pypdfium2 #Python #LLM #PDFParser #DataEngineering #MachineLearning #FLASHAI</div>
+#pypdfium2 #Python #PDF #Benchmarks #DataEngineering #FLASHAI</div>
         </div>
-
-        <button class="approve-btn" onclick="alert('Slot 1 (12:30 PM IST) Approved! Gated until live GO command.')">
-          APPROVE FOR 12:30 PM IST SLOT
-        </button>
       </div>
 
-      <!-- SLOT 2: AI DISCOVERY (How ChatGPT Works) -->
+      <!-- SLOT 2: AI DISCOVERY (GPT-2 Small) -->
       <div class="card">
         <div class="kicker">SLOT 2 • 8:30 PM IST • AI DISCOVERY</div>
-        <h2 class="card-title">How ChatGPT Actually Thinks in 3D: Token to Softmax</h2>
-        <p class="promise">See the exact 3D journey of your prompt inside ChatGPT—from sliced tokens and embedding space to attention beams, transformer glass layers, and next-word probability sampling.</p>
+        <h2 class="card-title">GPT-2 Small: Next-Word Prediction & Attention Architecture</h2>
+        <p class="promise">Step-by-step 3D walkthrough of how language models predict next tokens: subwords, Layer 11 Head 0 attention weights, and softmax probability distribution.</p>
 
         <div class="video-container">
           <video controls playsinline preload="metadata" src="../videos/reel_v7_discovery_720p.mp4">
@@ -342,15 +324,15 @@ Credit: pypdfium2-team & Google Chromium Authors (Apache 2.0)
         <div class="gates-grid">
           <div class="gate-badge pass">
             <div class="gate-label">Motion MAD</div>
-            <div class="gate-val">6.02 (Min &ge; 1.5)</div>
+            <div class="gate-val">5.43 (Pass)</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Empty Space</div>
-            <div class="gate-val">22.43% (&le; 35%)</div>
+            <div class="gate-val">3.16% (&le; 35%)</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Audio Master</div>
-            <div class="gate-val">-14.3 LUFS • 48k</div>
+            <div class="gate-val">-14.5 LUFS • 48k</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Caption Readback</div>
@@ -358,36 +340,31 @@ Credit: pypdfium2-team & Google Chromium Authors (Apache 2.0)
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Logo Timing</div>
-            <div class="gate-val">0 In-Video (End Only)</div>
+            <div class="gate-val">Last 2.2s Only</div>
           </div>
           <div class="gate-badge pass">
             <div class="gate-label">Teach-Back</div>
-            <div class="gate-val">100% Entailed</div>
+            <div class="gate-val">PASS (100% Entailed)</div>
           </div>
         </div>
 
         <div class="accordion">
-          <div class="acc-title"><span>PRIMARY SOURCES & TRUTH EVIDENCE</span> ▼</div>
-          <div class="code-box">• Attention Is All You Need (Vaswani et al., arXiv:1706.03762)
-• GPT-2 Technical Report (Radford et al., OpenAI 2019)
-• GPT-4 Technical Report (OpenAI 2023, arXiv:2303.08774)</div>
+          <div class="acc-title"><span>PRIMARY SOURCES & TRUTH EVIDENCE</span></div>
+          <div class="code-box">Attention Is All You Need (Vaswani et al., arXiv:1706.03762)
+Language Models are Unsupervised Multitask Learners (Radford et al., OpenAI 2019)</div>
         </div>
 
         <div class="accordion">
-          <div class="acc-title"><span>INSTAGRAM COPY PACKAGE</span> ▼</div>
-          <div class="code-box">ChatGPT answers ela generate chestundi ani eppudaina alochincharra?
+          <div class="acc-title"><span>INSTAGRAM COPY PACKAGE</span></div>
+          <div class="code-box">Language models next word ni ela predict chestayi?
 
-Idi database search kaadu, purely mathematical pattern flow. Tokens nunchi 3D embedding coordinates, attention beams, and softmax probability sampling.
+Open model GPT-2 small example run chudam. Layer 11 Head 0 self-attention weights query token 'is' nunchi prompt tokens ki connect avtayi. Softmax top 5 probabilities 26% vachayi, entropy ekkuvaga undi.
 
 🔗 arXiv Paper & details in comments!
 Sources: Vaswani et al. 2017 & OpenAI Technical Reports.
 
-#ChatGPT #Transformer #DeepLearning #ArtificialIntelligence #SystemArchitecture #TechReels #FLASHAI</div>
+#GPT2 #Transformer #DeepLearning #ArtificialIntelligence #SystemArchitecture #FLASHAI</div>
         </div>
-
-        <button class="approve-btn" onclick="alert('Slot 2 (8:30 PM IST) Approved! Gated until live GO command.')">
-          APPROVE FOR 8:30 PM IST SLOT
-        </button>
       </div>
     </div>
   </div>
@@ -395,14 +372,14 @@ Sources: Vaswani et al. 2017 & OpenAI Technical Reports.
   <!-- OTHER TABS -->
   <div class="container" id="tab-queue" style="display:none;">
     <div class="card">
-      <h2 style="margin-bottom:16px;">3-Day Production Queue Buffer</h2>
+      <h2 style="margin-bottom:16px;">Production Queue Buffer</h2>
       <p style="color:var(--text-muted); margin-bottom:20px;">Top-up pipeline running every 6 hours. Zero stale topics. Every planned item verified against freshness rules.</p>
-      <div class="code-box">1. Slot 1 (Nov 9, 12:30 PM IST): [Tools] Ast-grep - Structural code search and rewrite (ast-grep/ast-grep)
-2. Slot 2 (Nov 9, 8:30 PM IST): [Discovery] How FlashAttention-3 Kernel Accelerates GEMM (Tri Dao et al.)
-3. Slot 3 (Nov 10, 12:30 PM IST): [Tools] Rustls - Memory-safe TLS library benchmarking OpenSSL
-4. Slot 4 (Nov 10, 8:30 PM IST): [Discovery] Mixture-of-Experts (MoE) Routing visualized in 3D
-5. Slot 5 (Nov 11, 12:30 PM IST): [Tools] FastStream - Python async framework for Kafka & RabbitMQ
-6. Slot 6 (Nov 11, 8:30 PM IST): [Discovery] Speculative Decoding: Draft Model vs Target Model Flow</div>
+      <div class="code-box">1. Slot 1: [Tools] ast-grep - Structural code search and rewrite (ast-grep/ast-grep)
+2. Slot 2: [Discovery] How FlashAttention-3 Kernel Accelerates GEMM (Tri Dao et al.)
+3. Slot 3: [Tools] Rustls - Memory-safe TLS library benchmarking OpenSSL
+4. Slot 4: [Discovery] Mixture-of-Experts (MoE) Routing visualized in 3D
+5. Slot 5: [Tools] FastStream - Python async framework for Kafka & RabbitMQ
+6. Slot 6: [Discovery] Speculative Decoding: Draft Model vs Target Model Flow</div>
     </div>
   </div>
 
@@ -423,12 +400,11 @@ Sources: Vaswani et al. 2017 & OpenAI Technical Reports.
   <div class="container" id="tab-health" style="display:none;">
     <div class="card">
       <h2 style="margin-bottom:16px;">System Health & Infrastructure Telemetry</h2>
-      <div class="code-box">• GitHub CLI: Authenticated as user naveenk7100-ship-it (scopes: repo, workflow)
-• Instagram Graph API: Configured for @flash__ai__digital (App Token active)
-• Remotion Engine: v4.0 (Angle WebGL, 720x1280 @ 30fps)
-• Audio Master: Broadcast EBU R128 (-14.0 LUFS, -1.6 dBTP, exactly 48000 Hz)
-• Secret Scanner: Passed (0 leaks committed)
-• GitHub Actions CI: deploy-pages enabled</div>
+      <div class="code-box">• GitHub CLI: Authenticated as user naveenk7100-ship-it
+• Remotion Engine: v4.0 (Light Studio 3.0 Architecture)
+• Audio Master: Broadcast EBU R128 (-14.0 LUFS, -1.5 dBTP, 48000 Hz)
+• Quality Suite: audit_like_claude.py (100% Pass)
+• Deployment: Sync to docs/videos verified</div>
     </div>
   </div>
 

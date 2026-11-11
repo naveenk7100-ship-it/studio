@@ -1,0 +1,42 @@
+{
+  "updated_at": "2026-11-11T15:03:08+05:30",
+  "videos": {
+    "v7_tools": {
+      "title": "pypdfium2: High-Speed PDF Text Extraction Benchmark",
+      "pillar": "TOOLS",
+      "slot": "12:30 PM IST",
+      "promise": "Empirical benchmark comparing pypdfium2, pypdf, and pdfminer.six across all 15 pages of arXiv:1706.03762 with 10 measured runs.",
+      "video_url": "../videos/reel_v7_tools_720p.mp4",
+      "motion_mad": 6.91,
+      "empty_pct": 3.69,
+      "loudness": -14.5,
+      "sample_rate": 48000,
+      "readback_match": 100.0,
+      "teach_back": "PASS (100% Entailed)",
+      "sources": [
+        "pypdfium2: https://github.com/pypdfium2-team/pypdfium2",
+        "Google PDFium: https://pdfium.googlesource.com/pdfium/",
+        "arXiv:1706.03762 (Attention Is All You Need, Vaswani et al.)"
+      ],
+      "caption": "Python lo PDF text extract cheyadaniki best tool edi?\n\nMemu 15 pages paper paina 10 runs benchmark chesam. pypdfium2 median 239 milliseconds lo text extract chesindi. pypdf 1400 milliseconds tho 5.85x slow ga vachindi.\n\n\ud83d\udd17 Source repository & benchmarks in comments!\nCredit: pypdfium2-team & Chromium Authors (Apache 2.0 / BSD)\n\n#pypdfium2 #Python #PDF #Benchmarks #DataEngineering #FLASHAI"
+    },
+    "v7_discovery": {
+      "title": "GPT-2 Small: Next-Word Prediction & Attention Architecture",
+      "pillar": "AI DISCOVERY",
+      "slot": "8:30 PM IST",
+      "promise": "Step-by-step 3D walkthrough of how language models predict next tokens: subwords, Layer 11 Head 0 attention weights, and softmax probability distribution.",
+      "video_url": "../videos/reel_v7_discovery_720p.mp4",
+      "motion_mad": 5.43,
+      "empty_pct": 3.16,
+      "loudness": -14.5,
+      "sample_rate": 48000,
+      "readback_match": 100.0,
+      "teach_back": "PASS (100% Entailed)",
+      "sources": [
+        "Attention Is All You Need (Vaswani et al., arXiv:1706.03762)",
+        "Language Models are Unsupervised Multitask Learners (Radford et al., OpenAI 2019)"
+      ],
+      "caption": "Language models next word ni ela predict chestayi?\n\nOpen model GPT-2 small example run chudam. Layer 11 Head 0 self-attention weights query token 'is' nunchi prompt tokens ki connect avtayi. Softmax top 5 probabilities 26% vachayi, entropy ekkuvaga undi.\n\n\ud83d\udd17 arXiv Paper & details in comments!\nSources: Vaswani et al. 2017 & OpenAI Technical Reports.\n\n#GPT2 #Transformer #DeepLearning #ArtificialIntelligence #SystemArchitecture #FLASHAI"
+    }
+  }
+}

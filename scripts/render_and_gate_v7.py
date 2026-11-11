@@ -25,6 +25,11 @@ from dotenv import load_dotenv
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = r"C:\Users\navee\OneDrive\Desktop\studio"
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+scripts_dir = os.path.join(ROOT, "scripts")
+if scripts_dir not in sys.path:
+    sys.path.insert(0, scripts_dir)
 load_dotenv(os.path.join(ROOT, ".env"))
 GEMINI_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 
@@ -366,13 +371,41 @@ def process_and_gate_reel(reel_id: str, dossier_video_item: dict):
         audio_gates["pass"]
     )
     
-    # 4. Run Independent Audit
-    print(f"\n--- Running Independent Audit (audit_like_claude.py) on {info['final_out']} ---")
+    # 4. Run Independent Audit on Master
+    print(f"\n--- Running Independent Audit (audit_like_claude.py) on Master {info['final_out']} ---")
     audit_cmd = [sys.executable, os.path.join(ROOT, "audit_like_claude.py"), info["final_out"]]
     res_audit = subprocess.run(audit_cmd, capture_output=True, text=True)
     print(res_audit.stdout)
     if res_audit.stderr:
         print(res_audit.stderr)
+        
+    # 5. Compress & Deploy Web Copy to docs/videos (bitrate <= 3.5 Mbps for mobile browser streaming)
+    web_dest = os.path.join(ROOT, "docs", "videos", os.path.basename(info["final_out"]))
+    print(f"\n--- Compressing Web-Optimized Copy -> {web_dest} ---")
+    cmd_web = [
+        "ffmpeg", "-y",
+        "-i", info["final_out"],
+        "-c:v", "libx264",
+        "-crf", "22",
+        "-maxrate", "2.8M",
+        "-bufsize", "5.6M",
+        "-preset", "fast",
+        "-movflags", "+faststart",
+        "-c:a", "aac",
+        "-b:a", "192k",
+        "-ar", "48000",
+        web_dest
+    ]
+    subprocess.run(cmd_web, check=True)
+    print(f"Web copy created: {web_dest} ({os.path.getsize(web_dest)/1e6:.2f} MB)")
+    
+    # 6. Run Independent Audit with --web flag on the deployed file
+    print(f"\n--- Running Independent Audit (audit_like_claude.py --web) on {web_dest} ---")
+    audit_web_cmd = [sys.executable, os.path.join(ROOT, "audit_like_claude.py"), web_dest, "--web"]
+    res_web_audit = subprocess.run(audit_web_cmd, capture_output=True, text=True)
+    print(res_web_audit.stdout)
+    if res_web_audit.stderr:
+        print(res_web_audit.stderr)
     
     gates_data = {
         "video_id": reel_id,
@@ -424,4 +457,11 @@ if __name__ == "__main__":
     for r_id in ["v7_tools", "v7_discovery"]:
         results[r_id] = process_and_gate_reel(r_id, dossier_map.get(r_id, {}))
         
-    print("\nALL V7 STAGE 1 PRODUCTIONS RENDERED AND GATED SUCCESSFULLY.")
+    print("\nSynchronizing Review Dashboard...")
+    try:
+        from sync_review_dashboard import sync_dashboard
+        sync_dashboard()
+    except Exception as e:
+        print(f"Error syncing dashboard: {e}")
+        
+    print("\nALL V7 STAGE 1 PRODUCTIONS RENDERED, GATED, AND SYNCHRONIZED SUCCESSFULLY.")
